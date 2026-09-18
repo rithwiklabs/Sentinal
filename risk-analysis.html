@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel — Payment Risk</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f5ff;
+            color: #17172b;
+            min-height: 100vh;
+        }
+
+        /* ==============================
+           SIDEBAR
+        ============================== */
+
+        .sidebar {
+            width: 248px;
+            background: #ffffff;
+            border-right: 1px solid #e8e8f2;
+            padding: 28px 18px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            padding: 0 14px;
+            margin-bottom: 6px;
+            color: #17172b;
+        }
+
+        .logo span {
+            color: #635bff;
+        }
+
+        .tagline {
+            font-size: 11px;
+            color: #8b8b9f;
+            padding: 0 14px;
+            margin-bottom: 35px;
+        }
+
+        .nav-title {
+            font-size: 10px;
+            color: #9999aa;
+            padding: 0 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .nav-item {
+            display: block;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            color: #77778b;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .nav-item:hover {
+            background: #f2f1ff;
+            color: #635bff;
+        }
+
+        .nav-item.active {
+            background: #eeecff;
+            color: #635bff;
+        }
+
+        .simulation {
+            position: absolute;
+            bottom: 25px;
+            left: 18px;
+            right: 18px;
+            background: #f6f6fb;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #88889b;
+        }
+
+        .simulation strong {
+            display: block;
+            color: #19a66a;
+            margin-bottom: 5px;
+        }
+
+
+        /* ==============================
+           MAIN
+        ============================== */
+
+        .main {
+            margin-left: 248px;
+            width: calc(100% - 248px);
+            padding: 34px 48px;
+            max-width: 1500px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .back {
+            color: #66667c;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .back:hover {
+            color: #635bff;
+        }
+
+        .badge {
+            background: #e9e7ff;
+            color: #635bff;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #77778a;
+            margin-bottom: 30px;
+        }
+
+
+        /* ==============================
+           WARNING CARD
+        ============================== */
+
+        .warning-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 12px 40px rgba(40, 35, 90, 0.08);
+            margin-bottom: 25px;
+            border: 1px solid #ebeafd;
+        }
+
+        .warning-top {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        .warning-icon {
+            width: 52px;
+            height: 52px;
+            background: #fff4dc;
+            color: #e99512;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+
+        .warning-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .warning-text {
+            color: #65657a;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .warning-text strong {
+            color: #303044;
+        }
+
+
+        /* ==============================
+           PAYMENT
+        ============================== */
+
+        .payment-box {
+            margin-top: 25px;
+            background: #f8f8ff;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e8e8f2;
+            font-size: 14px;
+        }
+
+        .payment-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #85859a;
+        }
+
+        .value {
+            font-weight: 700;
+        }
+
+
+        /* ==============================
+           SIGNALS
+        ============================== */
+
+        .section-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin: 30px 0 15px;
+        }
+
+        .signal-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .signal {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid #ececf5;
+            transition: 0.2s;
+        }
+
+        .signal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 35, 90, 0.06);
+        }
+
+        .signal-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 9px;
+        }
+
+        .signal-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .signal-status {
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .bar {
+            height: 7px;
+            background: #ededf5;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .fill {
+            height: 100%;
+            border-radius: 20px;
+        }
+
+
+        /* ==============================
+           SCORE
+        ============================== */
+
+        .score-box {
+            background: #15152a;
+            color: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .score-left h3 {
+            font-size: 18px;
+            margin-bottom: 7px;
+        }
+
+        .score-left p {
+            color: #aaaabd;
+            font-size: 13px;
+        }
+
+        .score-number {
+            font-size: 42px;
+            font-weight: 800;
+        }
+
+        .score-label {
+            font-size: 12px;
+            color: #aaaabd;
+        }
+
+
+        /* ==============================
+           ACTIONS
+        ============================== */
+
+        .actions {
+            display: flex;
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        button {
+            border: none;
+            border-radius: 12px;
+            padding: 15px 24px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .cancel {
+            background: #f1f1f7;
+            color: #39394c;
+        }
+
+        .cancel:hover {
+            background: #e5e5ee;
+        }
+
+        .continue {
+            background: #635bff;
+            color: white;
+        }
+
+        .continue:hover {
+            background: #5149e8;
+        }
+
+
+        /* ==============================
+           NOTE
+        ============================== */
+
+        .note {
+            margin-top: 18px;
+            font-size: 12px;
+            color: #85859a;
+            line-height: 1.6;
+        }
+
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media(max-width: 900px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+                width: calc(100% - 210px);
+                padding: 25px;
+            }
+
+            .signal-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 650px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 20px;
+            }
+
+            .simulation {
+                position: static;
+                margin-top: 20px;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 25px 18px;
+            }
+
+            .topbar {
+                margin-bottom: 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ==============================
+         SIDEBAR
+    ============================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Sentinel<span>.</span>
+        </div>
+
+        <div class="tagline">
+            Payment safety before you press pay
+        </div>
+
+
+        <div class="nav-title">
+            Workspace
+        </div>
+
+
+        <a class="nav-item" href="index.html">
+            Overview
+        </a>
+
+
+        <a class="nav-item" href="payment.html">
+            Payment Simulation
+        </a>
+
+
+        <a class="nav-item active" href="risk-analysis.html">
+            Risk Analysis
+        </a>
+
+
+        <a class="nav-item" href="decision.html">
+            Decision
+        </a>
+
+
+        <a class="nav-item" href="transactions.html">
+            Transactions
+        </a>
+
+
+        <a class="nav-item" href="insights.html">
+            Risk Insights
+        </a>
+
+
+        <div class="simulation">
+            <strong>● Simulation Mode</strong>
+            Synthetic data only
+        </div>
+
+    </aside>
+
+
+    <!-- ==============================
+         MAIN
+    ============================== -->
+
+    <main class="main">
+
+
+        <div class="topbar">
+
+            <div class="back" onclick="goPayment()">
+                ← Back to payment
+            </div>
+
+            <div class="badge">
+                PAYMENT UNDER REVIEW
+            </div>
+
+        </div>
+
+
+        <h1>
+            Before you pay...
+        </h1>
+
+        <p class="subtitle">
+            Let's take a quick look at this payment together.
+        </p>
+
+
+        <!-- ==============================
+             FRIENDLY WARNING
+        ============================== -->
+
+        <div class="warning-card">
+
+            <div class="warning-top">
+
+                <div class="warning-icon">
+                    🛡️
+                </div>
+
+                <div>
+
+                    <div class="warning-title" id="friendlyTitle">
+                        Hey, just a quick check 👋
+                    </div>
+
+                    <div class="warning-text" id="friendlyMessage">
+                        We're noticing a few things about this payment
+                        that may be worth checking before you continue.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="payment-box">
+
+                <div class="payment-row">
+
+                    <span class="label">
+                        Recipient
+                    </span>
+
+                    <span class="value" id="upiDisplay">
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="payment-row">
+
+                    <span class="label">
+                        Amount
+                    </span>
+
+                    <span class="value" id="amountDisplay">
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button class="cancel" onclick="cancelPayment()">
+
+                    Cancel Payment
+
+                </button>
+
+
+                <button class="continue" onclick="continuePayment()">
+
+                    I've Checked — Continue
+
+                </button>
+
+            </div>
+
+
+            <div class="note">
+
+                Sentinel does not decide whether a payment is a scam.
+                It simply highlights unusual signals so you can make the final decision.
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             SCORE
+        ============================== -->
+
+        <div class="score-box">
+
+            <div class="score-left">
+
+                <h3>
+                    Sentinel Risk Check
+                </h3>
+
+                <p>
+                    This score is based on the signals found in this simulation.
+                </p>
+
+            </div>
+
+
+            <div style="text-align:right">
+
+                <div class="score-number" id="score">
+
+                    0
+
+                </div>
+
+                <div class="score-label" id="riskLevel">
+
+                    LOW RISK
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             SIGNALS
+        ============================== -->
+
+        <div class="section-title">
+            What made us pause?
+        </div>
+
+
+        <div class="signal-list" id="signalList">
+
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+        /* =================================
+           NAVIGATION
+        ================================= */
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+
+        function goPayment() {
+            window.location.href = "payment.html";
+        }
+
+
+        function goRisk() {
+            window.location.href = "risk-analysis.html";
+        }
+
+
+        function goDecision() {
+            window.location.href = "decision.html";
+        }
+
+
+        function goLog() {
+            window.location.href = "transactions.html";
+        }
+
+
+        /* =================================
+           GET PAYMENT DATA
+        ================================= */
+
+        const paymentData =
+            JSON.parse(
+                sessionStorage.getItem("sentinelPayment")
+            );
+
+
+        if (!paymentData) {
+
+            alert("No payment simulation found.");
+
+            window.location.href = "payment.html";
+
+        }
+
+
+        /* =================================
+           BASIC DATA
+        ================================= */
+
+        const upi = paymentData.upi;
+
+        const amount =
+            Number(paymentData.amount);
+
+        const message =
+            paymentData.message || "";
+
+
+        /* =================================
+           DISPLAY PAYMENT
+        ================================= */
+
+        document.getElementById("upiDisplay")
+            .textContent = upi;
+
+
+        document.getElementById("amountDisplay")
+            .textContent =
+            "₹" + amount.toLocaleString("en-IN");
+
+
+        /* =================================
+           SENTINEL SIMULATION MODEL
+        ================================= */
+
+        const typicalMin = 500;
+
+        const typicalMax = 1500;
+
+
+        const knownRecipients = [
+
+            "rahul@upi",
+            "friend@upi",
+            "family@upi"
+
+        ];
+
+
+        let score = 0;
+
+
+        /* =================================
+           1. AMOUNT ANOMALY
+        ================================= */
+
+        let amountScore = 0;
+
+
+        if (
+            amount >= typicalMin &&
+            amount <= typicalMax
+        ) {
+
+            amountScore = 0;
+
+        }
+
+        else if (amount <= 3000) {
+
+            amountScore = 8;
+
+        }
+
+        else if (amount <= 7500) {
+
+            amountScore = 14;
+
+        }
+
+        else {
+
+            amountScore = 20;
+
+        }
+
+
+        score += amountScore;
+
+
+        /* =================================
+           2. NEW BENEFICIARY
+        ================================= */
+
+        const newBeneficiary =
+            !knownRecipients.includes(upi);
+
+
+        let beneficiaryScore =
+            newBeneficiary ? 15 : 0;
+
+
+        score += beneficiaryScore;
+
+
+        /* =================================
+           3. URGENCY
+        ================================= */
+
+        const urgencyWords = [
+
+            "urgent",
+            "immediately",
+            "now",
+            "asap",
+            "blocked",
+            "block",
+            "deadline",
+            "quickly",
+            "expire",
+            "suspend",
+            "suspended",
+            "last chance"
+
+        ];
+
+
+        let urgencyHits = 0;
+
+
+        urgencyWords.forEach(word => {
+
+            if (
+                message
+                    .toLowerCase()
+                    .includes(word)
+            ) {
+
+                urgencyHits++;
+
+            }
+
+        });
+
+
+        let urgencyScore = 0;
+
+
+        if (urgencyHits === 1) {
+
+            urgencyScore = 8;
+
+        }
+
+        else if (urgencyHits === 2) {
+
+            urgencyScore = 14;
+
+        }
+
+        else if (urgencyHits >= 3) {
+
+            urgencyScore = 20;
+
+        }
+
+
+        score += urgencyScore;
+
+
+        /* =================================
+           4. SCAM LANGUAGE
+        ================================= */
+
+        const scamPatterns = [
+
+            "accidentally transferred",
+            "accidentally transfer",
+            "return the money",
+            "return money",
+            "refund",
+            "send money back",
+            "account will be blocked",
+            "account will be suspended",
+            "verify your account",
+            "claim your refund",
+            "processing fee",
+            "security deposit",
+            "urgent payment",
+            "pay immediately"
+
+        ];
+
+
+        let scamHits = 0;
+
+
+        scamPatterns.forEach(pattern => {
+
+            if (
+                message
+                    .toLowerCase()
+                    .includes(pattern)
+            ) {
+
+                scamHits++;
+
+            }
+
+        });
+
+
+        let scamScore = 0;
+
+
+        if (scamHits === 1) {
+
+            scamScore = 10;
+
+        }
+
+        else if (scamHits === 2) {
+
+            scamScore = 18;
+
+        }
+
+        else if (scamHits >= 3) {
+
+            scamScore = 25;
+
+        }
+
+
+        score += scamScore;
+
+
+        /* =================================
+           5. TRANSACTION VELOCITY
+        ================================= */
+
+        let velocityScore = 0;
+
+
+        if (
+            urgencyHits >= 2 &&
+            amount > typicalMax
+        ) {
+
+            velocityScore = 10;
+
+        }
+
+        else if (urgencyHits >= 1) {
+
+            velocityScore = 5;
+
+        }
+
+
+        score += velocityScore;
+
+
+        /* =================================
+           6. BEHAVIOUR DEVIATION
+        ================================= */
+
+        let behaviourScore = 0;
+
+
+        if (
+            amount > typicalMax * 5 &&
+            newBeneficiary
+        ) {
+
+            behaviourScore = 10;
+
+        }
+
+        else if (
+            amount > typicalMax * 2 ||
+            newBeneficiary
+        ) {
+
+            behaviourScore = 6;
+
+        }
+
+
+        score += behaviourScore;
+
+
+        /* =================================
+           RISK LEVEL
+        ================================= */
+
+        let riskLevel;
+
+
+        if (score < 30) {
+
+            riskLevel = "LOW";
+
+        }
+
+        else if (score < 60) {
+
+            riskLevel = "MEDIUM";
+
+        }
+
+        else {
+
+            riskLevel = "HIGH";
+
+        }
+
+
+        /* =================================
+           SCORE DISPLAY
+        ================================= */
+
+        document.getElementById("score")
+            .textContent = score;
+
+
+        document.getElementById("riskLevel")
+            .textContent =
+            riskLevel + " RISK";
+
+
+        /* =================================
+           FRIENDLY MESSAGE
+        ================================= */
+
+        const friendlyTitle =
+            document.getElementById(
+                "friendlyTitle"
+            );
+
+
+        const friendlyMessage =
+            document.getElementById(
+                "friendlyMessage"
+            );
+
+
+        if (riskLevel === "LOW") {
+
+            friendlyTitle.textContent =
+                "Looks pretty normal 👍";
+
+
+            friendlyMessage.innerHTML =
+                "We had a quick look at this payment and " +
+                "<strong>nothing unusual really stood out</strong>. " +
+                "Everything looks fairly similar to the activity we're expecting.";
+
+        }
+
+
+        else if (riskLevel === "MEDIUM") {
+
+            friendlyTitle.textContent =
+                "Hey, just a quick check 👋";
+
+
+            friendlyMessage.innerHTML =
+                "We noticed <strong>a couple of things that are a little unusual</strong> " +
+                "about this payment. Nothing here proves it's a scam, " +
+                "but we'd recommend taking a moment to make sure you know " +
+                "and trust the recipient before paying.";
+
+        }
+
+
+        else {
+
+            friendlyTitle.textContent =
+                "Hey — we'd pause for a moment here 🛡️";
+
+
+            friendlyMessage.innerHTML =
+                "This payment has <strong>several unusual signals</strong>. " +
+                "For example, the recipient may be new, the amount may be " +
+                "different from your usual payments, or the message may be " +
+                "pressuring you to act quickly.<br><br>" +
+
+                "<strong>This does NOT mean the payment is definitely a scam.</strong> " +
+                "We're simply giving you a heads-up so you can double-check " +
+                "before sending the money.";
+
+        }
+
+
+        /* =================================
+           SIGNALS
+        ================================= */
+
+        const signals = [];
+
+
+        /* Amount */
+
+        if (amountScore > 0) {
+
+            signals.push({
+
+                name:
+                    "The amount looks different from usual",
+
+                score:
+                    amountScore,
+
+                max:
+                    20
+
+            });
+
+        }
+
+        else {
+
+            signals.push({
+
+                name:
+                    "The amount looks normal",
+
+                score:
+                    0,
+
+                max:
+                    20
+
+            });
+
+        }
+
+
+        /* Beneficiary */
+
+        if (beneficiaryScore > 0) {
+
+            signals.push({
+
+                name:
+                    "This is a recipient you haven't paid before",
+
+                score:
+                    beneficiaryScore,
+
+                max:
+                    15
+
+            });
+
+        }
+
+        else {
+
+            signals.push({
+
+                name:
+                    "You have paid this recipient before",
+
+                score:
+                    0,
+
+                max:
+                    15
+
+            });
+
+        }
+
+
+        /* Urgency */
+
+        if (urgencyScore > 0) {
+
+            signals.push({
+
+                name:
+                    "The message is pushing you to act quickly",
+
+                score:
+                    urgencyScore,
+
+                max:
+                    20
+
+            });
+
+        }
+
+        else {
+
+            signals.push({
+
+                name:
+                    "No obvious urgency in the message",
+
+                score:
+                    0,
+
+                max:
+                    20
+
+            });
+
+        }
+
+
+        /* Scam language */
+
+        if (scamScore > 0) {
+
+            signals.push({
+
+                name:
+                    "Some wording looks similar to common scam messages",
+
+                score:
+                    scamScore,
+
+                max:
+                    25
+
+            });
+
+        }
+
+        else {
+
+            signals.push({
+
+                name:
+                    "The message doesn't show obvious scam-style wording",
+
+                score:
+                    0,
+
+                max:
+                    25
+
+            });
+
+        }
+
+
+        /* Velocity */
+
+        if (velocityScore > 0) {
+
+            signals.push({
+
+                name:
+                    "The payment feels more rushed than usual",
+
+                score:
+                    velocityScore,
+
+                max:
+                    10
+
+            });
+
+        }
+
+        else {
+
+            signals.push({
+
+                name:
+                    "No strong sign of rushed payment behaviour",
+
+                score:
+                    0,
+
+                max:
+                    10
+
+            });
+
+        }
+
+
+        /* Behaviour */
+
+        if (behaviourScore > 0) {
+
+            signals.push({
+
+                name:
+                    "This payment is a little outside your usual pattern",
+
+                score:
+                    behaviourScore,
+
+                max:
+                    10
+
+            });
+
+        }
+
+        else {
+
+            signals.push({
+
+                name:
+                    "The payment fits the usual behaviour pattern",
+
+                score:
+                    0,
+
+                max:
+                    10
+
+            });
+
+        }
+
+
+        /* =================================
+           RENDER SIGNALS
+        ================================= */
+
+        const signalList =
+            document.getElementById(
+                "signalList"
+            );
+
+
+        signals.forEach(signal => {
+
+            const percentage =
+                (signal.score / signal.max) * 100;
+
+
+            const div =
+                document.createElement("div");
+
+
+            div.className = "signal";
+
+
+            div.innerHTML = `
+
+                <div class="signal-head">
+
+                    <div class="signal-name">
+                        ${signal.name}
+                    </div>
+
+                    <div
+                        class="signal-status"
+                        style="color:${signal.score === 0
+                    ? "#19a66a"
+                    : "#e99512"
+                }">
+
+                        ${signal.score === 0
+                    ? "✓ Looks okay"
+                    : "Worth checking"
+                }
+
+                    </div>
+
+                </div>
+
+
+                <div class="bar">
+
+                    <div
+                        class="fill"
+                        style="
+                            width:${percentage}%;
+                            background:${signal.score === 0
+                    ? "#19a66a"
+                    : "#e99512"
+                };
+                        ">
+                    </div>
+
+                </div>
+
+            `;
+
+
+            signalList.appendChild(div);
+
+        });
+
+
+        /* =================================
+           SAVE ANALYSED TRANSACTION
+           FOR TRANSACTIONS + INSIGHTS
+        ================================= */
+
+        const status =
+            riskLevel === "HIGH"
+                ? "Blocked"
+                : riskLevel === "MEDIUM"
+                    ? "Review"
+                    : "Approved";
+
+
+        const transaction = {
+
+            id:
+                "TXN-" +
+                Date.now()
+                    .toString()
+                    .slice(-6),
+
+            timestamp:
+                new Date().toISOString(),
+
+            recipient:
+                upi,
+
+            upi:
+                upi,
+
+            amount:
+                amount,
+
+            riskScore:
+                score,
+
+            score:
+                score,
+
+            riskLevel:
+                riskLevel.toLowerCase(),
+
+            risk:
+                riskLevel.toLowerCase(),
+
+            status:
+                status,
+
+            method:
+                "UPI",
+
+            message:
+                message
+
+        };
+
+
+        try {
+
+            const existing =
+                JSON.parse(
+                    localStorage.getItem(
+                        "sentinelTransactions"
+                    )
+                ) || [];
+
+
+            existing.unshift(transaction);
+
+
+            localStorage.setItem(
+                "sentinelTransactions",
+                JSON.stringify(
+                    existing.slice(0, 100)
+                )
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Could not save Sentinel transaction",
+                error
+            );
+
+        }
+
+
+        /* =================================
+           DECISION
+        ================================= */
+
+        function cancelPayment() {
+
+            sessionStorage.setItem(
+                "sentinelDecision",
+                "cancelled"
+            );
+
+
+            sessionStorage.setItem(
+                "sentinelDecisionTime",
+                new Date().toISOString()
+            );
+
+
+            window.location.href =
+                "decision.html";
+
+        }
+
+
+        function continuePayment() {
+
+            sessionStorage.setItem(
+                "sentinelDecision",
+                "continued"
+            );
+
+
+            sessionStorage.setItem(
+                "sentinelDecisionTime",
+                new Date().toISOString()
+            );
+
+
+            window.location.href =
+                "decision.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

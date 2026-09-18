@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sentinel — Payment Decision</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f5ff;
+            color: #17172b;
+            min-height: 100vh;
+        }
+
+        /* ==============================
+           SIDEBAR
+        ============================== */
+
+        .sidebar {
+            width: 248px;
+            background: #ffffff;
+            border-right: 1px solid #e8e8f2;
+            padding: 28px 18px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            padding: 0 14px;
+            margin-bottom: 6px;
+            color: #17172b;
+        }
+
+        .logo span {
+            color: #635bff;
+        }
+
+        .tagline {
+            font-size: 11px;
+            color: #8b8b9f;
+            padding: 0 14px;
+            margin-bottom: 35px;
+        }
+
+        .nav-title {
+            font-size: 10px;
+            color: #9999aa;
+            padding: 0 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .nav-item {
+            display: block;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            color: #77778b;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .nav-item:hover {
+            background: #f2f1ff;
+            color: #635bff;
+        }
+
+        .nav-item.active {
+            background: #eeecff;
+            color: #635bff;
+        }
+
+        .simulation {
+            position: absolute;
+            bottom: 25px;
+            left: 18px;
+            right: 18px;
+            background: #f6f6fb;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #88889b;
+        }
+
+        .simulation strong {
+            display: block;
+            color: #19a66a;
+            margin-bottom: 5px;
+        }
+
+
+        /* ==============================
+           MAIN
+        ============================== */
+
+        .main {
+            margin-left: 248px;
+            width: calc(100% - 248px);
+            padding: 34px 48px;
+            max-width: 1500px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .back {
+            color: #66667c;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .back:hover {
+            color: #635bff;
+        }
+
+        .badge {
+            background: #e9e7ff;
+            color: #635bff;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #77778a;
+            margin-bottom: 30px;
+        }
+
+
+        /* ==============================
+           DECISION CARD
+        ============================== */
+
+        .decision-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid #ebeafd;
+            box-shadow: 0 12px 40px rgba(40, 35, 90, 0.08);
+            max-width: 850px;
+        }
+
+        .decision-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 18px;
+            background: #eeecff;
+            color: #635bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .decision-title {
+            font-size: 25px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .decision-message {
+            color: #68687b;
+            line-height: 1.7;
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+
+
+        /* ==============================
+           PAYMENT SUMMARY
+        ============================== */
+
+        .payment-summary {
+            background: #f8f8ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 11px 0;
+            border-bottom: 1px solid #e8e8f2;
+            font-size: 14px;
+        }
+
+        .payment-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #85859a;
+        }
+
+        .value {
+            font-weight: 700;
+        }
+
+
+        /* ==============================
+           RESULT
+        ============================== */
+
+        .result {
+            padding: 18px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            border: 1px solid #e7e7ef;
+        }
+
+        .result-title {
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .result-text {
+            font-size: 13px;
+            color: #737388;
+            line-height: 1.6;
+        }
+
+        .result.continued {
+            background: #eefbf5;
+            border-color: #cdeedd;
+        }
+
+        .result.continued .result-title {
+            color: #168457;
+        }
+
+        .result.cancelled {
+            background: #fff5f4;
+            border-color: #f2d8d5;
+        }
+
+        .result.cancelled .result-title {
+            color: #d45b50;
+        }
+
+
+        /* ==============================
+           BUTTONS
+        ============================== */
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        .button-link {
+            border: none;
+            border-radius: 11px;
+            padding: 13px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .primary {
+            background: #635bff;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #5149e8;
+        }
+
+        .secondary {
+            background: #f1f1f7;
+            color: #39394c;
+        }
+
+        .secondary:hover {
+            background: #e5e5ee;
+        }
+
+
+        /* ==============================
+           NOTE
+        ============================== */
+
+        .note {
+            margin-top: 18px;
+            color: #85859a;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media(max-width: 900px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+                width: calc(100% - 210px);
+                padding: 25px;
+            }
+        }
+
+        @media(max-width: 650px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 20px;
+            }
+
+            .simulation {
+                position: static;
+                margin-top: 20px;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 25px 18px;
+            }
+
+            .topbar {
+                margin-bottom: 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            button,
+            .button-link {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ==============================
+         SIDEBAR
+    ============================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Sentinel<span>.</span>
+        </div>
+
+        <div class="tagline">
+            Payment safety before you press pay
+        </div>
+
+
+        <div class="nav-title">
+            Workspace
+        </div>
+
+
+        <a class="nav-item" href="index.html">
+            Overview
+        </a>
+
+
+        <a class="nav-item" href="payment.html">
+            Payment Simulation
+        </a>
+
+
+        <a class="nav-item" href="risk-analysis.html">
+            Risk Analysis
+        </a>
+
+
+        <a class="nav-item active" href="decision.html">
+            Decision
+        </a>
+
+
+        <a class="nav-item" href="transactions.html">
+            Transactions
+        </a>
+
+
+        <a class="nav-item" href="insights.html">
+            Risk Insights
+        </a>
+
+
+        <div class="simulation">
+
+            <strong>● Simulation Mode</strong>
+
+            Synthetic data only
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==============================
+         MAIN
+    ============================== -->
+
+    <main class="main">
+
+
+        <div class="topbar">
+
+            <div class="back" onclick="goRisk()">
+
+                ← Back to risk analysis
+
+            </div>
+
+
+            <div class="badge">
+                DECISION RECORDED
+            </div>
+
+        </div>
+
+
+        <h1>
+            Payment Decision
+        </h1>
+
+
+        <p class="subtitle">
+            Your choice has been recorded for this simulation.
+        </p>
+
+
+        <!-- ==============================
+             DECISION CARD
+        ============================== -->
+
+        <div class="decision-card">
+
+
+            <div class="decision-icon" id="decisionIcon">
+
+                ✓
+
+            </div>
+
+
+            <div class="decision-title" id="decisionTitle">
+
+                Decision recorded
+
+            </div>
+
+
+            <div class="decision-message" id="decisionMessage">
+
+                Your payment decision has been recorded.
+
+            </div>
+
+
+            <!-- PAYMENT SUMMARY -->
+
+            <div class="payment-summary">
+
+
+                <div class="payment-row">
+
+                    <span class="label">
+                        Recipient
+                    </span>
+
+                    <span class="value" id="upiDisplay">
+
+                        —
+
+                    </span>
+
+                </div>
+
+
+                <div class="payment-row">
+
+                    <span class="label">
+                        Amount
+                    </span>
+
+                    <span class="value" id="amountDisplay">
+
+                        —
+
+                    </span>
+
+                </div>
+
+
+                <div class="payment-row">
+
+                    <span class="label">
+                        Risk Score
+                    </span>
+
+                    <span class="value" id="scoreDisplay">
+
+                        —
+
+                    </span>
+
+                </div>
+
+
+                <div class="payment-row">
+
+                    <span class="label">
+                        Risk Level
+                    </span>
+
+                    <span class="value" id="riskDisplay">
+
+                        —
+
+                    </span>
+
+                </div>
+
+
+                <div class="payment-row">
+
+                    <span class="label">
+                        Decision
+                    </span>
+
+                    <span class="value" id="decisionDisplay">
+
+                        —
+
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div class="result" id="resultBox">
+
+                <div class="result-title" id="resultTitle">
+
+                    Decision status
+
+                </div>
+
+
+                <div class="result-text" id="resultText">
+
+                    —
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+
+                <a href="transactions.html" class="button-link primary">
+
+                    View Transactions
+
+                </a>
+
+
+                <a href="insights.html" class="button-link secondary">
+
+                    View Risk Insights
+
+                </a>
+
+
+                <a href="payment.html" class="button-link secondary">
+
+                    New Simulation
+
+                </a>
+
+            </div>
+
+
+            <div class="note">
+
+                Sentinel only highlights unusual payment signals.
+                The final payment decision remains with the user.
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        /* =================================
+           GET DATA
+        ================================= */
+
+        const paymentData =
+            JSON.parse(
+                sessionStorage.getItem(
+                    "sentinelPayment"
+                )
+            );
+
+
+        const decision =
+            sessionStorage.getItem(
+                "sentinelDecision"
+            );
+
+
+        const decisionTime =
+            sessionStorage.getItem(
+                "sentinelDecisionTime"
+            );
+
+
+        /*
+         * Get the most recent analysed
+         * transaction for this payment.
+         */
+
+        let transaction = null;
+
+
+        try {
+
+            const transactions =
+                JSON.parse(
+                    localStorage.getItem(
+                        "sentinelTransactions"
+                    )
+                ) || [];
+
+
+            if (
+                paymentData &&
+                transactions.length
+            ) {
+
+                transaction =
+                    transactions.find(item =>
+                        item.upi === paymentData.upi &&
+                        Number(item.amount) ===
+                        Number(paymentData.amount)
+                    );
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Could not read transactions",
+                error
+            );
+
+        }
+
+
+        /* =================================
+           DISPLAY PAYMENT
+        ================================= */
+
+        if (paymentData) {
+
+            document.getElementById(
+                "upiDisplay"
+            ).textContent =
+                paymentData.upi || "—";
+
+
+            document.getElementById(
+                "amountDisplay"
+            ).textContent =
+                "₹" +
+                Number(paymentData.amount || 0)
+                    .toLocaleString("en-IN");
+
+        }
+
+
+        /* =================================
+           DISPLAY RISK
+        ================================= */
+
+        if (transaction) {
+
+            document.getElementById(
+                "scoreDisplay"
+            ).textContent =
+                transaction.riskScore ?? "—";
+
+
+            document.getElementById(
+                "riskDisplay"
+            ).textContent =
+                transaction.riskLevel
+                    ? transaction.riskLevel.toUpperCase()
+                    : "—";
+
+        }
+
+
+        /* =================================
+           DECISION UI
+        ================================= */
+
+        const decisionIcon =
+            document.getElementById(
+                "decisionIcon"
+            );
+
+
+        const decisionTitle =
+            document.getElementById(
+                "decisionTitle"
+            );
+
+
+        const decisionMessage =
+            document.getElementById(
+                "decisionMessage"
+            );
+
+
+        const decisionDisplay =
+            document.getElementById(
+                "decisionDisplay"
+            );
+
+
+        const resultBox =
+            document.getElementById(
+                "resultBox"
+            );
+
+
+        const resultTitle =
+            document.getElementById(
+                "resultTitle"
+            );
+
+
+        const resultText =
+            document.getElementById(
+                "resultText"
+            );
+
+
+        if (decision === "continued") {
+
+            decisionIcon.textContent = "✓";
+
+
+            decisionTitle.textContent =
+                "You chose to continue";
+
+
+            decisionMessage.textContent =
+                "You've reviewed the signals and decided to continue with this payment simulation.";
+
+
+            decisionDisplay.textContent =
+                "Continued";
+
+
+            resultBox.className =
+                "result continued";
+
+
+            resultTitle.textContent =
+                "Payment continued";
+
+
+            resultText.textContent =
+                "Your decision has been recorded. In this prototype, continuing means you acknowledged the risk signals and chose to proceed.";
+
+        }
+
+
+        else if (decision === "cancelled") {
+
+            decisionIcon.textContent = "×";
+
+
+            decisionTitle.textContent =
+                "You chose to cancel";
+
+
+            decisionMessage.textContent =
+                "You've reviewed the signals and decided not to continue with this payment simulation.";
+
+
+            decisionDisplay.textContent =
+                "Cancelled";
+
+
+            resultBox.className =
+                "result cancelled";
+
+
+            resultTitle.textContent =
+                "Payment cancelled";
+
+
+            resultText.textContent =
+                "Your decision has been recorded. The simulated payment was stopped before proceeding.";
+
+        }
+
+
+        else {
+
+            decisionIcon.textContent = "•";
+
+
+            decisionTitle.textContent =
+                "No decision recorded";
+
+
+            decisionMessage.textContent =
+                "We couldn't find a decision for the current payment simulation.";
+
+
+            decisionDisplay.textContent =
+                "Not recorded";
+
+
+            resultTitle.textContent =
+                "No decision found";
+
+
+            resultText.textContent =
+                "Return to the risk analysis page and choose whether to cancel or continue.";
+
+        }
+
+
+        /* =================================
+           NAVIGATION
+        ================================= */
+
+        function goRisk() {
+
+            window.location.href =
+                "risk-analysis.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

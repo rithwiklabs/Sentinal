@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Sentinel — Payment Risk Intelligence</title>
+
+    <style>
+        /* =========================================================
+           SENTINEL — COLORFUL FINTECH THEME
+        ========================================================= */
+
+        :root {
+            --bg: #f3f5ff;
+
+            --surface: #ffffff;
+            --surface-2: #f7f8ff;
+
+            --text: #172033;
+            --text-2: #5b6478;
+            --muted: #8992a7;
+
+            --border: #e3e7f4;
+
+            --primary: #635bff;
+            --primary-dark: #5148e8;
+            --secondary: #8b5cf6;
+            --cyan: #22c7d6;
+
+            --green: #16a66a;
+            --green-soft: #e8faf2;
+
+            --orange: #e99512;
+            --orange-soft: #fff6df;
+
+            --red: #e5484d;
+            --red-soft: #fff0f0;
+
+            --shadow:
+                0 12px 35px rgba(55, 65, 120, 0.08);
+
+            --shadow-small:
+                0 3px 12px rgba(55, 65, 120, 0.05);
+
+            --radius-xl: 24px;
+            --radius-lg: 18px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+
+            --sidebar: 248px;
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                ui-sans-serif,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                radial-gradient(circle at 10% 10%,
+                    rgba(99, 91, 255, 0.06),
+                    transparent 25%),
+                radial-gradient(circle at 90% 90%,
+                    rgba(34, 199, 214, 0.05),
+                    transparent 25%),
+                var(--bg);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+
+        /* =========================================================
+           APP
+        ========================================================= */
+
+        .app {
+            min-height: 100vh;
+            display: flex;
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
+
+        .sidebar {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            width: var(--sidebar);
+
+            padding: 25px 16px;
+
+            background:
+                linear-gradient(180deg,
+                    #ffffff 0%,
+                    #f8f8ff 100%);
+
+            border-right: 1px solid var(--border);
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 50;
+        }
+
+
+        /* BRAND */
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            padding: 4px 10px;
+
+            margin-bottom: 40px;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(135deg,
+                    var(--primary),
+                    var(--secondary));
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 800;
+
+            box-shadow:
+                0 7px 18px rgba(99, 91, 255, 0.28);
+        }
+
+        .brand-name {
+            font-size: 17px;
+            font-weight: 750;
+            letter-spacing: -0.4px;
+        }
+
+        .brand-sub {
+            margin-top: 4px;
+
+            font-size: 9px;
+            color: var(--muted);
+
+            letter-spacing: .9px;
+            text-transform: uppercase;
+        }
+
+
+        /* NAV */
+
+        .nav-title {
+            padding: 0 11px;
+
+            margin-bottom: 9px;
+
+            font-size: 9px;
+            font-weight: 750;
+
+            color: var(--muted);
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-item {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border: none;
+            border-radius: 11px;
+
+            background: transparent;
+
+            color: var(--text-2);
+
+            cursor: pointer;
+
+            font-size: 12px;
+            font-weight: 550;
+
+            text-align: left;
+
+            transition:
+                background .2s ease,
+                color .2s ease,
+                transform .2s ease;
+
+            text-decoration: none;
+        }
+
+        .nav-item:visited {
+            color: var(--text-2);
+        }
+
+        .nav-item:hover {
+            background:
+                linear-gradient(90deg,
+                    #f0efff,
+                    #f8f7ff);
+
+            color: var(--primary);
+
+            transform: translateX(2px);
+
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            background:
+                linear-gradient(90deg,
+                    #eeecff,
+                    #f6f4ff);
+
+            color: var(--primary);
+
+            font-weight: 700;
+        }
+
+        .nav-item.active::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            width: 3px;
+            height: 19px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(180deg,
+                    var(--primary),
+                    var(--secondary));
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+
+        /* SIDEBAR FOOTER */
+
+        .sidebar-footer {
+            margin-top: auto;
+
+            padding: 15px;
+
+            border: 1px solid #dedfff;
+            border-radius: 14px;
+
+            background:
+                linear-gradient(145deg,
+                    #f7f5ff,
+                    #eefaff);
+        }
+
+        .environment {
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 8px;
+
+            color: #4e46b4;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .online-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+
+            box-shadow:
+                0 0 0 4px rgba(22, 166, 106, .10);
+
+            animation: pulse 2s infinite;
+        }
+
+        .sidebar-footer p {
+            color: #7c83a0;
+
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .45;
+            }
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main {
+            width:
+                calc(100% - var(--sidebar));
+
+            margin-left:
+                var(--sidebar);
+
+            padding:
+                27px 38px 55px;
+        }
+
+
+        /* =========================================================
+           TOP BAR
+        ========================================================= */
+
+        .topbar {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 26px;
+        }
+
+        .breadcrumb {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .breadcrumb strong {
+            color: var(--primary);
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .mode {
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            background:
+                rgba(255, 255, 255, .85);
+
+            border:
+                1px solid #dfe2f3;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+            font-weight: 650;
+
+            color: var(--text-2);
+
+            box-shadow:
+                var(--shadow-small);
+        }
+
+        .mode-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+        }
+
+        .avatar {
+            width: 31px;
+            height: 31px;
+
+            border-radius: 50%;
+
+            display: grid;
+            place-items: center;
+
+            background:
+                linear-gradient(135deg,
+                    #dedbff,
+                    #d7f8fa);
+
+            color: #5148c9;
+
+            font-size: 9px;
+            font-weight: 750;
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            position: relative;
+
+            min-height: 345px;
+
+            overflow: hidden;
+
+            border-radius:
+                var(--radius-xl);
+
+            padding:
+                44px 46px;
+
+            color: white;
+
+            background:
+                radial-gradient(circle at 82% 25%,
+                    rgba(255, 255, 255, .17),
+                    transparent 22%),
+                radial-gradient(circle at 70% 95%,
+                    rgba(34, 199, 214, .18),
+                    transparent 25%),
+                linear-gradient(120deg,
+                    #5148d9 0%,
+                    #675cf0 42%,
+                    #7759e8 70%,
+                    #5667df 100%);
+
+            box-shadow:
+                0 20px 45px rgba(81, 72, 217, .20);
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 380px;
+            height: 380px;
+
+            right: -150px;
+            bottom: -210px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(34, 199, 214, .12);
+
+            filter:
+                blur(15px);
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background-image:
+                linear-gradient(rgba(255, 255, 255, .055) 1px,
+                    transparent 1px),
+                linear-gradient(90deg,
+                    rgba(255, 255, 255, .055) 1px,
+                    transparent 1px);
+
+            background-size:
+                34px 34px;
+
+            mask-image:
+                linear-gradient(to right,
+                    transparent,
+                    black 50%,
+                    transparent);
+
+            animation:
+                gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+
+            from {
+                transform:
+                    translateX(0);
+            }
+
+            to {
+                transform:
+                    translateX(34px);
+            }
+        }
+
+
+        .hero-content {
+            position: relative;
+
+            z-index: 3;
+
+            max-width: 640px;
+        }
+
+
+        /* EYEBROW */
+
+        .eyebrow {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                7px 10px;
+
+            margin-bottom:
+                18px;
+
+            border-radius:
+                999px;
+
+            border:
+                1px solid rgba(255, 255, 255, .18);
+
+            background:
+                rgba(255, 255, 255, .10);
+
+            color:
+                rgba(255, 255, 255, .88);
+
+            font-size: 9px;
+
+            font-weight: 750;
+
+            letter-spacing: 1px;
+
+            text-transform:
+                uppercase;
+
+            backdrop-filter:
+                blur(8px);
+        }
+
+        .eyebrow-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #5ee7c0;
+
+            box-shadow:
+                0 0 13px rgba(94, 231, 192, .9);
+        }
+
+
+        /* TITLE */
+
+        .hero h1 {
+            max-width: 650px;
+
+            font-size:
+                clamp(37px, 4.5vw, 57px);
+
+            line-height: 1.02;
+
+            letter-spacing: -2.7px;
+
+            margin-bottom: 17px;
+        }
+
+        .hero h1 span {
+            color:
+                rgba(255, 255, 255, .67);
+        }
+
+        .hero-description {
+            max-width: 555px;
+
+            color:
+                rgba(255, 255, 255, .72);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            margin-bottom: 27px;
+        }
+
+
+        /* CTA */
+
+        .primary-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                13px 17px;
+
+            border: none;
+
+            border-radius:
+                11px;
+
+            background:
+                #ffffff;
+
+            color:
+                #4d43c4;
+
+            font-size: 12px;
+
+            font-weight: 750;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 23px rgba(25, 20, 100, .20);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .primary-btn:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 13px 30px rgba(25, 20, 100, .27);
+        }
+
+        .primary-btn:active {
+            transform:
+                translateY(0);
+        }
+
+        .arrow {
+            font-size: 16px;
+
+            transition:
+                transform .2s ease;
+        }
+
+        .primary-btn:hover .arrow {
+            transform:
+                translateX(4px);
+        }
+
+
+        /* =========================================================
+           SECURITY VISUAL
+        ========================================================= */
+
+        .security-visual {
+            position: absolute;
+
+            right: 55px;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 270px;
+            height: 270px;
+
+            z-index: 2;
+        }
+
+        .orbit {
+            position: absolute;
+
+            border:
+                1px solid rgba(255, 255, 255, .14);
+
+            border-radius: 50%;
+        }
+
+        .orbit.one {
+            inset: 0;
+
+            animation:
+                rotate 25s linear infinite;
+        }
+
+        .orbit.two {
+            inset: 36px;
+
+            animation:
+                rotateReverse 18s linear infinite;
+        }
+
+        .orbit.three {
+            inset: 72px;
+        }
+
+        @keyframes rotate {
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+        }
+
+        @keyframes rotateReverse {
+
+            to {
+                transform:
+                    rotate(-360deg);
+            }
+        }
+
+        .security-core {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            width: 82px;
+            height: 82px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 24px;
+
+            background:
+                rgba(255, 255, 255, .12);
+
+            border:
+                1px solid rgba(255, 255, 255, .20);
+
+            backdrop-filter:
+                blur(15px);
+
+            box-shadow:
+                0 0 50px rgba(255, 255, 255, .12);
+
+            font-size: 29px;
+        }
+
+        .signal {
+            position: absolute;
+
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+
+            background:
+                #d7f8fa;
+
+            box-shadow:
+                0 0 15px rgba(215, 248, 250, .8);
+
+            animation:
+                signalPulse 2.5s infinite;
+        }
+
+        @keyframes signalPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: .7;
+            }
+
+            50% {
+                transform: scale(1.35);
+                opacity: 1;
+            }
+        }
+
+        .signal.s1 {
+            top: 27px;
+            right: 62px;
+        }
+
+        .signal.s2 {
+            bottom: 35px;
+            left: 50px;
+        }
+
+        .signal.s3 {
+            top: 120px;
+            left: 3px;
+        }
+
+        .signal.s4 {
+            bottom: 11px;
+            right: 83px;
+        }
+
+
+        /* =========================================================
+           SECTIONS
+        ========================================================= */
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .section-header {
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content:
+                space-between;
+
+            margin-bottom: 13px;
+        }
+
+        .section-title {
+            font-size: 13px;
+
+            font-weight: 750;
+
+            letter-spacing: -.1px;
+        }
+
+        .section-subtitle {
+            margin-top: 4px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================================
+           STATS
+        ========================================================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 13px;
+        }
+
+        .stat {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 19px;
+
+            background:
+                rgba(255, 255, 255, .92);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-md);
+
+            box-shadow:
+                var(--shadow-small);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .stat:hover {
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                var(--shadow);
+        }
+
+        .stat::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 3px;
+
+            background:
+                linear-gradient(90deg,
+                    var(--primary),
+                    var(--cyan));
+
+            opacity: .7;
+        }
+
+        .stat::after {
+            content: "";
+
+            position: absolute;
+
+            width: 110px;
+            height: 110px;
+
+            right: -55px;
+            bottom: -60px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(circle,
+                    #f0efff,
+                    transparent 68%);
+        }
+
+        .stat-top {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+
+            font-weight: 750;
+
+            letter-spacing: .8px;
+
+            color: var(--muted);
+        }
+
+        .stat-icon {
+            width: 30px;
+            height: 30px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 9px;
+
+            background:
+                #eeecff;
+
+            color:
+                var(--primary);
+
+            font-size: 12px;
+        }
+
+        .stat-value {
+            font-size: 29px;
+
+            line-height: 1;
+
+            font-weight: 750;
+
+            letter-spacing: -1.3px;
+
+            margin-bottom: 7px;
+        }
+
+        .stat-description {
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+
+        /* =========================================================
+           ACTIVITY
+        ========================================================= */
+
+        .activity-card {
+            overflow: hidden;
+
+            background:
+                rgba(255, 255, 255, .95);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-md);
+
+            box-shadow:
+                var(--shadow-small);
+        }
+
+        .activity {
+            display: grid;
+
+            grid-template-columns:
+                1.2fr 1fr 1fr auto;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding:
+                16px 19px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            transition:
+                background .2s ease;
+        }
+
+        .activity:last-child {
+            border-bottom: none;
+        }
+
+        .activity:hover {
+            background:
+                #fafaff;
+        }
+
+        .transaction-main {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+        }
+
+        .transaction-icon {
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+
+            place-items: center;
+
+            flex-shrink: 0;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(135deg,
+                    #eeecff,
+                    #e9fbfc);
+
+            color:
+                var(--primary);
+
+            font-size: 13px;
+        }
+
+        .transaction-amount {
+            font-size: 12px;
+
+            font-weight: 750;
+        }
+
+        .transaction-sub {
+            margin-top: 3px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+        .activity-detail {
+            color: var(--text-2);
+
+            font-size: 10px;
+        }
+
+        .activity-time {
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+
+        /* =========================================================
+           RISK BADGES
+        ========================================================= */
+
+        .risk {
+            display: inline-flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-width: 73px;
+
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            letter-spacing: .4px;
+        }
+
+        .risk.low {
+            color:
+                var(--green);
+
+            background:
+                var(--green-soft);
+        }
+
+        .risk.medium {
+            color:
+                var(--orange);
+
+            background:
+                var(--orange-soft);
+        }
+
+        .risk.high {
+            color:
+                var(--red);
+
+            background:
+                var(--red-soft);
+        }
+
+
+        /* =========================================================
+           PROTOTYPE NOTE
+        ========================================================= */
+
+        .prototype-note {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-top: 17px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+        .prototype-note strong {
+            color:
+                var(--text-2);
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+            position: fixed;
+
+            bottom: 25px;
+            right: 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                12px 15px;
+
+            background:
+                #27224d;
+
+            color: white;
+
+            border-radius: 11px;
+
+            font-size: 11px;
+
+            box-shadow:
+                0 15px 35px rgba(39, 34, 77, .25);
+
+            transform:
+                translateY(20px);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition:
+                opacity .25s ease,
+                transform .25s ease;
+
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1050px) {
+
+            .security-visual {
+                opacity: .35;
+
+                right: 15px;
+            }
+        }
+
+
+        @media (max-width: 850px) {
+
+            :root {
+                --sidebar: 0px;
+            }
+
+            .sidebar {
+                position: static;
+
+                width: 100%;
+                height: auto;
+
+                padding: 15px;
+
+                border-right: none;
+
+                border-bottom:
+                    1px solid var(--border);
+            }
+
+            .app {
+                display: block;
+            }
+
+            .brand {
+                margin-bottom: 17px;
+            }
+
+            .nav-title {
+                display: none;
+            }
+
+            .nav {
+                flex-direction: row;
+
+                overflow-x: auto;
+
+                padding-bottom: 2px;
+            }
+
+            .nav-item {
+                width: auto;
+
+                white-space: nowrap;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main {
+                width: 100%;
+
+                margin-left: 0;
+
+                padding:
+                    22px 20px 45px;
+            }
+
+            .security-visual {
+                display: none;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .top-right {
+                display: none;
+            }
+
+            .hero {
+                padding:
+                    32px 25px;
+
+                min-height:
+                    330px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+
+                letter-spacing:
+                    -1.8px;
+            }
+
+            .hero-description {
+                font-size: 12px;
+            }
+
+            .stats {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .activity {
+                grid-template-columns:
+                    1fr auto;
+            }
+
+            .activity-detail,
+            .activity-time {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="app">
+
+
+        <!-- =======================================================
+             SIDEBAR
+        ======================================================== -->
+
+        <aside class="sidebar">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    S
+                </div>
+
+                <div class="brand-text">
+
+                    <div class="brand-name">
+                        Sentinel
+                    </div>
+
+                    <div class="brand-sub">
+                        Payment Intelligence
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="nav-title">
+                Workspace
+            </div>
+
+
+            <nav class="nav">
+
+                <!-- OVERVIEW -->
+                <a href="index.html" class="nav-item active" data-page="overview">
+                    <span class="nav-icon">⌂</span>
+                    <span>Overview</span>
+                </a>
+
+
+                <!-- SIMULATE PAYMENT -->
+                <a href="payment.html" class="nav-item" data-page="simulate">
+                    <span class="nav-icon">＋</span>
+                    <span>Simulate Payment</span>
+                </a>
+
+
+                <!-- TRANSACTIONS -->
+                <a href="transactions.html" class="nav-item" data-page="transactions">
+                    <span class="nav-icon">◷</span>
+                    <span>Transactions</span>
+                </a>
+
+
+                <!-- RISK INSIGHTS -->
+                <a href="insights.html" class="nav-item" data-page="insights">
+                    <span class="nav-icon">◈</span>
+                    <span>Risk Insights</span>
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-footer">
+
+                <div class="environment">
+
+                    <span class="online-dot"></span>
+
+                    Simulation environment
+
+                </div>
+
+                <p>
+                    Synthetic data only. No real money,
+                    banking credentials, or UPI transactions
+                    are processed.
+                </p>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =======================================================
+             MAIN
+        ======================================================== -->
+
+        <main class="main">
+
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+                <div class="breadcrumb">
+
+                    Workspace /
+                    <strong>Overview</strong>
+
+                </div>
+
+
+                <div class="top-right">
+
+                    <div class="mode">
+
+                        <span class="mode-dot"></span>
+
+                        Simulation Mode
+
+                    </div>
+
+
+                    <div class="avatar">
+                        FR
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =====================================================
+                 HERO
+            ====================================================== -->
+
+            <section class="hero">
+
+
+                <div class="hero-content">
+
+
+                    <div class="eyebrow">
+
+                        <span class="eyebrow-dot"></span>
+
+                        Payment Risk Intelligence
+
+                    </div>
+
+
+                    <h1>
+
+                        Stop risky payments
+
+                        <span>
+                            before they're authorised.
+                        </span>
+
+                    </h1>
+
+
+                    <p class="hero-description">
+
+                        Sentinel analyses transaction behaviour,
+                        beneficiary patterns and contextual signals
+                        to identify potential social-engineering risk
+                        before the user confirms a payment.
+
+                    </p>
+
+
+                    <button class="primary-btn" id="simulateButton">
+
+                        Simulate a Payment
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+
+                <!-- SECURITY VISUAL -->
+
+                <div class="security-visual">
+
+                    <div class="orbit one"></div>
+
+                    <div class="orbit two"></div>
+
+                    <div class="orbit three"></div>
+
+
+                    <div class="signal s1"></div>
+
+                    <div class="signal s2"></div>
+
+                    <div class="signal s3"></div>
+
+                    <div class="signal s4"></div>
+
+
+                    <div class="security-core">
+                        ◇
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =====================================================
+                 OVERVIEW
+            ====================================================== -->
+
+            <section class="section">
+
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-title">
+                            Simulation Overview
+                        </div>
+
+                        <div class="section-subtitle">
+                            Synthetic activity from this session
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stats">
+
+
+                    <!-- STAT 1 -->
+
+                    <div class="stat">
+
+                        <div class="stat-top">
+
+                            <span class="stat-label">
+                                PAYMENTS TESTED
+                            </span>
+
+                            <span class="stat-icon">
+                                ↗
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat-value" data-value="24">
+                            0
+                        </div>
+
+
+                        <div class="stat-description">
+                            Simulated transactions analysed
+                        </div>
+
+                    </div>
+
+
+                    <!-- STAT 2 -->
+
+                    <div class="stat">
+
+                        <div class="stat-top">
+
+                            <span class="stat-label">
+                                LOW / MEDIUM RISK
+                            </span>
+
+                            <span class="stat-icon">
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat-value" data-value="18">
+                            0
+                        </div>
+
+
+                        <div class="stat-description">
+                            Without high-risk signals
+                        </div>
+
+                    </div>
+
+
+                    <!-- STAT 3 -->
+
+                    <div class="stat">
+
+                        <div class="stat-top">
+
+                            <span class="stat-label">
+                                HIGH RISK
+                            </span>
+
+                            <span class="stat-icon">
+                                !
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat-value" data-value="6">
+                            0
+                        </div>
+
+
+                        <div class="stat-description">
+                            Transactions requiring attention
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 RECENT ACTIVITY
+            ====================================================== -->
+
+            <section class="section">
+
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-title">
+                            Recent Simulations
+                        </div>
+
+                        <div class="section-subtitle">
+                            Latest transactions evaluated by Sentinel
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity-card">
+
+
+                    <!-- ACTIVITY 1 -->
+
+                    <div class="activity">
+
+
+                        <div class="transaction-main">
+
+                            <div class="transaction-icon">
+                                ₹
+                            </div>
+
+                            <div>
+
+                                <div class="transaction-amount">
+                                    ₹8,000
+                                </div>
+
+                                <div class="transaction-sub">
+                                    Amount anomaly
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-detail">
+                            New beneficiary
+                        </div>
+
+
+                        <div class="activity-time">
+                            Just now
+                        </div>
+
+
+                        <div>
+
+                            <span class="risk high">
+                                HIGH RISK
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- ACTIVITY 2 -->
+
+                    <div class="activity">
+
+
+                        <div class="transaction-main">
+
+                            <div class="transaction-icon">
+                                ₹
+                            </div>
+
+                            <div>
+
+                                <div class="transaction-amount">
+                                    ₹450
+                                </div>
+
+                                <div class="transaction-sub">
+                                    Typical transaction
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-detail">
+                            Known beneficiary
+                        </div>
+
+
+                        <div class="activity-time">
+                            12 min ago
+                        </div>
+
+
+                        <div>
+
+                            <span class="risk low">
+                                LOW RISK
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- ACTIVITY 3 -->
+
+                    <div class="activity">
+
+
+                        <div class="transaction-main">
+
+                            <div class="transaction-icon">
+                                ₹
+                            </div>
+
+                            <div>
+
+                                <div class="transaction-amount">
+                                    ₹2,500
+                                </div>
+
+                                <div class="transaction-sub">
+                                    Behaviour deviation
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-detail">
+                            Existing beneficiary
+                        </div>
+
+
+                        <div class="activity-time">
+                            28 min ago
+                        </div>
+
+
+                        <div>
+
+                            <span class="risk medium">
+                                MEDIUM
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="prototype-note">
+
+                    <span>ⓘ</span>
+
+                    <span>
+
+                        <strong>Prototype:</strong>
+
+                        All transactions shown are synthetic.
+
+                    </span>
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================================
+         TOAST
+    ========================================================== -->
+
+    <div class="toast" id="toast">
+
+        <span>→</span>
+
+        Opening payment simulator...
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =========================================================
+           COUNTER ANIMATION
+        ========================================================= */
+
+        const counters =
+            document.querySelectorAll("[data-value]");
+
+
+        counters.forEach(counter => {
+
+            const target =
+                Number(counter.dataset.value);
+
+            const duration = 850;
+
+            const start =
+                performance.now();
+
+
+            function animate(time) {
+
+                const progress =
+                    Math.min(
+                        (time - start) / duration,
+                        1
+                    );
+
+
+                const eased =
+                    1 - Math.pow(1 - progress, 3);
+
+
+                counter.textContent =
+                    Math.floor(target * eased);
+
+
+                if (progress < 1) {
+
+                    requestAnimationFrame(animate);
+
+                } else {
+
+                    counter.textContent =
+                        target;
+
+                }
+
+            }
+
+
+            requestAnimationFrame(animate);
+
+        });
+
+
+        /* =========================================================
+           ACTIVE NAVIGATION
+        ========================================================== */
+
+        const navItems =
+            document.querySelectorAll(".nav-item");
+
+
+        const currentFile =
+            window.location.pathname.split("/").pop()
+            || "index.html";
+
+
+        navItems.forEach(item => {
+
+            const href =
+                item.getAttribute("href");
+
+            if (!href) return;
+
+            const linkFile =
+                href.split("/").pop();
+
+
+            if (linkFile === currentFile) {
+
+                navItems.forEach(nav =>
+                    nav.classList.remove("active")
+                );
+
+                item.classList.add("active");
+
+            }
+
+        });
+
+
+        /* =========================================================
+           SIMULATOR CTA
+        ========================================================== */
+
+        const simulateButton =
+            document.getElementById("simulateButton");
+
+        const toast =
+            document.getElementById("toast");
+
+
+        function openSimulator() {
+
+            toast.classList.add("show");
+
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "payment.html";
+
+            }, 350);
+
+        }
+
+
+        if (simulateButton) {
+
+            simulateButton.addEventListener(
+                "click",
+                openSimulator
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
