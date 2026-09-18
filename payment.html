@@ -2,1574 +2,767 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentinel — Payment Simulation</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sentinel - Payment Simulation</title>
+
 
     <style>
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        :root {
-            --bg: #f4f5ff;
-            --sidebar: #15152a;
-            --card: #ffffff;
-            --text: #1c1d35;
-            --muted: #777b98;
-
-            --purple: #635bff;
-            --purple-light: #eeecff;
-            --violet: #8b5cf6;
-            --cyan: #20bfd0;
-
-            --green: #19a66a;
-            --green-light: #e9f8f1;
-
-            --orange: #e99a16;
-            --orange-light: #fff5df;
-
-            --red: #e84b55;
-            --red-light: #ffebed;
-
-            --border: #e7e8f2;
-            --shadow: 0 15px 45px rgba(39, 36, 91, 0.08);
-        }
 
         body {
-            font-family:
-                Inter,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
         }
 
 
-        /* =========================================================
+        /* =====================================================
            SIDEBAR
-        ========================================================= */
+        ===================================================== */
 
         .sidebar {
             position: fixed;
-
             left: 0;
             top: 0;
-
-            width: 248px;
+            width: 240px;
             height: 100vh;
-
-            background:
-                linear-gradient(180deg,
-                    #ffffff 0%,
-                    #f8f8ff 100%);
-
-            color: var(--text);
-
-            padding: 25px 16px;
-
-            border-right: 1px solid var(--border);
-
-            z-index: 10;
-
-            display: flex;
-            flex-direction: column;
+            background: #111827;
+            color: white;
+            padding: 25px 15px;
         }
+
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-
-            padding: 4px 10px;
-
-            margin-bottom: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 35px;
+            padding-left: 15px;
         }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-
-            border-radius: 13px;
-
-            background:
-                linear-gradient(135deg,
-                    var(--purple),
-                    var(--violet));
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            color: white;
-
-            font-size: 17px;
-            font-weight: 800;
-
-            box-shadow:
-                0 7px 18px rgba(99, 91, 255, .28);
-        }
-
-        .logo-text {
-            font-size: 17px;
-            font-weight: 750;
-
-            letter-spacing: -.4px;
-        }
-
-        .logo-sub {
-            margin-top: 4px;
-
-            font-size: 9px;
-
-            color: var(--muted);
-
-            letter-spacing: .9px;
-
-            text-transform: uppercase;
-        }
-
-        .nav-label {
-            color: var(--muted);
-
-            font-size: 9px;
-            font-weight: 750;
-
-            letter-spacing: 1px;
-
-            padding: 0 11px 9px;
-
-            text-transform: uppercase;
-        }
-
-        .nav {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
 
         .nav-item {
-            position: relative;
-
-            padding: 11px 12px;
-
-            border-radius: 11px;
-
-            color: #5b6478;
-
-            font-size: 12px;
-            font-weight: 550;
-
-            display: flex;
-            align-items: center;
-
-            gap: 12px;
-
+            display: block;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            color: #d1d5db;
             text-decoration: none;
-
-            transition:
-                background .2s ease,
-                color .2s ease,
-                transform .2s ease;
+            transition: 0.2s;
         }
 
-        .nav-item:hover {
-            background:
-                linear-gradient(90deg,
-                    #f0efff,
-                    #f8f7ff);
 
-            color: var(--purple);
-
-            transform: translateX(2px);
-        }
-
+        .nav-item:hover,
         .nav-item.active {
-            background:
-                linear-gradient(90deg,
-                    #eeecff,
-                    #f6f4ff);
-
-            color: var(--purple);
-
-            font-weight: 700;
+            background: #1f2937;
+            color: white;
         }
 
-        .nav-item.active::before {
-            content: "";
 
-            position: absolute;
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
 
-            left: 0;
-
-            width: 3px;
-            height: 19px;
-
-            border-radius: 10px;
-
-            background:
-                linear-gradient(180deg,
-                    var(--purple),
-                    var(--violet));
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+            min-height: 100vh;
         }
 
-        .nav-icon {
-            width: 20px;
 
-            text-align: center;
-
-            font-size: 15px;
-        }
-
-        .simulation-box {
-            margin-top: auto;
-
-            padding: 15px;
-
-            border:
-                1px solid #dedfff;
-
-            border-radius: 14px;
-
-            background:
-                linear-gradient(145deg,
-                    #f7f5ff,
-                    #eefaff);
-        }
-
-        .simulation-top {
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            color: #4e46b4;
-
+        .page-title {
+            font-size: 30px;
+            font-weight: bold;
             margin-bottom: 8px;
         }
 
-        .status-dot {
-            width: 7px;
-            height: 7px;
 
-            border-radius: 50%;
-
-            background: var(--green);
-
-            box-shadow:
-                0 0 0 4px rgba(22, 166, 106, .10);
-        }
-
-        .simulation-text {
-            color: #7c83a0;
-
-            font-size: 10px;
-
-            line-height: 1.5;
+        .page-subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
         }
 
 
-        /* =========================================================
-           MAIN
-        ========================================================= */
+        /* =====================================================
+           GRID
+        ===================================================== */
 
-        .main {
-            margin-left: 248px;
-
-            min-height: 100vh;
-
-            padding:
-                27px 42px 45px;
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
         }
 
 
-        /* TOP BAR */
-
-        .topbar {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            margin-bottom: 34px;
-        }
-
-        .breadcrumb {
-            color: var(--muted);
-
-            font-size: 12px;
-        }
-
-        .breadcrumb strong {
-            color: var(--purple);
-        }
-
-        .mode {
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            padding:
-                8px 13px;
-
-            border-radius: 20px;
-
+        .card {
             background: white;
-
-            border:
-                1px solid var(--border);
-
-            font-size: 11px;
-
-            color: #565975;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
         }
 
 
-        /* HEADER */
-
-        .page-header {
-            margin-bottom: 25px;
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        .eyebrow {
-            display: inline-flex;
 
-            padding:
-                6px 10px;
+        /* =====================================================
+           FORM
+        ===================================================== */
 
-            border-radius: 7px;
-
-            background:
-                var(--purple-light);
-
-            color:
-                var(--purple);
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            letter-spacing: .7px;
-
-            text-transform:
-                uppercase;
-
-            margin-bottom: 12px;
+        .form-group {
+            margin-bottom: 18px;
         }
 
-        h1 {
-            font-size: 31px;
 
-            letter-spacing: -1px;
-
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
             margin-bottom: 7px;
         }
 
-        .subtitle {
-            color: var(--muted);
 
-            font-size: 13px;
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
         }
 
 
-        /* =========================================================
-           SCENARIOS
-        ========================================================= */
-
-        .section-title {
-            font-size: 13px;
-
-            font-weight: 700;
-
-            margin-bottom: 12px;
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #6366f1;
         }
 
-        .scenario-grid {
-            display: grid;
 
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 13px;
-
-            margin-bottom: 25px;
+        textarea {
+            resize: vertical;
+            min-height: 90px;
         }
 
-        .scenario {
-            background: white;
 
-            border:
-                1px solid var(--border);
+        /* =====================================================
+           ADVANCED CONTEXT
+        ===================================================== */
 
-            border-radius: 15px;
-
-            padding: 17px;
-
-            cursor: pointer;
-
-            transition: .2s ease;
-
-            box-shadow:
-                0 4px 15px rgba(30, 30, 70, .03);
+        .advanced {
+            margin-top: 25px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 25px;
         }
 
-        .scenario:hover {
-            transform:
-                translateY(-2px);
 
-            box-shadow:
-                var(--shadow);
-        }
-
-        .scenario.selected {
-            border:
-                2px solid var(--purple);
-
-            background:
-                #fafaff;
-
-            box-shadow:
-                0 10px 30px rgba(99, 91, 255, .12);
-        }
-
-        .scenario-head {
-            display: flex;
-
-            align-items: center;
-
-            justify-content:
-                space-between;
-
-            margin-bottom: 10px;
-        }
-
-        .scenario-icon {
-            width: 34px;
-            height: 34px;
-
-            border-radius: 10px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 16px;
-        }
-
-        .refund .scenario-icon {
-            background:
-                var(--red-light);
-        }
-
-        .urgent .scenario-icon {
-            background:
-                var(--orange-light);
-        }
-
-        .normal .scenario-icon {
-            background:
-                var(--green-light);
-        }
-
-        .scenario-tag {
-            font-size: 9px;
-
-            padding:
-                4px 7px;
-
-            border-radius: 20px;
-
-            font-weight: 700;
-        }
-
-        .refund .scenario-tag {
-            color:
-                var(--red);
-
-            background:
-                var(--red-light);
-        }
-
-        .urgent .scenario-tag {
-            color:
-                var(--orange);
-
-            background:
-                var(--orange-light);
-        }
-
-        .normal .scenario-tag {
-            color:
-                var(--green);
-
-            background:
-                var(--green-light);
-        }
-
-        .scenario h3 {
-            font-size: 13px;
-
+        .advanced-title {
+            font-size: 18px;
+            font-weight: bold;
             margin-bottom: 5px;
         }
 
-        .scenario p {
-            color: var(--muted);
 
-            font-size: 10px;
-
-            line-height: 1.5;
-        }
-
-
-        /* =========================================================
-           CONTENT
-        ========================================================= */
-
-        .content-grid {
-            display: grid;
-
-            grid-template-columns:
-                1.35fr .75fr;
-
-            gap: 20px;
-
-            align-items: start;
-        }
-
-
-        /* PAYMENT CARD */
-
-        .payment-card {
-            background: white;
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 20px;
-
-            padding: 25px;
-
-            box-shadow:
-                var(--shadow);
-        }
-
-        .card-header {
-            display: flex;
-
-            justify-content:
-                space-between;
-
-            align-items: center;
-
-            margin-bottom: 22px;
-        }
-
-        .card-header h2 {
-            font-size: 16px;
-        }
-
-        .sender-pill {
-            padding:
-                6px 10px;
-
-            border-radius: 20px;
-
-            background:
-                #f1f2f8;
-
-            color:
-                #62657e;
-
-            font-size: 10px;
-        }
-
-        .field {
-            margin-bottom: 17px;
-        }
-
-        .field label {
-            display: block;
-
-            font-size: 11px;
-
-            font-weight: 600;
-
-            margin-bottom: 7px;
-
-            color: #52556e;
-        }
-
-        .input-wrap {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-
-            left: 13px;
-            top: 50%;
-
-            transform:
-                translateY(-50%);
-
-            font-size: 14px;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-
-            border:
-                1px solid #dedfea;
-
-            border-radius: 11px;
-
-            padding:
-                13px 14px 13px 38px;
-
-            font-family: inherit;
-
+        .advanced-description {
             font-size: 13px;
-
-            color: var(--text);
-
-            outline: none;
-
-            transition: .2s;
-
-            background:
-                #fcfcff;
-        }
-
-        textarea {
-            min-height: 90px;
-
-            resize: vertical;
-
-            padding-left: 14px;
-        }
-
-        input:focus,
-        textarea:focus {
-            border-color:
-                var(--purple);
-
-            background:
-                white;
-
-            box-shadow:
-                0 0 0 3px rgba(99, 91, 255, .08);
-        }
-
-        .amount-input {
-            font-size: 22px;
-
-            font-weight: 600;
-        }
-
-        .amount-input::placeholder {
-            font-weight: 400;
-
-            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 20px;
         }
 
 
-        /* CONTEXT */
-
-        .context-label {
-            display: flex;
-
-            align-items: center;
-
-            justify-content:
-                space-between;
-        }
-
-        .context-badge {
-            font-size: 9px;
-
-            color:
-                #7c7f98;
+        .advanced-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
         }
 
 
-        /* ANALYSE BUTTON */
+        /* =====================================================
+           REFUND FIELD
+        ===================================================== */
+
+        #refundField {
+            display: none;
+        }
+
+
+        #refundField.show {
+            display: block;
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
 
         .analyse-btn {
             width: 100%;
-
-            border: none;
-
-            border-radius: 12px;
-
             padding: 14px;
-
+            margin-top: 10px;
+            background: #4f46e5;
             color: white;
-
-            background:
-                linear-gradient(135deg,
-                    var(--purple),
-                    var(--violet));
-
-            font-family: inherit;
-
-            font-size: 13px;
-
-            font-weight: 700;
-
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
             cursor: pointer;
-
-            box-shadow:
-                0 9px 22px rgba(99, 91, 255, .22);
-
-            transition: .2s;
         }
+
 
         .analyse-btn:hover {
-            transform:
-                translateY(-1px);
-
-            box-shadow:
-                0 13px 27px rgba(99, 91, 255, .28);
+            background: #4338ca;
         }
+
 
         .analyse-btn:disabled {
-            opacity: .7;
-
-            cursor: wait;
-
-            transform: none;
-        }
-
-        .button-subtext {
-            text-align: center;
-
-            font-size: 9px;
-
-            color:
-                #9699ae;
-
-            margin-top: 9px;
+            background: #9ca3af;
+            cursor: not-allowed;
         }
 
 
-        /* =========================================================
-           RIGHT PANEL
-        ========================================================= */
+        /* =====================================================
+           SCENARIOS
+        ===================================================== */
 
-        .side-column {
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 15px;
-        }
-
-        .info-card {
-            background: white;
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 17px;
-
-            padding: 19px;
-        }
-
-        .info-title {
-            font-size: 13px;
-
-            font-weight: 700;
-
-            margin-bottom: 15px;
-        }
-
-        .signal {
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            padding: 9px 0;
-
-            border-bottom:
-                1px solid #f0f0f5;
-        }
-
-        .signal:last-child {
-            border-bottom: none;
-        }
-
-        .signal-icon {
-            width: 29px;
-            height: 29px;
-
-            border-radius: 8px;
-
-            background:
-                var(--purple-light);
-
-            color:
-                var(--purple);
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 12px;
-        }
-
-        .signal-text {
-            flex: 1;
-        }
-
-        .signal-text strong {
-            display: block;
-
-            font-size: 10px;
-
-            font-weight: 600;
-        }
-
-        .signal-text span {
-            color:
-                #9295a9;
-
-            font-size: 9px;
-        }
-
-        .ready {
-            color:
-                var(--green);
-
-            font-size: 9px;
-
-            font-weight: 700;
-        }
-
-
-        /* =========================================================
-           EXPLANATION
-        ========================================================= */
-
-        .risk-note {
-            background:
-                linear-gradient(135deg,
-                    #f0efff,
-                    #f7f9ff);
-
-            border:
-                1px solid #dfddff;
-        }
-
-        .risk-note-top {
-            display: flex;
-
-            gap: 11px;
-
-            align-items: flex-start;
-        }
-
-        .shield {
-            width: 34px;
-            height: 34px;
-
-            flex-shrink: 0;
-
+        .scenario {
+            border: 1px solid #e5e7eb;
             border-radius: 10px;
-
-            background:
-                var(--purple);
-
-            color: white;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        .risk-note h3 {
-            font-size: 12px;
 
+        .scenario:hover {
+            border-color: #6366f1;
+        }
+
+
+        .scenario.selected {
+            border-color: #4f46e5;
+            background: #eef2ff;
+        }
+
+
+        .scenario-title {
+            font-weight: bold;
             margin-bottom: 5px;
         }
 
-        .risk-note p {
-            color:
-                #70738e;
 
-            font-size: 10px;
-
-            line-height: 1.55;
+        .scenario-description {
+            font-size: 13px;
+            color: #6b7280;
         }
 
 
-        /* =========================================================
-           FOOTER
-        ========================================================= */
+        /* =====================================================
+           CHECK LIST
+        ===================================================== */
 
-        .synthetic-note {
-            margin-top: 24px;
-
-            padding:
-                11px 14px;
-
-            border-radius: 10px;
-
-            background:
-                #eceef7;
-
-            color:
-                #73768d;
-
-            font-size: 9px;
-
-            text-align: center;
+        .check-list {
+            list-style: none;
         }
 
 
-        /* =========================================================
+        .check-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+
+        .check-list li:last-child {
+            border-bottom: none;
+        }
+
+
+        .check-list li::before {
+            content: "✓";
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           SYNTHETIC DATA BADGE
+        ===================================================== */
+
+        .badge {
+            display: inline-block;
+            background: #ecfdf5;
+            color: #047857;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+
+        /* =====================================================
            TOAST
-        ========================================================= */
+        ===================================================== */
 
         .toast {
             position: fixed;
-
+            right: 25px;
             bottom: 25px;
-            right: 28px;
-
-            background:
-                #1c1d35;
-
+            background: #111827;
             color: white;
-
-            padding:
-                12px 16px;
-
-            border-radius: 10px;
-
-            font-size: 11px;
-
+            padding: 14px 20px;
+            border-radius: 8px;
             opacity: 0;
-
-            transform:
-                translateY(10px);
-
+            transform: translateY(20px);
             pointer-events: none;
-
-            transition: .25s;
-
-            box-shadow:
-                0 10px 30px rgba(0, 0, 0, .18);
-
-            z-index: 100;
+            transition: 0.3s;
+            z-index: 1000;
         }
+
 
         .toast.show {
             opacity: 1;
-
-            transform:
-                translateY(0);
+            transform: translateY(0);
         }
 
 
-        /* =========================================================
+        /* =====================================================
            RESPONSIVE
-        ========================================================= */
+        ===================================================== */
 
-        @media(max-width: 1000px) {
+        @media (max-width: 900px) {
 
             .sidebar {
-                width: 190px;
+                width: 200px;
             }
 
             .main {
-                margin-left: 190px;
-
-                padding: 25px;
+                margin-left: 200px;
             }
 
-            .content-grid {
+            .grid {
                 grid-template-columns: 1fr;
             }
         }
 
 
-        @media(max-width: 750px) {
+        @media (max-width: 650px) {
 
             .sidebar {
-                display: none;
+                position: relative;
+                width: 100%;
+                height: auto;
             }
 
             .main {
                 margin-left: 0;
+                padding: 20px;
             }
 
-            .scenario-grid {
+            .advanced-grid {
                 grid-template-columns: 1fr;
             }
         }
+
     </style>
+
 </head>
 
 
 <body>
 
 
-    <!-- =========================================================
+    <!-- =====================================================
          SIDEBAR
-    ========================================================== -->
+    ====================================================== -->
 
     <aside class="sidebar">
 
         <div class="logo">
-
-            <div class="logo-icon">
-                S
-            </div>
-
-            <div>
-
-                <div class="logo-text">
-                    Sentinel
-                </div>
-
-                <div class="logo-sub">
-                    Payment Intelligence
-                </div>
-
-            </div>
-
+            Sentinel
         </div>
 
 
-        <div class="nav-label">
-            Workspace
-        </div>
+        <a
+            href="index.html"
+            class="nav-item"
+        >
+            Overview
+        </a>
 
 
-        <nav class="nav">
+        <a
+            href="payment.html"
+            class="nav-item active"
+        >
+            Payment Simulation
+        </a>
 
 
-            <a class="nav-item" href="index.html">
-
-                <span class="nav-icon">
-                    ⌂
-                </span>
-
-                Overview
-
-            </a>
+        <a
+            href="risk-analysis.html"
+            class="nav-item"
+        >
+            Risk Analysis
+        </a>
 
 
-            <a class="nav-item active" href="payment.html">
-
-                <span class="nav-icon">
-                    ＋
-                </span>
-
-                Simulate Payment
-
-            </a>
+        <a
+            href="decision.html"
+            class="nav-item"
+        >
+            Decision
+        </a>
 
 
-            <a class="nav-item" href="risk-analysis.html">
-
-                <span class="nav-icon">
-                    ◉
-                </span>
-
-                Risk Analysis
-
-            </a>
+        <a
+            href="transactions.html"
+            class="nav-item"
+        >
+            Transactions
+        </a>
 
 
-            <a class="nav-item" href="transactions.html">
-
-                <span class="nav-icon">
-                    ◷
-                </span>
-
-                Transactions
-
-            </a>
-
-
-            <a class="nav-item" href="insights.html">
-
-                <span class="nav-icon">
-                    ◌
-                </span>
-
-                Risk Insights
-
-            </a>
-
-
-        </nav>
-
-
-        <div class="simulation-box">
-
-            <div class="simulation-top">
-
-                <span class="status-dot"></span>
-
-                Sentinel Engine Online
-
-            </div>
-
-            <div class="simulation-text">
-
-                Payment risk simulation environment
-
-            </div>
-
-        </div>
-
+        <a
+            href="risk-insights.html"
+            class="nav-item"
+        >
+            Risk Insights
+        </a>
 
     </aside>
 
 
-    <!-- =========================================================
+
+    <!-- =====================================================
          MAIN
-    ========================================================== -->
+    ====================================================== -->
 
     <main class="main">
 
 
-        <div class="topbar">
-
-            <div class="breadcrumb">
-
-                Sentinel /
-                <strong>Payment Simulation</strong>
-
-            </div>
-
-
-            <div class="mode">
-
-                <span class="status-dot"></span>
-
-                Synthetic environment
-
-            </div>
-
+        <div class="badge">
+            Synthetic Simulation Mode
         </div>
 
 
-        <!-- HEADER -->
-
-        <section class="page-header">
-
-            <div class="eyebrow">
-                Step 01 · Create scenario
-            </div>
-
-            <h1>
-                Simulate a payment request
-            </h1>
-
-            <p class="subtitle">
-                Recreate the situation a user may face before authorising a payment.
-            </p>
-
-        </section>
+        <h1 class="page-title">
+            Payment Simulation
+        </h1>
 
 
-        <!-- SCENARIOS -->
-
-        <div class="section-title">
-            Choose a simulated social-engineering scenario
-        </div>
-
-
-        <div class="scenario-grid">
+        <p class="page-subtitle">
+            Simulate a UPI payment and let Sentinel analyse the
+            transaction before confirmation.
+        </p>
 
 
-            <div class="scenario refund selected" onclick="loadScenario('refund', this)">
 
-                <div class="scenario-head">
-
-                    <div class="scenario-icon">
-                        ↩
-                    </div>
-
-                    <div class="scenario-tag">
-                        HIGH-RISK CONTEXT
-                    </div>
-
-                </div>
-
-                <h3>
-                    Refund manipulation
-                </h3>
-
-                <p>
-                    A sender is pressured to return money after a claimed accidental transfer.
-                </p>
-
-            </div>
+        <div class="grid">
 
 
-            <div class="scenario urgent" onclick="loadScenario('urgent', this)">
+            <!-- =================================================
+                 PAYMENT FORM
+            ================================================== -->
 
-                <div class="scenario-head">
+            <div class="card">
 
-                    <div class="scenario-icon">
-                        !
-                    </div>
-
-                    <div class="scenario-tag">
-                        PRESSURE
-                    </div>
-
-                </div>
-
-                <h3>
-                    Urgency / threat
-                </h3>
-
-                <p>
-                    The user receives an urgent request containing pressure or consequences.
-                </p>
-
-            </div>
-
-
-            <div class="scenario normal" onclick="loadScenario('normal', this)">
-
-                <div class="scenario-head">
-
-                    <div class="scenario-icon">
-                        ✓
-                    </div>
-
-                    <div class="scenario-tag">
-                        BASELINE
-                    </div>
-
-                </div>
-
-                <h3>
-                    Normal-looking payment
-                </h3>
-
-                <p>
-                    A routine-looking transaction used as a comparison baseline.
-                </p>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- CONTENT -->
-
-        <div class="content-grid">
-
-
-            <!-- PAYMENT CARD -->
-
-            <section class="payment-card">
-
-
-                <div class="card-header">
-
-                    <h2>
-                        Payment details
-                    </h2>
-
-                    <div class="sender-pill">
-                        👤 Simulated victim / sender
-                    </div>
-
+                <div class="card-title">
+                    Enter Payment Details
                 </div>
 
 
-                <div class="field">
+                <!-- UPI -->
 
-                    <label>
+                <div class="form-group">
+
+                    <label for="upi">
                         Recipient UPI ID
                     </label>
 
-                    <div class="input-wrap">
-
-                        <span class="input-icon">
-                            ◉
-                        </span>
-
-                        <input id="upi" type="text" placeholder="example@upi">
-
-                    </div>
+                    <input
+                        type="text"
+                        id="upi"
+                        placeholder="example@upi"
+                    >
 
                 </div>
 
 
-                <div class="field">
 
-                    <label>
+                <!-- AMOUNT -->
+
+                <div class="form-group">
+
+                    <label for="amount">
                         Amount
                     </label>
 
-                    <div class="input-wrap">
-
-                        <span class="input-icon">
-                            ₹
-                        </span>
-
-                        <input id="amount" class="amount-input" type="number" placeholder="0">
-
-                    </div>
+                    <input
+                        type="number"
+                        id="amount"
+                        placeholder="Enter amount"
+                        min="1"
+                    >
 
                 </div>
 
 
-                <div class="field">
 
-                    <div class="context-label">
+                <!-- MESSAGE -->
 
-                        <label>
-                            Payment context
+                <div class="form-group">
+
+                    <label for="message">
+                        Payment Message
+                    </label>
+
+                    <textarea
+                        id="message"
+                        placeholder="Enter payment message..."
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ADVANCED TRANSACTION CONTEXT
+                ================================================== -->
+
+                <div class="advanced">
+
+                    <div class="advanced-title">
+                        Advanced Transaction Context
+                    </div>
+
+
+                    <div class="advanced-description">
+                        These synthetic signals help Sentinel detect
+                        unusual or socially engineered payments.
+                    </div>
+
+
+
+                    <div class="advanced-grid">
+
+
+                        <!-- USUAL AMOUNT -->
+
+                        <div class="form-group">
+
+                            <label for="usualAmount">
+                                Usual Payment Amount
+                            </label>
+
+                            <input
+                                type="number"
+                                id="usualAmount"
+                                placeholder="Example: 1000"
+                                min="0"
+                            >
+
+                        </div>
+
+
+
+                        <!-- RECENT PAYMENTS -->
+
+                        <div class="form-group">
+
+                            <label for="recentPayments">
+                                Payments in Last 10 Minutes
+                            </label>
+
+                            <input
+                                type="number"
+                                id="recentPayments"
+                                placeholder="Example: 2"
+                                min="0"
+                            >
+
+                        </div>
+
+
+
+                        <!-- BENEFICIARY -->
+
+                        <div class="form-group">
+
+                            <label for="beneficiaryStatus">
+                                Beneficiary History
+                            </label>
+
+                            <select
+                                id="beneficiaryStatus"
+                            >
+
+                                <option value="known">
+                                    Known beneficiary
+                                </option>
+
+                                <option
+                                    value="new"
+                                    selected
+                                >
+                                    New beneficiary
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- PREVIOUS PAYMENTS -->
+
+                        <div class="form-group">
+
+                            <label for="previousPayments">
+                                Previous Payments to Recipient
+                            </label>
+
+                            <input
+                                type="number"
+                                id="previousPayments"
+                                placeholder="Example: 5"
+                                min="0"
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- REFUND UPI -->
+
+                    <div
+                        class="form-group"
+                        id="refundField"
+                    >
+
+                        <label for="refundUpi">
+                            Refund Destination UPI ID
                         </label>
 
-                        <span class="context-badge">
-                            Scammer-provided message / context
-                        </span>
+                        <input
+                            type="text"
+                            id="refundUpi"
+                            placeholder="Different UPI ID for refund"
+                        >
 
                     </div>
-
-
-                    <textarea id="message"
-                        placeholder="Did anyone ask you to send this payment? If yes, what did they tell you? Paste the message or type here exactly"></textarea>
 
                 </div>
 
 
-                <button class="analyse-btn" id="analyseBtn" onclick="analysePayment()">
+
+                <!-- ANALYSE BUTTON -->
+
+                <button
+                    id="analyseBtn"
+                    class="analyse-btn"
+                    onclick="analysePayment()"
+                >
                     Analyse Payment Risk →
                 </button>
 
-
-                <div class="button-subtext">
-                    Sentinel checks the payment before simulated authorisation
-                </div>
+            </div>
 
 
-            </section>
+
+            <!-- =================================================
+                 RIGHT SIDE
+            ================================================== -->
+
+            <div>
 
 
-            <!-- RIGHT SIDE -->
+                <!-- =================================================
+                     SCENARIOS
+                ================================================== -->
 
-            <aside class="side-column">
+                <div class="card">
 
-
-                <div class="info-card">
-
-
-                    <div class="info-title">
-                        What Sentinel checks
+                    <div class="card-title">
+                        Quick Scenarios
                     </div>
 
 
-                    <div class="signal">
+                    <!-- REFUND -->
 
-                        <div class="signal-icon">
-                            ₹
+                    <div
+                        class="scenario refund"
+                        onclick="loadScenario('refund', this)"
+                    >
+
+                        <div class="scenario-title">
+                            🔄 Refund Scam
                         </div>
 
-                        <div class="signal-text">
-
-                            <strong>
-                                Amount anomaly
-                            </strong>
-
-                            <span>
-                                Compared with normal behaviour
-                            </span>
-
-                        </div>
-
-                        <div class="ready">
-                            READY
+                        <div class="scenario-description">
+                            Simulates a fake accidental transfer
+                            requesting money to another UPI ID.
                         </div>
 
                     </div>
 
 
-                    <div class="signal">
 
-                        <div class="signal-icon">
-                            ◉
+                    <!-- URGENT -->
+
+                    <div
+                        class="scenario urgent"
+                        onclick="loadScenario('urgent', this)"
+                    >
+
+                        <div class="scenario-title">
+                            ⚠️ Urgent Payment
                         </div>
 
-                        <div class="signal-text">
-
-                            <strong>
-                                New beneficiary
-                            </strong>
-
-                            <span>
-                                Recipient familiarity
-                            </span>
-
-                        </div>
-
-                        <div class="ready">
-                            READY
+                        <div class="scenario-description">
+                            Simulates a payment using pressure,
+                            urgency and account-blocking threats.
                         </div>
 
                     </div>
 
 
-                    <div class="signal">
 
-                        <div class="signal-icon">
-                            !
+                    <!-- NORMAL -->
+
+                    <div
+                        class="scenario normal"
+                        onclick="loadScenario('normal', this)"
+                    >
+
+                        <div class="scenario-title">
+                            ✓ Normal Payment
                         </div>
 
-                        <div class="signal-text">
-
-                            <strong>
-                                Urgency
-                            </strong>
-
-                            <span>
-                                Pressure or threat indicators
-                            </span>
-
-                        </div>
-
-                        <div class="ready">
-                            READY
-                        </div>
-
-                    </div>
-
-
-                    <div class="signal">
-
-                        <div class="signal-icon">
-                            ⌁
-                        </div>
-
-                        <div class="signal-text">
-
-                            <strong>
-                                Scam patterns
-                            </strong>
-
-                            <span>
-                                Suspicious language/context
-                            </span>
-
-                        </div>
-
-                        <div class="ready">
-                            READY
-                        </div>
-
-                    </div>
-
-
-                    <div class="signal">
-
-                        <div class="signal-icon">
-                            ↗
-                        </div>
-
-                        <div class="signal-text">
-
-                            <strong>
-                                Transaction velocity
-                            </strong>
-
-                            <span>
-                                Recent payment activity
-                            </span>
-
-                        </div>
-
-                        <div class="ready">
-                            READY
-                        </div>
-
-                    </div>
-
-
-                    <div class="signal">
-
-                        <div class="signal-icon">
-                            ◌
-                        </div>
-
-                        <div class="signal-text">
-
-                            <strong>
-                                Behaviour deviation
-                            </strong>
-
-                            <span>
-                                Change from user baseline
-                            </span>
-
-                        </div>
-
-                        <div class="ready">
-                            READY
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- RISK NOTE -->
-
-                <div class="info-card risk-note">
-
-                    <div class="risk-note-top">
-
-                        <div class="shield">
-                            ♢
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Risk ≠ fraud
-                            </h3>
-
-                            <p>
-                                Sentinel does not declare a payment fraudulent.
-                                It identifies risk signals and gives the user
-                                information before they authorise the payment.
-                            </p>
-
+                        <div class="scenario-description">
+                            Simulates a familiar, low-value payment.
                         </div>
 
                     </div>
@@ -1577,58 +770,107 @@
                 </div>
 
 
-            </aside>
 
+                <!-- =================================================
+                     WHAT SENTINEL CHECKS
+                ================================================== -->
+
+                <div
+                    class="card"
+                    style="margin-top: 25px;"
+                >
+
+                    <div class="card-title">
+                        What Sentinel Checks
+                    </div>
+
+
+                    <ul class="check-list">
+
+                        <li>
+                            Amount anomaly
+                        </li>
+
+                        <li>
+                            New beneficiary
+                        </li>
+
+                        <li>
+                            Urgency signals
+                        </li>
+
+                        <li>
+                            Refund redirection
+                        </li>
+
+                        <li>
+                            Scam language patterns
+                        </li>
+
+                        <li>
+                            Transaction velocity
+                        </li>
+
+                        <li>
+                            Behaviour deviation
+                        </li>
+
+                        <li>
+                            Combined transaction context
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
 
         </div>
-
-
-        <div class="synthetic-note">
-
-            🔒 Prototype only · All recipients, messages, amounts and behaviour are synthetic.
-            No real UPI or banking transaction is performed.
-
-        </div>
-
 
     </main>
 
 
-    <div class="toast" id="toast">
-        Analysing payment signals...
-    </div>
 
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="toast"
+        class="toast"
+    ></div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
 
     <script>
 
-        /* =========================================================
-           NAVIGATION
-        ========================================================= */
 
-        function goHome() {
-
-            window.location.href =
-                "index.html";
-
-        }
-
-
-        /* =========================================================
-           SCENARIOS
-        ========================================================= */
+        /* =====================================================
+           SCENARIO LOADER
+        ===================================================== */
 
         function loadScenario(type, element) {
 
             document
                 .querySelectorAll(".scenario")
-                .forEach(card =>
-                    card.classList.remove("selected")
-                );
+                .forEach(card => {
+
+                    card.classList.remove(
+                        "selected"
+                    );
+
+                });
 
 
             if (element) {
 
-                element.classList.add("selected");
+                element.classList.add(
+                    "selected"
+                );
 
             }
 
@@ -1642,6 +884,31 @@
             const message =
                 document.getElementById("message");
 
+            const usualAmount =
+                document.getElementById("usualAmount");
+
+            const recentPayments =
+                document.getElementById("recentPayments");
+
+            const beneficiaryStatus =
+                document.getElementById(
+                    "beneficiaryStatus"
+                );
+
+            const previousPayments =
+                document.getElementById(
+                    "previousPayments"
+                );
+
+            const refundUpi =
+                document.getElementById(
+                    "refundUpi"
+                );
+
+
+            /* =================================================
+               REFUND SCENARIO
+            ================================================== */
 
             if (type === "refund") {
 
@@ -1652,12 +919,34 @@
                     "8000";
 
                 message.value =
-                    "Hi, I accidentally transferred ₹8,000 to you. Please return the money immediately to this UPI ID.";
+                    "Hi, I accidentally transferred ₹8,000 to you. Please return the money immediately to another UPI ID.";
 
+                usualAmount.value =
+                    "1000";
+
+                recentPayments.value =
+                    "1";
+
+                beneficiaryStatus.value =
+                    "new";
+
+                previousPayments.value =
+                    "0";
+
+                refundUpi.value =
+                    "another.account@upi";
+
+                updateRefundVisibility(
+                    "refund"
+                );
             }
 
 
-            if (type === "urgent") {
+            /* =================================================
+               URGENT SCENARIO
+            ================================================== */
+
+            else if (type === "urgent") {
 
                 upi.value =
                     "service.help@upi";
@@ -1668,10 +957,32 @@
                 message.value =
                     "URGENT! Please complete this payment immediately. Your account will be blocked if you don't pay now.";
 
+                usualAmount.value =
+                    "1200";
+
+                recentPayments.value =
+                    "3";
+
+                beneficiaryStatus.value =
+                    "new";
+
+                previousPayments.value =
+                    "0";
+
+                refundUpi.value =
+                    "";
+
+                updateRefundVisibility(
+                    "urgent"
+                );
             }
 
 
-            if (type === "normal") {
+            /* =================================================
+               NORMAL SCENARIO
+            ================================================== */
+
+            else if (type === "normal") {
 
                 upi.value =
                     "rahul@upi";
@@ -1682,16 +993,70 @@
                 message.value =
                     "Dinner yesterday. Sending my share.";
 
+                usualAmount.value =
+                    "1000";
+
+                recentPayments.value =
+                    "0";
+
+                beneficiaryStatus.value =
+                    "known";
+
+                previousPayments.value =
+                    "8";
+
+                refundUpi.value =
+                    "";
+
+                updateRefundVisibility(
+                    "normal"
+                );
             }
 
         }
 
 
-        /* =========================================================
-           ANALYSE PAYMENT
-        ========================================================= */
 
-        function analysePayment() {
+        /* =====================================================
+           REFUND FIELD VISIBILITY
+        ===================================================== */
+
+        function updateRefundVisibility(type) {
+
+            const refundField =
+                document.getElementById(
+                    "refundField"
+                );
+
+
+            if (type === "refund") {
+
+                refundField.classList.add(
+                    "show"
+                );
+
+            } else {
+
+                refundField.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           ANALYSE PAYMENT
+        ===================================================== */
+
+        async function analysePayment() {
+
+
+            /* =================================================
+               GET FORM VALUES
+            ================================================= */
 
             const upi =
                 document
@@ -1714,16 +1079,168 @@
                     .trim();
 
 
-            if (!upi || !amount) {
+            const usualAmount =
+                document
+                    .getElementById("usualAmount")
+                    .value
+                    .trim();
+
+
+            const recentPayments =
+                document
+                    .getElementById("recentPayments")
+                    .value
+                    .trim();
+
+
+            const beneficiaryStatus =
+                document
+                    .getElementById(
+                        "beneficiaryStatus"
+                    )
+                    .value;
+
+
+            const previousPayments =
+                document
+                    .getElementById(
+                        "previousPayments"
+                    )
+                    .value
+                    .trim();
+
+
+            const refundUpi =
+                document
+                    .getElementById(
+                        "refundUpi"
+                    )
+                    .value
+                    .trim();
+
+
+
+            /* =================================================
+               VALIDATION
+            ================================================= */
+
+            if (!upi) {
 
                 showToast(
-                    "Please enter a recipient and amount."
+                    "Please enter a recipient UPI ID."
                 );
 
                 return;
-
             }
 
+
+            if (!amount) {
+
+                showToast(
+                    "Please enter a payment amount."
+                );
+
+                return;
+            }
+
+
+            const numericAmount =
+                Number(amount);
+
+
+            if (
+                isNaN(numericAmount) ||
+                numericAmount <= 0
+            ) {
+
+                showToast(
+                    "Please enter a valid amount."
+                );
+
+                return;
+            }
+
+
+
+            /* =================================================
+               CONVERT ADVANCED VALUES
+            ================================================= */
+
+            const numericUsualAmount =
+                Number(usualAmount) || 0;
+
+
+            const numericRecentPayments =
+                Number(recentPayments) || 0;
+
+
+            const numericPreviousPayments =
+                Number(previousPayments) || 0;
+
+
+
+            /* =================================================
+               REFUND DESTINATION CHECK
+            ================================================= */
+
+            const differentRefundUpi =
+                refundUpi !== "" &&
+                refundUpi.toLowerCase() !==
+                upi.toLowerCase();
+
+
+
+            /* =================================================
+               PAYMENT DATA
+            ================================================= */
+
+            const paymentData = {
+
+                upi:
+                    upi,
+
+                amount:
+                    numericAmount,
+
+                message:
+                    message,
+
+                usualAmount:
+                    numericUsualAmount,
+
+                recentPayments:
+                    numericRecentPayments,
+
+                beneficiaryStatus:
+                    beneficiaryStatus,
+
+                previousPayments:
+                    numericPreviousPayments,
+
+                refundUpi:
+                    refundUpi,
+
+                differentRefundUpi:
+                    Boolean(
+                        differentRefundUpi
+                    ),
+
+                createdAt:
+                    new Date().toISOString(),
+
+                scenario:
+                    detectScenario(
+                        message,
+                        refundUpi
+                    )
+
+            };
+
+
+
+            /* =================================================
+               BUTTON
+            ================================================= */
 
             const button =
                 document.getElementById(
@@ -1731,55 +1248,308 @@
                 );
 
 
-            button.innerHTML =
-                "Analysing signals...";
-
             button.disabled =
                 true;
 
 
+            button.innerHTML =
+                "Analysing signals...";
+
+
             showToast(
-                "Checking payment risk signals..."
+                "Checking payment risk..."
             );
 
 
-            /*
-                Store payment information temporarily.
 
-                Risk Analysis reads this data.
-            */
+            /* =================================================
+               SEND TO FLASK BACKEND
+            ================================================= */
 
-            const paymentData = {
-
-                upi: upi,
-
-                amount:
-                    Number(amount),
-
-                message: message
-
-            };
+            try {
 
 
-            sessionStorage.setItem(
-                "sentinelPayment",
-                JSON.stringify(paymentData)
-            );
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/api/analyze-payment",
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    upi:
+                                        upi,
+
+                                    amount:
+                                        numericAmount,
+
+                                    message:
+                                        message,
+
+                                    usualAmount:
+                                        numericUsualAmount,
+
+                                    recentPayments:
+                                        numericRecentPayments,
+
+                                    beneficiaryStatus:
+                                        beneficiaryStatus,
+
+                                    previousPayments:
+                                        numericPreviousPayments,
+
+                                    refundUpi:
+                                        refundUpi,
+
+                                    differentRefundUpi:
+                                        Boolean(
+                                            differentRefundUpi
+                                        )
+
+                                })
+
+                        }
+                    );
 
 
-            setTimeout(() => {
 
-                window.location.href =
-                    "risk-analysis.html";
+                /* =================================================
+                   READ BACKEND RESPONSE
+                ================================================= */
 
-            }, 900);
+                const result =
+                    await response.json();
+
+
+
+                /* =================================================
+                   BACKEND ERROR
+                ================================================= */
+
+                if (!response.ok) {
+
+                    console.error(
+                        "Backend error:",
+                        result
+                    );
+
+
+                    showToast(
+                        result.error ||
+                        "Risk analysis failed."
+                    );
+
+
+                    button.disabled =
+                        false;
+
+
+                    button.innerHTML =
+                        "Analyse Payment Risk →";
+
+
+                    return;
+                }
+
+
+
+                /* =================================================
+                   SAVE PAYMENT DATA
+                ================================================= */
+
+                sessionStorage.setItem(
+                    "sentinelPayment",
+                    JSON.stringify(
+                        paymentData
+                    )
+                );
+
+
+
+                /* =================================================
+                   SAVE BACKEND RISK RESULT
+                ================================================= */
+
+                sessionStorage.setItem(
+                    "sentinelRisk",
+                    JSON.stringify(
+                        result
+                    )
+                );
+
+
+
+                /* =================================================
+                   DEBUG INFORMATION
+                ================================================= */
+
+                console.log(
+                    "Payment Data:",
+                    paymentData
+                );
+
+
+                console.log(
+                    "Backend Risk Result:",
+                    result
+                );
+
+
+
+                /* =================================================
+                   SUCCESS
+                ================================================= */
+
+                showToast(
+                    "Risk analysis completed."
+                );
+
+
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            "risk-analysis.html";
+
+                    },
+                    700
+                );
+
+            }
+
+
+            /* =================================================
+               CONNECTION ERROR
+            ================================================= */
+
+            catch (error) {
+
+                console.error(
+                    "Backend connection error:",
+                    error
+                );
+
+
+                showToast(
+                    "Could not connect to Sentinel backend."
+                );
+
+
+                button.disabled =
+                    false;
+
+
+                button.innerHTML =
+                    "Analyse Payment Risk →";
+
+            }
 
         }
 
 
-        /* =========================================================
-           TOAST
-        ========================================================= */
+
+        /* =====================================================
+           SCENARIO DETECTION
+        ===================================================== */
+
+        function detectScenario(
+            message,
+            refundUpi
+        ) {
+
+            const text =
+                message.toLowerCase();
+
+
+            const refundWords = [
+
+                "refund",
+
+                "return",
+
+                "accidentally transferred",
+
+                "sent by mistake",
+
+                "money back"
+
+            ];
+
+
+            const urgencyWords = [
+
+                "urgent",
+
+                "immediately",
+
+                "now",
+
+                "blocked",
+
+                "within",
+
+                "as soon as possible"
+
+            ];
+
+
+            const hasRefund =
+                refundWords.some(
+                    word =>
+                        text.includes(word)
+                );
+
+
+            const hasUrgency =
+                urgencyWords.some(
+                    word =>
+                        text.includes(word)
+                );
+
+
+            if (
+                hasRefund &&
+                refundUpi
+            ) {
+
+                return "refund-redirection";
+
+            }
+
+
+            if (hasRefund) {
+
+                return "refund";
+
+            }
+
+
+            if (hasUrgency) {
+
+                return "urgent";
+
+            }
+
+
+            return "normal";
+
+        }
+
+
+
+        /* =====================================================
+           TOAST MESSAGE
+        ===================================================== */
 
         function showToast(text) {
 
@@ -1798,30 +1568,38 @@
             );
 
 
-            setTimeout(() => {
+            setTimeout(
+                () => {
 
-                toast.classList.remove(
-                    "show"
-                );
+                    toast.classList.remove(
+                        "show"
+                    );
 
-            }, 2300);
+                },
+                2300
+            );
 
         }
 
 
-        /* =========================================================
+
+        /* =====================================================
            DEFAULT SCENARIO
-        ========================================================= */
+        ===================================================== */
 
         window.addEventListener(
             "DOMContentLoaded",
             () => {
 
-                loadScenario(
-                    "refund",
+                const refundScenario =
                     document.querySelector(
                         ".scenario.refund"
-                    )
+                    );
+
+
+                loadScenario(
+                    "refund",
+                    refundScenario
                 );
 
             }

@@ -8,8 +8,15 @@
     <title>Sentinel — Transactions</title>
 
     <style>
+
+        /* =========================================================
+           SENTINEL THEME
+        ========================================================= */
+
         :root {
+
             --bg: #f3f5ff;
+
             --surface: #ffffff;
             --surface-2: #f7f8ff;
 
@@ -47,6 +54,11 @@
             --sidebar: 248px;
         }
 
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
         * {
             margin: 0;
             padding: 0;
@@ -58,6 +70,7 @@
         }
 
         body {
+
             font-family:
                 Inter,
                 ui-sans-serif,
@@ -67,40 +80,44 @@
                 sans-serif;
 
             background:
-                radial-gradient(circle at 10% 10%,
+                radial-gradient(
+                    circle at 10% 10%,
                     rgba(99, 91, 255, 0.06),
-                    transparent 25%),
-                radial-gradient(circle at 90% 90%,
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 90% 90%,
                     rgba(34, 199, 214, 0.05),
-                    transparent 25%),
+                    transparent 25%
+                ),
                 var(--bg);
 
             color: var(--text);
+
             min-height: 100vh;
 
             -webkit-font-smoothing: antialiased;
         }
 
-        button,
-        input,
-        select {
-            font-family: inherit;
-        }
 
-        /* =====================================================
+        /* =========================================================
            APP
-        ===================================================== */
+        ========================================================= */
 
         .app {
+
             min-height: 100vh;
+
             display: flex;
         }
 
-        /* =====================================================
+
+        /* =========================================================
            SIDEBAR
-        ===================================================== */
+        ========================================================= */
 
         .sidebar {
+
             position: fixed;
 
             top: 0;
@@ -112,44 +129,60 @@
             padding: 25px 16px;
 
             background:
-                linear-gradient(180deg,
+                linear-gradient(
+                    180deg,
                     #ffffff 0%,
-                    #f8f8ff 100%);
+                    #f8f8ff 100%
+                );
 
-            border-right: 1px solid var(--border);
+            border-right:
+                1px solid var(--border);
 
             display: flex;
+
             flex-direction: column;
 
             z-index: 50;
         }
 
+
+        /* BRAND */
+
         .brand {
+
             display: flex;
+
             align-items: center;
+
             gap: 11px;
 
             padding: 4px 10px;
+
             margin-bottom: 40px;
         }
 
         .brand-logo {
+
             width: 40px;
             height: 40px;
 
             display: grid;
+
             place-items: center;
 
             border-radius: 13px;
 
             background:
-                linear-gradient(135deg,
+                linear-gradient(
+                    135deg,
                     var(--primary),
-                    var(--secondary));
+                    var(--secondary)
+                );
 
             color: white;
 
             font-size: 16px;
+
             font-weight: 800;
 
             box-shadow:
@@ -157,48 +190,62 @@
         }
 
         .brand-name {
+
             font-size: 17px;
+
             font-weight: 750;
+
             letter-spacing: -0.4px;
         }
 
         .brand-sub {
+
             margin-top: 4px;
 
             font-size: 9px;
+
             color: var(--muted);
 
             letter-spacing: .9px;
+
             text-transform: uppercase;
         }
 
-        /* =====================================================
-           NAVIGATION
-        ===================================================== */
+
+        /* NAV */
 
         .nav-title {
+
             padding: 0 11px;
+
             margin-bottom: 9px;
 
             font-size: 9px;
+
             font-weight: 750;
 
             color: var(--muted);
 
             text-transform: uppercase;
+
             letter-spacing: 1px;
         }
 
         .nav {
+
             display: flex;
+
             flex-direction: column;
+
             gap: 5px;
         }
 
         .nav-item {
+
             position: relative;
 
             display: flex;
+
             align-items: center;
 
             gap: 12px;
@@ -206,6 +253,8 @@
             width: 100%;
 
             padding: 11px 12px;
+
+            border: none;
 
             border-radius: 11px;
 
@@ -216,34 +265,47 @@
             cursor: pointer;
 
             font-size: 12px;
+
             font-weight: 550;
 
             text-align: left;
-
-            text-decoration: none;
 
             transition:
                 background .2s ease,
                 color .2s ease,
                 transform .2s ease;
+
+            text-decoration: none;
+        }
+
+        .nav-item:visited {
+            color: var(--text-2);
         }
 
         .nav-item:hover {
+
             background:
-                linear-gradient(90deg,
+                linear-gradient(
+                    90deg,
                     #f0efff,
-                    #f8f7ff);
+                    #f8f7ff
+                );
 
             color: var(--primary);
 
             transform: translateX(2px);
+
+            text-decoration: none;
         }
 
         .nav-item.active {
+
             background:
-                linear-gradient(90deg,
+                linear-gradient(
+                    90deg,
                     #eeecff,
-                    #f6f4ff);
+                    #f6f4ff
+                );
 
             color: var(--primary);
 
@@ -251,6 +313,7 @@
         }
 
         .nav-item.active::before {
+
             content: "";
 
             position: absolute;
@@ -263,38 +326,48 @@
             border-radius: 10px;
 
             background:
-                linear-gradient(180deg,
+                linear-gradient(
+                    180deg,
                     var(--primary),
-                    var(--secondary));
+                    var(--secondary)
+                );
         }
 
         .nav-icon {
+
             width: 20px;
+
             text-align: center;
+
             font-size: 15px;
         }
 
-        /* =====================================================
-           SIDEBAR FOOTER
-        ===================================================== */
+
+        /* SIDEBAR FOOTER */
 
         .sidebar-footer {
+
             margin-top: auto;
 
             padding: 15px;
 
-            border: 1px solid #dedfff;
+            border:
+                1px solid #dedfff;
 
             border-radius: 14px;
 
             background:
-                linear-gradient(145deg,
+                linear-gradient(
+                    145deg,
                     #f7f5ff,
-                    #eefaff);
+                    #eefaff
+                );
         }
 
         .environment {
+
             display: flex;
+
             align-items: center;
 
             gap: 8px;
@@ -304,10 +377,12 @@
             color: #4e46b4;
 
             font-size: 10px;
+
             font-weight: 700;
         }
 
         .online-dot {
+
             width: 7px;
             height: 7px;
 
@@ -318,13 +393,16 @@
             box-shadow:
                 0 0 0 4px rgba(22, 166, 106, .10);
 
-            animation: pulse 2s infinite;
+            animation:
+                pulse 2s infinite;
         }
 
         .sidebar-footer p {
+
             color: #7c83a0;
 
             font-size: 10px;
+
             line-height: 1.5;
         }
 
@@ -340,48 +418,64 @@
             }
         }
 
-        /* =====================================================
+
+        /* =========================================================
            MAIN
-        ===================================================== */
+        ========================================================= */
 
         .main {
-            width: calc(100% - var(--sidebar));
 
-            margin-left: var(--sidebar);
+            width:
+                calc(100% - var(--sidebar));
 
-            padding: 27px 38px 55px;
+            margin-left:
+                var(--sidebar);
+
+            padding:
+                27px 38px 55px;
         }
 
-        /* =====================================================
-           TOP BAR
-        ===================================================== */
+
+        /* =========================================================
+           TOPBAR
+        ========================================================= */
 
         .topbar {
+
             display: flex;
 
             justify-content: space-between;
+
             align-items: center;
 
             margin-bottom: 26px;
         }
 
         .breadcrumb {
+
             font-size: 11px;
+
             color: var(--muted);
         }
 
         .breadcrumb strong {
+
             color: var(--primary);
         }
 
         .top-right {
+
             display: flex;
+
             align-items: center;
+
             gap: 10px;
         }
 
         .mode {
+
             display: flex;
+
             align-items: center;
 
             gap: 7px;
@@ -397,6 +491,7 @@
             border-radius: 999px;
 
             font-size: 10px;
+
             font-weight: 650;
 
             color: var(--text-2);
@@ -406,6 +501,7 @@
         }
 
         .mode-dot {
+
             width: 6px;
             height: 6px;
 
@@ -415,128 +511,67 @@
         }
 
         .avatar {
+
             width: 31px;
             height: 31px;
 
             border-radius: 50%;
 
             display: grid;
+
             place-items: center;
 
             background:
-                linear-gradient(135deg,
+                linear-gradient(
+                    135deg,
                     #dedbff,
-                    #d7f8fa);
+                    #d7f8fa
+                );
 
             color: #5148c9;
 
             font-size: 9px;
+
             font-weight: 750;
         }
 
-        /* =====================================================
+
+        /* =========================================================
            PAGE HEADER
-        ===================================================== */
+        ========================================================= */
 
         .page-header {
-            display: flex;
-
-            justify-content: space-between;
-            align-items: flex-end;
 
             margin-bottom: 25px;
         }
 
-        .page-eyebrow {
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            padding: 7px 10px;
-
-            margin-bottom: 12px;
-
-            border-radius: 999px;
-
-            background: #eeecff;
-
-            color: #554cc8;
-
-            font-size: 9px;
-            font-weight: 750;
-
-            letter-spacing: 1px;
-
-            text-transform: uppercase;
-        }
-
-        .page-eyebrow span {
-            width: 6px;
-            height: 6px;
-
-            border-radius: 50%;
-
-            background: var(--primary);
-        }
-
         .page-header h1 {
-            font-size: 34px;
 
-            line-height: 1.05;
+            font-size: 32px;
 
-            letter-spacing: -1.4px;
+            line-height: 1.1;
 
-            margin-bottom: 9px;
+            letter-spacing: -1.3px;
+
+            margin-bottom: 8px;
         }
 
         .page-header p {
-            color: var(--text-2);
+
+            color: var(--muted);
 
             font-size: 12px;
 
             line-height: 1.6;
         }
 
-        .export-btn {
-            display: inline-flex;
 
-            align-items: center;
-            gap: 8px;
+        /* =========================================================
+           SUMMARY CARDS
+        ========================================================= */
 
-            padding: 11px 15px;
+        .summary-grid {
 
-            border: 1px solid var(--border);
-
-            border-radius: 11px;
-
-            background: white;
-
-            color: var(--text-2);
-
-            font-size: 11px;
-            font-weight: 700;
-
-            cursor: pointer;
-
-            box-shadow: var(--shadow-small);
-
-            transition: .2s ease;
-        }
-
-        .export-btn:hover {
-            color: var(--primary);
-            border-color: #cbc8ff;
-
-            transform: translateY(-2px);
-        }
-
-        /* =====================================================
-           STAT CARDS
-        ===================================================== */
-
-        .stats {
             display: grid;
 
             grid-template-columns:
@@ -547,7 +582,8 @@
             margin-bottom: 25px;
         }
 
-        .stat-card {
+        .summary-card {
+
             position: relative;
 
             overflow: hidden;
@@ -555,7 +591,7 @@
             padding: 18px;
 
             background:
-                rgba(255, 255, 255, .94);
+                rgba(255, 255, 255, .92);
 
             border:
                 1px solid var(--border);
@@ -565,101 +601,75 @@
 
             box-shadow:
                 var(--shadow-small);
-
-            transition:
-                transform .2s ease,
-                box-shadow .2s ease;
         }
 
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow);
-        }
+        .summary-card::before {
 
-        .stat-card::before {
             content: "";
 
             position: absolute;
 
-            width: 55px;
-            height: 55px;
+            top: 0;
+            left: 0;
+            right: 0;
 
-            right: -22px;
-            top: -22px;
-
-            border-radius: 50%;
+            height: 3px;
 
             background:
-                rgba(99, 91, 255, .08);
+                linear-gradient(
+                    90deg,
+                    var(--primary),
+                    var(--cyan)
+                );
+
+            opacity: .7;
         }
 
-        .stat-label {
-            font-size: 9px;
+        .summary-label {
 
             color: var(--muted);
+
+            font-size: 9px;
 
             font-weight: 750;
 
             letter-spacing: .8px;
 
-            text-transform: uppercase;
+            margin-bottom: 9px;
         }
 
-        .stat-value {
-            margin-top: 9px;
+        .summary-value {
 
-            font-size: 27px;
+            font-size: 26px;
 
-            font-weight: 780;
+            font-weight: 750;
 
             letter-spacing: -1px;
         }
 
-        .stat-bottom {
-            margin-top: 6px;
 
-            font-size: 9px;
-
-            color: var(--text-2);
-        }
-
-        .stat-green .stat-value {
-            color: var(--green);
-        }
-
-        .stat-orange .stat-value {
-            color: var(--orange);
-        }
-
-        .stat-red .stat-value {
-            color: var(--red);
-        }
-
-        /* =====================================================
+        /* =========================================================
            TABLE CARD
-        ===================================================== */
+        ========================================================= */
 
         .table-card {
+
+            overflow: hidden;
+
             background:
-                rgba(255, 255, 255, .94);
+                rgba(255, 255, 255, .95);
 
             border:
                 1px solid var(--border);
 
             border-radius:
-                var(--radius-lg);
+                var(--radius-md);
 
             box-shadow:
                 var(--shadow-small);
-
-            overflow: hidden;
         }
 
         .table-header {
-            padding: 20px 21px;
-
-            border-bottom:
-                1px solid var(--border);
 
             display: flex;
 
@@ -667,1572 +677,924 @@
 
             align-items: center;
 
-            gap: 20px;
+            padding: 18px 20px;
+
+            border-bottom:
+                1px solid var(--border);
         }
 
-        .table-title h2 {
-            font-size: 14px;
+        .table-title {
+
+            font-size: 13px;
 
             font-weight: 750;
         }
 
-        .table-title p {
+        .table-subtitle {
+
             margin-top: 4px;
 
             color: var(--muted);
 
-            font-size: 10px;
+            font-size: 9px;
         }
 
-        /* =====================================================
-           FILTERS
-        ===================================================== */
+        .refresh-btn {
 
-        .filters {
-            display: flex;
+            border: 1px solid var(--border);
 
-            align-items: center;
+            background: white;
 
-            gap: 8px;
-        }
+            color: var(--primary);
 
-        .search-box {
-            position: relative;
-        }
-
-        .search-box span {
-            position: absolute;
-
-            left: 11px;
-            top: 50%;
-
-            transform:
-                translateY(-50%);
-
-            color: var(--muted);
-
-            font-size: 12px;
-        }
-
-        .search-box input {
-            width: 190px;
-
-            padding:
-                9px 11px 9px 30px;
-
-            border:
-                1px solid var(--border);
+            padding: 8px 12px;
 
             border-radius: 9px;
 
-            outline: none;
-
-            background: var(--surface-2);
-
-            color: var(--text);
-
             font-size: 10px;
+
+            font-weight: 700;
+
+            cursor: pointer;
 
             transition: .2s ease;
         }
 
-        .search-box input:focus {
-            border-color: #aaa5ff;
+        .refresh-btn:hover {
 
-            background: white;
+            background: #f4f2ff;
 
-            box-shadow:
-                0 0 0 3px rgba(99, 91, 255, .08);
+            transform: translateY(-1px);
         }
 
-        .filter-select {
-            padding:
-                9px 11px;
 
-            border:
-                1px solid var(--border);
-
-            border-radius: 9px;
-
-            outline: none;
-
-            background: white;
-
-            color: var(--text-2);
-
-            font-size: 10px;
-
-            cursor: pointer;
-        }
-
-        /* =====================================================
+        /* =========================================================
            TABLE
-        ===================================================== */
+        ========================================================= */
 
         .table-wrapper {
-            width: 100%;
 
             overflow-x: auto;
         }
 
         table {
+
             width: 100%;
 
+            min-width: 950px;
+
             border-collapse: collapse;
-
-            min-width: 850px;
-        }
-
-        thead {
-            background:
-                #fafaff;
         }
 
         th {
-            padding:
-                12px 17px;
 
-            text-align: left;
+            padding:
+                13px 18px;
+
+            background:
+                #fafaff;
+
+            color: var(--muted);
 
             font-size: 9px;
 
             font-weight: 750;
 
-            color: var(--muted);
+            letter-spacing: .6px;
 
-            letter-spacing: .7px;
+            text-align: left;
 
             text-transform: uppercase;
 
             border-bottom:
                 1px solid var(--border);
-
-            white-space: nowrap;
         }
 
         td {
-            padding:
-                15px 17px;
 
-            border-bottom:
-                1px solid #eef0f7;
+            padding:
+                15px 18px;
 
             font-size: 10px;
 
-            color: var(--text-2);
+            border-bottom:
+                1px solid var(--border);
 
-            white-space: nowrap;
+            color: var(--text-2);
         }
 
         tbody tr {
-            transition: .15s ease;
+
+            transition:
+                background .2s ease;
         }
 
         tbody tr:hover {
+
             background:
                 #fafaff;
         }
 
         tbody tr:last-child td {
+
             border-bottom: none;
         }
 
-        .transaction-id {
+
+        /* =========================================================
+           UPI
+        ========================================================= */
+
+        .upi {
+
             color: var(--text);
 
-            font-weight: 750;
+            font-weight: 700;
         }
 
-        .date {
-            color: var(--muted);
-        }
+
+        /* =========================================================
+           AMOUNT
+        ========================================================= */
 
         .amount {
+
             color: var(--text);
 
             font-weight: 750;
         }
 
-        .recipient {
-            color: var(--text-2);
-        }
 
-        /* =====================================================
+        /* =========================================================
            RISK BADGES
-        ===================================================== */
+        ========================================================= */
 
-        .risk-badge {
+        .risk {
+
             display: inline-flex;
+
+            justify-content: center;
 
             align-items: center;
 
-            gap: 5px;
+            min-width: 70px;
 
-            padding:
-                5px 8px;
+            padding: 6px 9px;
 
-            border-radius: 999px;
+            border-radius: 7px;
 
-            font-size: 9px;
+            font-size: 8px;
 
-            font-weight: 750;
+            font-weight: 800;
+
+            letter-spacing: .4px;
         }
 
-        .risk-dot {
-            width: 5px;
-            height: 5px;
+        .risk.low {
 
-            border-radius: 50%;
-        }
-
-        .risk-low {
-            color: var(--green);
+            color:
+                var(--green);
 
             background:
                 var(--green-soft);
         }
 
-        .risk-low .risk-dot {
-            background: var(--green);
-        }
+        .risk.medium {
 
-        .risk-medium {
-            color: var(--orange);
+            color:
+                var(--orange);
 
             background:
                 var(--orange-soft);
         }
 
-        .risk-medium .risk-dot {
-            background: var(--orange);
-        }
+        .risk.high {
 
-        .risk-high {
-            color: var(--red);
+            color:
+                var(--red);
 
             background:
                 var(--red-soft);
         }
 
-        .risk-high .risk-dot {
-            background: var(--red);
-        }
 
-        /* =====================================================
-           STATUS
-        ===================================================== */
+        /* =========================================================
+           DECISION
+        ========================================================= */
 
-        .status {
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 6px;
-
-            font-size: 9px;
-
-            font-weight: 700;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-
-            border-radius: 50%;
-        }
-
-        .status-approved {
-            color: var(--green);
-        }
-
-        .status-approved .status-dot {
-            background: var(--green);
-        }
-
-        .status-review {
-            color: var(--orange);
-        }
-
-        .status-review .status-dot {
-            background: var(--orange);
-        }
-
-        .status-blocked {
-            color: var(--red);
-        }
-
-        .status-blocked .status-dot {
-            background: var(--red);
-        }
-
-        /* =====================================================
-           SCORE
-        ===================================================== */
-
-        .score {
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-        }
-
-        .score-number {
-            width: 29px;
-            height: 29px;
-
-            display: grid;
-
-            place-items: center;
-
-            border-radius: 8px;
-
-            font-size: 9px;
-
-            font-weight: 800;
-        }
-
-        .score-low {
-            background: var(--green-soft);
-            color: var(--green);
-        }
-
-        .score-medium {
-            background: var(--orange-soft);
-            color: var(--orange);
-        }
-
-        .score-high {
-            background: var(--red-soft);
-            color: var(--red);
-        }
-
-        /* =====================================================
-           VIEW BUTTON
-        ===================================================== */
-
-        .view-btn {
-            border: none;
-
-            background:
-                #f0efff;
-
-            color:
-                var(--primary);
-
-            padding:
-                7px 10px;
-
-            border-radius:
-                8px;
+        .decision {
 
             font-size: 9px;
 
             font-weight: 750;
 
-            cursor: pointer;
-
-            transition: .2s ease;
+            text-transform: capitalize;
         }
 
-        .view-btn:hover {
-            background:
-                var(--primary);
+        .decision.cancelled {
 
-            color: white;
+            color:
+                var(--red);
         }
 
-        /* =====================================================
-           EMPTY STATE
-        ===================================================== */
+        .decision.continued {
 
-        .empty-state {
-            display: none;
+            color:
+                var(--green);
+        }
+
+
+        /* =========================================================
+           EMPTY / LOADING / ERROR
+        ========================================================= */
+
+        .message {
+
+            padding: 50px 20px;
 
             text-align: center;
 
-            padding: 55px 20px;
-        }
-
-        .empty-icon {
-            width: 50px;
-            height: 50px;
-
-            margin:
-                0 auto 14px;
-
-            display: grid;
-
-            place-items: center;
-
-            border-radius: 15px;
-
-            background:
-                #eeecff;
-
-            color:
-                var(--primary);
-
-            font-size: 20px;
-        }
-
-        .empty-state h3 {
-            font-size: 13px;
-        }
-
-        .empty-state p {
-            margin-top: 5px;
-
             color: var(--muted);
-
-            font-size: 10px;
-        }
-
-        /* =====================================================
-           MODAL
-        ===================================================== */
-
-        .modal-overlay {
-            position: fixed;
-
-            inset: 0;
-
-            display: none;
-
-            align-items: center;
-            justify-content: center;
-
-            background:
-                rgba(23, 32, 51, .35);
-
-            backdrop-filter:
-                blur(5px);
-
-            z-index: 100;
-        }
-
-        .modal-overlay.show {
-            display: flex;
-        }
-
-        .modal {
-            width: min(500px, 92%);
-
-            background: white;
-
-            border-radius:
-                var(--radius-lg);
-
-            box-shadow:
-                0 25px 70px rgba(20, 25, 70, .20);
-
-            overflow: hidden;
-
-            animation:
-                modalIn .25s ease;
-        }
-
-        @keyframes modalIn {
-
-            from {
-                opacity: 0;
-                transform: translateY(10px) scale(.98);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .modal-top {
-            padding: 19px 21px;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            border-bottom:
-                1px solid var(--border);
-        }
-
-        .modal-top h3 {
-            font-size: 14px;
-        }
-
-        .close-btn {
-            width: 29px;
-            height: 29px;
-
-            border: none;
-
-            border-radius: 8px;
-
-            background:
-                var(--surface-2);
-
-            color:
-                var(--text-2);
-
-            cursor: pointer;
-
-            font-size: 15px;
-        }
-
-        .modal-body {
-            padding: 21px;
-        }
-
-        .modal-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 13px;
-        }
-
-        .detail {
-            padding: 13px;
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 11px;
-
-            background:
-                #fafaff;
-        }
-
-        .detail-label {
-            font-size: 8px;
-
-            color: var(--muted);
-
-            font-weight: 750;
-
-            text-transform: uppercase;
-
-            letter-spacing: .7px;
-        }
-
-        .detail-value {
-            margin-top: 5px;
 
             font-size: 11px;
-
-            color: var(--text);
-
-            font-weight: 700;
         }
 
-        /* =====================================================
+        .error-message {
+
+            color: var(--red);
+        }
+
+
+        /* =========================================================
            RESPONSIVE
-        ===================================================== */
+        ========================================================= */
 
         @media (max-width: 1050px) {
 
-            .stats {
+            .summary-grid {
+
                 grid-template-columns:
                     repeat(2, 1fr);
             }
-
-            .table-header {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .filters {
-                width: 100%;
-            }
         }
 
-        @media (max-width: 750px) {
+
+        @media (max-width: 850px) {
 
             :root {
-                --sidebar: 205px;
+                --sidebar: 0px;
             }
-
-            .main {
-                padding:
-                    22px 20px 40px;
-            }
-
-            .page-header {
-                align-items: flex-start;
-
-                flex-direction: column;
-
-                gap: 15px;
-            }
-
-            .filters {
-                flex-wrap: wrap;
-            }
-
-            .search-box input {
-                width: 160px;
-            }
-        }
-
-        @media (max-width: 560px) {
 
             .sidebar {
-                width: 70px;
 
-                padding:
-                    20px 8px;
+                position: static;
+
+                width: 100%;
+
+                height: auto;
+
+                padding: 15px;
+
+                border-right: none;
+
+                border-bottom:
+                    1px solid var(--border);
             }
 
-            :root {
-                --sidebar: 70px;
+            .app {
+
+                display: block;
             }
 
             .brand {
-                justify-content: center;
-                padding: 0;
+
+                margin-bottom: 17px;
             }
 
-            .brand-name,
-            .brand-sub,
-            .nav-title,
-            .sidebar-footer {
+            .nav-title {
+
                 display: none;
+            }
+
+            .nav {
+
+                flex-direction: row;
+
+                overflow-x: auto;
+
+                padding-bottom: 2px;
             }
 
             .nav-item {
-                justify-content: center;
-                padding: 12px 5px;
-            }
 
-            .nav-icon {
                 width: auto;
+
+                white-space: nowrap;
             }
 
-            .main {
-                width:
-                    calc(100% - 70px);
+            .sidebar-footer {
 
-                margin-left: 70px;
-
-                padding:
-                    20px 14px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .top-right .mode {
                 display: none;
             }
 
+            .main {
+
+                width: 100%;
+
+                margin-left: 0;
+
+                padding:
+                    22px 20px 45px;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .top-right {
+
+                display: none;
+            }
+
+            .summary-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
             .page-header h1 {
+
                 font-size: 28px;
             }
 
-            .modal-grid {
-                grid-template-columns: 1fr;
+            .table-header {
+
+                align-items: flex-start;
+
+                gap: 12px;
             }
         }
+
     </style>
 </head>
 
 
 <body>
 
-    <div class="app">
+<div class="app">
 
-        <!-- ==============================
-             SIDEBAR
-        ============================== -->
 
-        <aside class="sidebar">
+    <!-- =======================================================
+         SIDEBAR
+    ======================================================== -->
 
-            <div class="brand">
+    <aside class="sidebar">
 
-                <div class="brand-logo">
-                    S
-                </div>
+        <div class="brand">
 
-                <div>
-                    <div class="brand-name">
-                        Sentinel
-                    </div>
-
-                    <div class="brand-sub">
-                        Payment Intelligence
-                    </div>
-                </div>
-
+            <div class="brand-logo">
+                S
             </div>
 
+            <div class="brand-text">
 
-            <div class="nav-title">
-                Workspace
-            </div>
-
-
-            <nav class="nav">
-
-                <a class="nav-item" href="index.html">
-                    <span class="nav-icon">⌂</span>
-                    Overview
-                </a>
-
-
-                <a class="nav-item" href="payment.html">
-                    <span class="nav-icon">＋</span>
-                    Simulate Payment
-                </a>
-
-
-                <a class="nav-item" href="risk-analysis.html">
-                    <span class="nav-icon">◈</span>
-                    Risk Analysis
-                </a>
-
-
-                <a class="nav-item" href="decision.html">
-                    <span class="nav-icon">✓</span>
-                    Decision
-                </a>
-
-
-                <a class="nav-item active" href="transactions.html">
-                    <span class="nav-icon">◷</span>
-                    Transactions
-                </a>
-
-
-                <a class="nav-item" href="insights.html">
-                    <span class="nav-icon">⌁</span>
-                    Risk Insights
-                </a>
-
-            </nav>
-
-
-            <div class="sidebar-footer">
-
-                <div class="environment">
-
-                    <span class="online-dot"></span>
-
-                    Sentinel Engine Online
-
-                </div>
-
-                <p>
-                    Risk analysis environment is ready
-                    for payment simulation.
-                </p>
-
-            </div>
-
-        </aside>
-
-
-        <!-- ==============================
-             MAIN
-        ============================== -->
-
-        <main class="main">
-
-            <div class="topbar">
-
-                <div class="breadcrumb">
+                <div class="brand-name">
                     Sentinel
-                    <span> / </span>
-                    <strong>Transactions</strong>
                 </div>
 
-
-                <div class="top-right">
-
-                    <div class="mode">
-                        <span class="mode-dot"></span>
-                        Demo Environment
-                    </div>
-
-                    <div class="avatar">
-                        SB
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- PAGE HEADER -->
-
-            <section class="page-header">
-
-                <div>
-
-                    <div class="page-eyebrow">
-                        <span></span>
-                        Payment Activity
-                    </div>
-
-                    <h1>
-                        Transactions
-                    </h1>
-
-                    <p>
-                        Review analyzed payments and their
-                        corresponding risk assessments.
-                    </p>
-
-                </div>
-
-
-                <button class="export-btn" id="exportBtn">
-
-                    ↓
-                    Export CSV
-
-                </button>
-
-            </section>
-
-
-            <!-- ==============================
-                 STATISTICS
-            ============================== -->
-
-            <section class="stats">
-
-                <div class="stat-card">
-
-                    <div class="stat-label">
-                        Total Transactions
-                    </div>
-
-                    <div class="stat-value" id="totalCount">
-
-                        0
-
-                    </div>
-
-                    <div class="stat-bottom">
-                        Analyzed payments
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card stat-green">
-
-                    <div class="stat-label">
-                        Low Risk
-                    </div>
-
-                    <div class="stat-value" id="lowCount">
-
-                        0
-
-                    </div>
-
-                    <div class="stat-bottom">
-                        Low-risk transactions
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card stat-orange">
-
-                    <div class="stat-label">
-                        Medium Risk
-                    </div>
-
-                    <div class="stat-value" id="mediumCount">
-
-                        0
-
-                    </div>
-
-                    <div class="stat-bottom">
-                        Requires review
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card stat-red">
-
-                    <div class="stat-label">
-                        High Risk
-                    </div>
-
-                    <div class="stat-value" id="highCount">
-
-                        0
-
-                    </div>
-
-                    <div class="stat-bottom">
-                        Potentially risky
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ==============================
-                 TRANSACTION TABLE
-            ============================== -->
-
-            <section class="table-card">
-
-                <div class="table-header">
-
-                    <div class="table-title">
-
-                        <h2>
-                            Transaction History
-                        </h2>
-
-                        <p>
-                            Recently analyzed payment activity
-                        </p>
-
-                    </div>
-
-
-                    <div class="filters">
-
-                        <div class="search-box">
-
-                            <span>⌕</span>
-
-                            <input type="text" id="searchInput" placeholder="Search transactions...">
-
-                        </div>
-
-
-                        <select class="filter-select" id="riskFilter">
-
-                            <option value="all">
-                                All Risk Levels
-                            </option>
-
-                            <option value="low">
-                                Low Risk
-                            </option>
-
-                            <option value="medium">
-                                Medium Risk
-                            </option>
-
-                            <option value="high">
-                                High Risk
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <div class="table-wrapper">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    Transaction
-                                </th>
-
-                                <th>
-                                    Date & Time
-                                </th>
-
-                                <th>
-                                    Recipient
-                                </th>
-
-                                <th>
-                                    Amount
-                                </th>
-
-                                <th>
-                                    Risk Score
-                                </th>
-
-                                <th>
-                                    Risk Level
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                                <th>
-                                    Action
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody id="transactionBody">
-                        </tbody>
-
-                    </table>
-
-
-                    <div class="empty-state" id="emptyState">
-
-                        <div class="empty-icon">
-                            ◷
-                        </div>
-
-                        <h3>
-                            No transactions found
-                        </h3>
-
-                        <p>
-                            Try changing your search or risk filter.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-        </main>
-
-    </div>
-
-
-    <!-- ==============================
-         MODAL
-    ============================== -->
-
-    <div class="modal-overlay" id="modalOverlay">
-
-        <div class="modal">
-
-            <div class="modal-top">
-
-                <h3>
-                    Transaction Details
-                </h3>
-
-                <button class="close-btn" id="closeModal">
-
-                    ×
-
-                </button>
-
-            </div>
-
-
-            <div class="modal-body">
-
-                <div class="modal-grid" id="modalDetails">
-
+                <div class="brand-sub">
+                    Payment Intelligence
                 </div>
 
             </div>
 
         </div>
 
-    </div>
-
-
-    <script>
-
-        /* =====================================================
-           SAMPLE TRANSACTIONS
-        ===================================================== */
-
-        const sampleTransactions = [
-
-            {
-                id: "TXN-1048",
-                date: "18 Sep 2026, 10:42 AM",
-                recipient: "Rahul Stores",
-                amount: 1500,
-                score: 12,
-                risk: "low",
-                status: "Approved",
-                method: "UPI",
-                location: "Hyderabad"
-            },
-
-            {
-                id: "TXN-1047",
-                date: "18 Sep 2026, 09:31 AM",
-                recipient: "QuickPay Services",
-                amount: 8500,
-                score: 48,
-                risk: "medium",
-                status: "Review",
-                method: "UPI",
-                location: "Hyderabad"
-            },
-
-            {
-                id: "TXN-1046",
-                date: "17 Sep 2026, 08:16 PM",
-                recipient: "Unknown Beneficiary",
-                amount: 25000,
-                score: 82,
-                risk: "high",
-                status: "Blocked",
-                method: "UPI",
-                location: "Mumbai"
-            },
-
-            {
-                id: "TXN-1045",
-                date: "17 Sep 2026, 04:52 PM",
-                recipient: "Amazon Pay",
-                amount: 3200,
-                score: 21,
-                risk: "low",
-                status: "Approved",
-                method: "Card",
-                location: "Hyderabad"
-            },
-
-            {
-                id: "TXN-1044",
-                date: "17 Sep 2026, 01:24 PM",
-                recipient: "New Beneficiary",
-                amount: 12000,
-                score: 67,
-                risk: "high",
-                status: "Blocked",
-                method: "UPI",
-                location: "Delhi"
-            },
-
-            {
-                id: "TXN-1043",
-                date: "16 Sep 2026, 07:45 PM",
-                recipient: "FoodHub",
-                amount: 950,
-                score: 9,
-                risk: "low",
-                status: "Approved",
-                method: "UPI",
-                location: "Hyderabad"
-            },
-
-            {
-                id: "TXN-1042",
-                date: "16 Sep 2026, 11:15 AM",
-                recipient: "Unknown Merchant",
-                amount: 6800,
-                score: 52,
-                risk: "medium",
-                status: "Review",
-                method: "Card",
-                location: "Bengaluru"
-            }
-
-        ];
-
-
-        /* =====================================================
-           LOAD SAVED TRANSACTIONS
-        ===================================================== */
 
-        function loadTransactions() {
+        <div class="nav-title">
+            Workspace
+        </div>
 
-            let saved = [];
 
-            try {
+        <nav class="nav">
 
-                saved =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "sentinelTransactions"
-                        )
-                    ) || [];
+            <a
+                href="index.html"
+                class="nav-item"
+                data-page="overview"
+            >
+                <span class="nav-icon">⌂</span>
+                <span>Overview</span>
+            </a>
 
-            }
 
-            catch (error) {
+            <a
+                href="payment.html"
+                class="nav-item"
+                data-page="simulate"
+            >
+                <span class="nav-icon">＋</span>
+                <span>Simulate Payment</span>
+            </a>
 
-                saved = [];
 
-            }
+            <a
+                href="transactions.html"
+                class="nav-item"
+                data-page="transactions"
+            >
+                <span class="nav-icon">◷</span>
+                <span>Transactions</span>
+            </a>
 
 
-            return [
-                ...saved,
-                ...sampleTransactions
-            ];
+            <a
+                href="insights.html"
+                class="nav-item"
+                data-page="insights"
+            >
+                <span class="nav-icon">◈</span>
+                <span>Risk Insights</span>
+            </a>
 
-        }
+        </nav>
 
 
-        let transactions =
-            loadTransactions();
+        <div class="sidebar-footer">
 
+            <div class="environment">
 
-        /* =====================================================
-           HELPERS
-        ===================================================== */
+                <span class="online-dot"></span>
 
-        function capitalize(value) {
+                Simulation environment
 
-            if (!value) {
-                return "";
-            }
+            </div>
 
-            return value.charAt(0).toUpperCase()
-                + value.slice(1);
+            <p>
 
-        }
+                Synthetic data only. No real money,
+                banking credentials, or UPI transactions
+                are processed.
 
+            </p>
 
-        function escapeHTML(value) {
+        </div>
 
-            return String(value ?? "")
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+    </aside>
 
-        }
 
+    <!-- =======================================================
+         MAIN
+    ======================================================== -->
 
-        function getTransactionDate(transaction) {
+    <main class="main">
 
-            if (transaction.date) {
-                return transaction.date;
-            }
 
-            if (transaction.timestamp) {
+        <!-- TOPBAR -->
 
-                const date =
-                    new Date(transaction.timestamp);
+        <header class="topbar">
 
-                return date.toLocaleString(
-                    "en-IN",
-                    {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
-                );
+            <div class="breadcrumb">
 
-            }
+                Workspace /
 
-            return "—";
+                <strong>
+                    Transactions
+                </strong>
 
-        }
+            </div>
 
 
-        /* =====================================================
-           NORMALIZE SAVED TRANSACTIONS
-        ===================================================== */
+            <div class="top-right">
 
-        transactions =
-            transactions.map(transaction => {
+                <div class="mode">
 
-                const risk =
-                    String(
-                        transaction.risk ||
-                        transaction.riskLevel ||
-                        "low"
-                    ).toLowerCase();
+                    <span class="mode-dot"></span>
 
+                    Simulation Mode
 
-                return {
+                </div>
 
-                    ...transaction,
 
-                    id:
-                        transaction.id ||
-                        "TXN-" +
-                        Date.now()
-                            .toString()
-                            .slice(-6),
+                <div class="avatar">
+                    FR
+                </div>
 
-                    date:
-                        getTransactionDate(
-                            transaction
-                        ),
+            </div>
 
-                    recipient:
-                        transaction.recipient ||
-                        transaction.upi ||
-                        "Unknown",
+        </header>
 
-                    amount:
-                        Number(
-                            transaction.amount || 0
-                        ),
 
-                    score:
-                        Number(
-                            transaction.score ??
-                            transaction.riskScore ??
-                            0
-                        ),
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
 
-                    risk:
-                        risk,
+        <section class="page-header">
 
-                    status:
-                        transaction.status ||
-                        (
-                            risk === "high"
-                                ? "Blocked"
-                                : risk === "medium"
-                                    ? "Review"
-                                    : "Approved"
-                        ),
+            <h1>
+                Transactions
+            </h1>
 
-                    method:
-                        transaction.method ||
-                        "UPI"
+            <p>
+                Review simulated payments analysed by
+                Sentinel and the decisions made after risk analysis.
+            </p>
 
-                };
+        </section>
 
-            });
 
+        <!-- =====================================================
+             SUMMARY
+        ====================================================== -->
 
-        /* =====================================================
-           UPDATE STATISTICS
-        ===================================================== */
+        <section class="summary-grid">
 
-        function updateStats() {
 
-            const total =
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    TOTAL TRANSACTIONS
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="totalTransactions"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    HIGH RISK
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="highRisk"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    CANCELLED
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="cancelled"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    CONTINUED
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="continued"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TRANSACTION TABLE
+        ====================================================== -->
+
+        <section class="table-card">
+
+
+            <div class="table-header">
+
+                <div>
+
+                    <div class="table-title">
+                        Transaction History
+                    </div>
+
+                    <div class="table-subtitle">
+                        Live data from Firebase Firestore
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="refresh-btn"
+                    id="refreshBtn"
+                >
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                UPI ID
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Risk Score
+                            </th>
+
+                            <th>
+                                Risk Level
+                            </th>
+
+                            <th>
+                                Scenario
+                            </th>
+
+                            <th>
+                                Decision
+                            </th>
+
+                            <th>
+                                Date & Time
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="transactionsBody">
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="message"
+                            >
+                                Loading transactions...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+
+<script type="module">
+
+    import {
+        getTransactions
+    } from "./js/database.js";
+
+
+    const transactionsBody =
+        document.getElementById(
+            "transactionsBody"
+        );
+
+
+    const totalTransactions =
+        document.getElementById(
+            "totalTransactions"
+        );
+
+
+    const highRisk =
+        document.getElementById(
+            "highRisk"
+        );
+
+
+    const cancelled =
+        document.getElementById(
+            "cancelled"
+        );
+
+
+    const continued =
+        document.getElementById(
+            "continued"
+        );
+
+
+    const refreshBtn =
+        document.getElementById(
+            "refreshBtn"
+        );
+
+
+    /* =========================================================
+       LOAD TRANSACTIONS
+    ========================================================== */
+
+    async function loadTransactions() {
+
+        transactionsBody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="message"
+                >
+                    Loading transactions...
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        try {
+
+            const transactions =
+                await getTransactions();
+
+
+            /* =================================================
+               SUMMARY
+            ================================================= */
+
+            totalTransactions.textContent =
                 transactions.length;
 
 
-            const low =
+            highRisk.textContent =
                 transactions.filter(
-                    item => item.risk === "low"
+                    transaction =>
+                        String(
+                            transaction.riskLevel || ""
+                        ).toUpperCase() === "HIGH"
                 ).length;
 
 
-            const medium =
+            cancelled.textContent =
                 transactions.filter(
-                    item => item.risk === "medium"
+                    transaction =>
+                        transaction.decision === "cancelled"
                 ).length;
 
 
-            const high =
+            continued.textContent =
                 transactions.filter(
-                    item => item.risk === "high"
+                    transaction =>
+                        transaction.decision === "continued"
                 ).length;
 
 
-            document.getElementById(
-                "totalCount"
-            ).textContent = total;
+            /* =================================================
+               EMPTY DATABASE
+            ================================================= */
 
+            if (
+                !transactions ||
+                transactions.length === 0
+            ) {
 
-            document.getElementById(
-                "lowCount"
-            ).textContent = low;
+                transactionsBody.innerHTML = `
 
+                    <tr>
 
-            document.getElementById(
-                "mediumCount"
-            ).textContent = medium;
+                        <td
+                            colspan="7"
+                            class="message"
+                        >
+                            No transactions found in Firebase.
 
+                        </td>
 
-            document.getElementById(
-                "highCount"
-            ).textContent = high;
+                    </tr>
 
-        }
-
-
-        /* =====================================================
-           RENDER TABLE
-        ===================================================== */
-
-        function renderTransactions() {
-
-            const body =
-                document.getElementById(
-                    "transactionBody"
-                );
-
-
-            const emptyState =
-                document.getElementById(
-                    "emptyState"
-                );
-
-
-            const search =
-                document
-                    .getElementById(
-                        "searchInput"
-                    )
-                    .value
-                    .toLowerCase()
-                    .trim();
-
-
-            const risk =
-                document
-                    .getElementById(
-                        "riskFilter"
-                    )
-                    .value;
-
-
-            const filtered =
-                transactions.filter(
-                    transaction => {
-
-                        const id =
-                            String(
-                                transaction.id
-                            ).toLowerCase();
-
-
-                        const recipient =
-                            String(
-                                transaction.recipient
-                            ).toLowerCase();
-
-
-                        const upi =
-                            String(
-                                transaction.upi || ""
-                            ).toLowerCase();
-
-
-                        const matchesSearch =
-                            id.includes(search) ||
-                            recipient.includes(search) ||
-                            upi.includes(search);
-
-
-                        const matchesRisk =
-                            risk === "all" ||
-                            transaction.risk === risk;
-
-
-                        return (
-                            matchesSearch &&
-                            matchesRisk
-                        );
-
-                    }
-                );
-
-
-            body.innerHTML = "";
-
-
-            if (filtered.length === 0) {
-
-                emptyState.style.display =
-                    "block";
-
-                updateStats();
+                `;
 
                 return;
-
             }
 
 
-            emptyState.style.display =
-                "none";
+            /* =================================================
+               SORT NEWEST FIRST
+            ================================================= */
+
+            transactions.sort(
+                (a, b) =>
+                    getDateValue(
+                        b.decisionTime ||
+                        b.createdAt
+                    )
+                    -
+                    getDateValue(
+                        a.decisionTime ||
+                        a.createdAt
+                    )
+            );
 
 
-            filtered.forEach(
-                (transaction, index) => {
+            transactionsBody.innerHTML = "";
+
+
+            /* =================================================
+               DISPLAY TRANSACTIONS
+            ================================================= */
+
+            transactions.forEach(
+                transaction => {
+
+                    const riskLevel =
+                        String(
+                            transaction.riskLevel ||
+                            "LOW"
+                        ).toUpperCase();
+
+
+                    const decision =
+                        String(
+                            transaction.decision ||
+                            "-"
+                        ).toLowerCase();
+
+
+                    const scenario =
+                        transaction.scenario ||
+                        "normal";
+
 
                     const row =
                         document.createElement("tr");
 
 
-                    const scoreClass =
-                        transaction.risk === "low"
-                            ? "score-low"
-                            : transaction.risk === "medium"
-                                ? "score-medium"
-                                : "score-high";
-
-
-                    const riskClass =
-                        transaction.risk === "low"
-                            ? "risk-low"
-                            : transaction.risk === "medium"
-                                ? "risk-medium"
-                                : "risk-high";
-
-
-                    const statusClass =
-                        transaction.status === "Approved"
-                            ? "status-approved"
-                            : transaction.status === "Review"
-                                ? "status-review"
-                                : "status-blocked";
-
-
                     row.innerHTML = `
 
                         <td>
-                            <span class="transaction-id">
-                                ${escapeHTML(transaction.id)}
+
+                            <span class="upi">
+
+                                ${escapeHTML(
+                                    transaction.upi || "-"
+                                )}
+
                             </span>
+
                         </td>
 
 
                         <td>
-                            <span class="date">
-                                ${escapeHTML(transaction.date)}
-                            </span>
-                        </td>
 
-
-                        <td>
-                            <span class="recipient">
-                                ${escapeHTML(transaction.recipient)}
-                            </span>
-                        </td>
-
-
-                        <td>
                             <span class="amount">
-                                ₹${Number(transaction.amount)
-                            .toLocaleString("en-IN")}
+
+                                ₹${Number(
+                                    transaction.amount || 0
+                                ).toLocaleString("en-IN")}
+
                             </span>
+
                         </td>
 
 
                         <td>
 
-                            <div class="score">
-
-                                <span
-                                    class="score-number ${scoreClass}">
-
-                                    ${transaction.score}
-
-                                </span>
-
-                            </div>
+                            ${transaction.score ?? 0}
 
                         </td>
 
@@ -2240,13 +1602,23 @@
                         <td>
 
                             <span
-                                class="risk-badge ${riskClass}">
+                                class="risk ${riskLevel.toLowerCase()}"
+                            >
 
-                                <span class="risk-dot"></span>
-
-                                ${capitalize(transaction.risk)}
+                                ${escapeHTML(
+                                    riskLevel
+                                )}
 
                             </span>
+
+                        </td>
+
+
+                        <td>
+
+                            ${escapeHTML(
+                                scenario
+                            )}
 
                         </td>
 
@@ -2254,11 +1626,18 @@
                         <td>
 
                             <span
-                                class="status ${statusClass}">
+                                class="decision ${
+                                    decision === "cancelled"
+                                        ? "cancelled"
+                                        : decision === "continued"
+                                            ? "continued"
+                                            : ""
+                                }"
+                            >
 
-                                <span class="status-dot"></span>
-
-                                ${escapeHTML(transaction.status)}
+                                ${escapeHTML(
+                                    decision
+                                )}
 
                             </span>
 
@@ -2267,449 +1646,251 @@
 
                         <td>
 
-                            <button
-                                class="view-btn"
-                                onclick="viewTransaction(${transactions.indexOf(transaction)})">
-
-                                View
-
-                            </button>
+                            ${formatDate(
+                                transaction.decisionTime ||
+                                transaction.createdAt
+                            )}
 
                         </td>
 
                     `;
 
 
-                    body.appendChild(row);
+                    transactionsBody.appendChild(row);
 
                 }
             );
 
 
-            updateStats();
+        } catch (error) {
 
-        }
-
-
-        /* =====================================================
-           VIEW TRANSACTION
-        ===================================================== */
-
-        function viewTransaction(index) {
-
-            const transaction =
-                transactions[index];
+            console.error(
+                "Error loading transactions:",
+                error
+            );
 
 
-            if (!transaction) {
-                return;
-            }
+            transactionsBody.innerHTML = `
 
+                <tr>
 
-            const modal =
-                document.getElementById(
-                    "modalOverlay"
-                );
+                    <td
+                        colspan="7"
+                        class="message error-message"
+                    >
 
+                        Could not load transactions
+                        from Firebase.
 
-            const details =
-                document.getElementById(
-                    "modalDetails"
-                );
+                    </td>
 
-
-            details.innerHTML = `
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Transaction ID
-                    </div>
-
-                    <div class="detail-value">
-                        ${escapeHTML(transaction.id)}
-                    </div>
-
-                </div>
-
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Date & Time
-                    </div>
-
-                    <div class="detail-value">
-                        ${escapeHTML(transaction.date)}
-                    </div>
-
-                </div>
-
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Recipient
-                    </div>
-
-                    <div class="detail-value">
-                        ${escapeHTML(transaction.recipient)}
-                    </div>
-
-                </div>
-
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Amount
-                    </div>
-
-                    <div class="detail-value">
-                        ₹${Number(transaction.amount)
-                    .toLocaleString("en-IN")}
-                    </div>
-
-                </div>
-
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Risk Score
-                    </div>
-
-                    <div class="detail-value">
-                        ${transaction.score}
-                    </div>
-
-                </div>
-
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Risk Level
-                    </div>
-
-                    <div class="detail-value">
-                        ${capitalize(transaction.risk)}
-                    </div>
-
-                </div>
-
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Status
-                    </div>
-
-                    <div class="detail-value">
-                        ${escapeHTML(transaction.status)}
-                    </div>
-
-                </div>
-
-
-                <div class="detail">
-
-                    <div class="detail-label">
-                        Payment Method
-                    </div>
-
-                    <div class="detail-value">
-                        ${escapeHTML(transaction.method)}
-                    </div>
-
-                </div>
-
-
-                ${transaction.location
-                    ? `
-
-                        <div class="detail">
-
-                            <div class="detail-label">
-                                Location
-                            </div>
-
-                            <div class="detail-value">
-                                ${escapeHTML(
-                        transaction.location
-                    )}
-                            </div>
-
-                        </div>
-
-                    `
-                    : ""
-                }
+                </tr>
 
             `;
 
+        }
 
-            modal.classList.add("show");
+    }
+
+
+    /* =========================================================
+       DATE VALUE
+    ========================================================== */
+
+    function getDateValue(value) {
+
+        if (!value) {
+            return 0;
+        }
+
+
+        /* Firebase Timestamp */
+
+        if (
+            value &&
+            typeof value.toDate === "function"
+        ) {
+
+            return value.toDate().getTime();
 
         }
 
 
-        /* =====================================================
-           CLOSE MODAL
-        ===================================================== */
+        return (
+            new Date(value).getTime()
+            || 0
+        );
 
-        function closeModal() {
+    }
 
-            document
-                .getElementById(
-                    "modalOverlay"
-                )
-                .classList.remove("show");
+
+    /* =========================================================
+       FORMAT DATE
+    ========================================================== */
+
+    function formatDate(value) {
+
+        if (!value) {
+            return "-";
+        }
+
+
+        let date;
+
+
+        if (
+            value &&
+            typeof value.toDate === "function"
+        ) {
+
+            date =
+                value.toDate();
+
+        } else {
+
+            date =
+                new Date(value);
 
         }
 
 
-        document
-            .getElementById("closeModal")
-            .addEventListener(
-                "click",
-                closeModal
+        if (
+            isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return "-";
+
+        }
+
+
+        return date.toLocaleString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       ESCAPE HTML
+    ========================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
             );
 
-
-        document
-            .getElementById("modalOverlay")
-            .addEventListener(
-                "click",
-                event => {
-
-                    if (
-                        event.target.id ===
-                        "modalOverlay"
-                    ) {
-
-                        closeModal();
-
-                    }
-
-                }
-            );
+    }
 
 
-        /* =====================================================
-           SEARCH + FILTER
-        ===================================================== */
+    /* =========================================================
+       ACTIVE NAVIGATION
+    ========================================================== */
 
-        document
-            .getElementById("searchInput")
-            .addEventListener(
-                "input",
-                renderTransactions
-            );
+    const navItems =
+        document.querySelectorAll(
+            ".nav-item"
+        );
 
 
-        document
-            .getElementById("riskFilter")
-            .addEventListener(
-                "change",
-                renderTransactions
-            );
+    const currentFile =
+        window.location.pathname
+            .split("/")
+            .pop()
+        || "index.html";
 
 
-        /* =====================================================
-           EXPORT CSV
-        ===================================================== */
+    navItems.forEach(
+        item => {
 
-        document
-            .getElementById("exportBtn")
-            .addEventListener(
-                "click",
-                exportCSV
-            );
+            const href =
+                item.getAttribute(
+                    "href"
+                );
 
 
-        function exportCSV() {
-
-            if (!transactions.length) {
+            if (!href) {
                 return;
             }
 
 
-            const headers = [
-
-                "Transaction ID",
-                "Date & Time",
-                "Recipient",
-                "Amount",
-                "Risk Score",
-                "Risk Level",
-                "Status",
-                "Payment Method"
-
-            ];
+            const linkFile =
+                href
+                    .split("/")
+                    .pop();
 
 
-            const rows =
-                transactions.map(
-                    transaction => [
+            if (
+                linkFile === currentFile
+            ) {
 
-                        transaction.id,
-
-                        transaction.date,
-
-                        transaction.recipient,
-
-                        transaction.amount,
-
-                        transaction.score,
-
-                        transaction.risk,
-
-                        transaction.status,
-
-                        transaction.method
-
-                    ]
+                navItems.forEach(
+                    nav =>
+                        nav.classList.remove(
+                            "active"
+                        )
                 );
 
 
-            const csv = [
-
-                headers,
-
-                ...rows
-
-            ]
-                .map(
-                    row =>
-                        row.map(
-                            value =>
-                                `"${String(value ?? "")
-                                    .replace(/"/g, '""')}"`
-                        ).join(",")
-                )
-                .join("\n");
-
-
-            const blob =
-                new Blob(
-                    [csv],
-                    {
-                        type:
-                            "text/csv;charset=utf-8;"
-                    }
+                item.classList.add(
+                    "active"
                 );
-
-
-            const url =
-                URL.createObjectURL(blob);
-
-
-            const link =
-                document.createElement("a");
-
-
-            link.href = url;
-
-            link.download =
-                "sentinel-transactions.csv";
-
-
-            document.body.appendChild(link);
-
-            link.click();
-
-            link.remove();
-
-            URL.revokeObjectURL(url);
-
-        }
-
-
-        /* =====================================================
-           REFRESH WHEN LOCAL STORAGE CHANGES
-        ===================================================== */
-
-        window.addEventListener(
-            "storage",
-            event => {
-
-                if (
-                    event.key ===
-                    "sentinelTransactions"
-                ) {
-
-                    transactions =
-                        loadTransactions();
-
-                    transactions =
-                        transactions.map(
-                            transaction => {
-
-                                const risk =
-                                    String(
-                                        transaction.risk ||
-                                        transaction.riskLevel ||
-                                        "low"
-                                    ).toLowerCase();
-
-
-                                return {
-
-                                    ...transaction,
-
-                                    date:
-                                        getTransactionDate(
-                                            transaction
-                                        ),
-
-                                    recipient:
-                                        transaction.recipient ||
-                                        transaction.upi ||
-                                        "Unknown",
-
-                                    score:
-                                        Number(
-                                            transaction.score ??
-                                            transaction.riskScore ??
-                                            0
-                                        ),
-
-                                    risk:
-                                        risk,
-
-                                    status:
-                                        transaction.status ||
-                                        (
-                                            risk === "high"
-                                                ? "Blocked"
-                                                : risk === "medium"
-                                                    ? "Review"
-                                                    : "Approved"
-                                        )
-
-                                };
-
-                            }
-                        );
-
-                    renderTransactions();
-
-                }
 
             }
-        );
+
+        }
+    );
 
 
-        /* =====================================================
-           INITIAL LOAD
-        ===================================================== */
+    /* =========================================================
+       REFRESH
+    ========================================================== */
 
-        updateStats();
+    refreshBtn.addEventListener(
+        "click",
+        loadTransactions
+    );
 
-        renderTransactions();
 
-    </script>
+    /* =========================================================
+       INITIAL LOAD
+    ========================================================== */
+
+    loadTransactions();
+
+</script>
 
 </body>
 

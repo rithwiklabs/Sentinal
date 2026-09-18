@@ -2,21 +2,23 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Risk Insights | Sentinel</title>
+    <title>Sentinel — Risk Insights</title>
+
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Inter, Arial, sans-serif;
-        }
+
+        /* =========================================================
+           SENTINEL THEME
+        ========================================================= */
 
         :root {
+
             --bg: #f3f5ff;
+
             --surface: #ffffff;
             --surface-2: #f7f8ff;
 
@@ -31,800 +33,1157 @@
             --secondary: #8b5cf6;
             --cyan: #22c7d6;
 
-            --green: #16a34a;
-            --green-bg: #eaf8ef;
+            --green: #16a66a;
+            --green-soft: #e8faf2;
 
-            --orange: #f59e0b;
-            --orange-bg: #fff7e6;
+            --orange: #e99512;
+            --orange-soft: #fff6df;
 
-            --red: #ef4444;
-            --red-bg: #fff0f0;
+            --red: #e5484d;
+            --red-soft: #fff0f0;
+
+            --shadow:
+                0 12px 35px rgba(55, 65, 120, 0.08);
+
+            --shadow-small:
+                0 3px 12px rgba(55, 65, 120, 0.05);
+
+            --radius-xl: 24px;
+            --radius-lg: 18px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
 
             --sidebar: 248px;
         }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+
+            box-sizing: border-box;
         }
 
-        /* ================= SIDEBAR ================= */
+
+        body {
+
+            font-family:
+                Inter,
+                ui-sans-serif,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(99, 91, 255, 0.06),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(34, 199, 214, 0.05),
+                    transparent 25%
+                ),
+                var(--bg);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+            -webkit-font-smoothing: antialiased;
+        }
+
+
+        /* =========================================================
+           APP
+        ========================================================= */
+
+        .app {
+
+            min-height: 100vh;
+
+            display: flex;
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
 
         .sidebar {
+
             position: fixed;
-            left: 0;
+
             top: 0;
+            left: 0;
+            bottom: 0;
+
             width: var(--sidebar);
-            height: 100vh;
-
-            background: linear-gradient(180deg,
-                    #ffffff 0%,
-                    #f8f7ff 100%);
-
-            border-right: 1px solid var(--border);
 
             padding: 25px 16px;
 
+            background:
+                linear-gradient(
+                    180deg,
+                    #ffffff 0%,
+                    #f8f8ff 100%
+                );
+
+            border-right:
+                1px solid var(--border);
+
             display: flex;
+
             flex-direction: column;
 
-            z-index: 100;
+            z-index: 50;
         }
 
-        .logo-area {
+
+        /* BRAND */
+
+        .brand {
+
             display: flex;
+
             align-items: center;
-            gap: 12px;
-            padding: 0 10px;
-            margin-bottom: 35px;
+
+            gap: 11px;
+
+            padding: 4px 10px;
+
+            margin-bottom: 40px;
         }
 
-        .logo {
-            width: 42px;
-            height: 42px;
 
-            border-radius: 12px;
+        .brand-logo {
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--secondary)
+                );
 
             color: white;
-            font-size: 22px;
+
+            font-size: 16px;
+
             font-weight: 800;
 
-            background: linear-gradient(135deg,
-                    var(--primary),
-                    var(--secondary));
-
-            box-shadow: 0 8px 20px rgba(99, 91, 255, 0.25);
+            box-shadow:
+                0 7px 18px rgba(99, 91, 255, 0.28);
         }
 
-        .logo-text h2 {
-            font-size: 20px;
+
+        .brand-name {
+
+            font-size: 17px;
+
+            font-weight: 750;
+
             letter-spacing: -0.4px;
         }
 
-        .logo-text span {
-            display: block;
-            font-size: 11px;
+
+        .brand-sub {
+
+            margin-top: 4px;
+
+            font-size: 9px;
+
             color: var(--muted);
-            margin-top: 2px;
+
+            letter-spacing: .9px;
+
+            text-transform: uppercase;
         }
+
+
+        /* NAV */
 
         .nav-title {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
 
-            padding: 0 12px;
-            margin-bottom: 10px;
+            padding: 0 11px;
+
+            margin-bottom: 9px;
+
+            font-size: 9px;
+
+            font-weight: 750;
+
+            color: var(--muted);
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
         }
+
 
         .nav {
+
             display: flex;
+
             flex-direction: column;
-            gap: 6px;
+
+            gap: 5px;
         }
 
-        .nav a {
-            text-decoration: none;
-            color: var(--text-2);
 
-            padding: 12px 13px;
+        .nav-item {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border: none;
 
             border-radius: 11px;
 
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            font-size: 14px;
-            font-weight: 600;
-
-            transition: 0.2s ease;
-        }
-
-        .nav a:hover {
-            background: #efefff;
-            color: var(--primary);
-        }
-
-        .nav a.active {
-            background: #ecebff;
-            color: var(--primary);
-        }
-
-        .nav-icon {
-            width: 20px;
-            text-align: center;
-            font-size: 17px;
-        }
-
-        .sidebar-bottom {
-            margin-top: auto;
-            padding: 14px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 13px;
-        }
-
-        .engine-status {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--green);
-            box-shadow: 0 0 0 4px var(--green-bg);
-        }
-
-        .engine-text {
-            color: var(--muted);
-            font-size: 11px;
-            margin-top: 7px;
-        }
-
-        /* ================= MAIN ================= */
-
-        .main {
-            margin-left: var(--sidebar);
-            padding: 34px 38px 50px;
-        }
-
-        .topbar {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-
-        .page-title h1 {
-            font-size: 30px;
-            letter-spacing: -0.8px;
-            margin-bottom: 7px;
-        }
-
-        .page-title p {
-            color: var(--text-2);
-            font-size: 14px;
-        }
-
-        .refresh-btn {
-            border: 1px solid var(--border);
-            background: var(--surface);
+            background: transparent;
 
             color: var(--text-2);
-
-            padding: 10px 15px;
-
-            border-radius: 10px;
-
-            font-size: 13px;
-            font-weight: 600;
 
             cursor: pointer;
 
-            transition: 0.2s;
+            font-size: 12px;
+
+            font-weight: 550;
+
+            text-align: left;
+
+            transition:
+                background .2s ease,
+                color .2s ease,
+                transform .2s ease;
+
+            text-decoration: none;
         }
 
-        .refresh-btn:hover {
-            color: var(--primary);
-            border-color: #c9c6ff;
-        }
 
-        /* ================= STAT CARDS ================= */
+        .nav-item:visited {
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: var(--surface);
-
-            border: 1px solid var(--border);
-            border-radius: 16px;
-
-            padding: 21px;
-
-            box-shadow: 0 4px 15px rgba(34, 42, 70, 0.035);
-        }
-
-        .stat-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .stat-label {
             color: var(--text-2);
-            font-size: 13px;
-            font-weight: 600;
         }
 
-        .stat-icon {
-            width: 34px;
-            height: 34px;
 
-            border-radius: 10px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 16px;
-        }
-
-        .purple-icon {
-            background: #efeeff;
-            color: var(--primary);
-        }
-
-        .green-icon {
-            background: var(--green-bg);
-            color: var(--green);
-        }
-
-        .orange-icon {
-            background: var(--orange-bg);
-            color: var(--orange);
-        }
-
-        .red-icon {
-            background: var(--red-bg);
-            color: var(--red);
-        }
-
-        .stat-number {
-            font-size: 27px;
-            font-weight: 800;
-            margin-top: 15px;
-            letter-spacing: -0.6px;
-        }
-
-        .stat-sub {
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 5px;
-        }
-
-        /* ================= GRID ================= */
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 22px;
-            margin-bottom: 22px;
-        }
-
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-
-            padding: 22px;
-
-            box-shadow: 0 4px 15px rgba(34, 42, 70, 0.035);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            margin-bottom: 23px;
-        }
-
-        .card-header h2 {
-            font-size: 16px;
-            letter-spacing: -0.2px;
-        }
-
-        .card-header span {
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        /* ================= RISK DISTRIBUTION ================= */
-
-        .risk-layout {
-            display: flex;
-            align-items: center;
-            gap: 35px;
-        }
-
-        .donut {
-            width: 180px;
-            height: 180px;
-
-            border-radius: 50%;
+        .nav-item:hover {
 
             background:
-                conic-gradient(var(--green) 0deg var(--low-angle),
-                    var(--orange) var(--low-angle) var(--medium-angle),
-                    var(--red) var(--medium-angle) 360deg);
+                linear-gradient(
+                    90deg,
+                    #f0efff,
+                    #f8f7ff
+                );
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: var(--primary);
 
-            flex-shrink: 0;
+            transform: translateX(2px);
+
+            text-decoration: none;
         }
 
-        .donut-inner {
-            width: 116px;
-            height: 116px;
 
-            border-radius: 50%;
-
-            background: var(--surface);
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .donut-number {
-            font-size: 25px;
-            font-weight: 800;
-        }
-
-        .donut-label {
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 2px;
-        }
-
-        .legend {
-            flex: 1;
-        }
-
-        .legend-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            margin-bottom: 17px;
-        }
-
-        .legend-name {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-
-            font-size: 13px;
-            color: var(--text-2);
-        }
-
-        .legend-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-        }
-
-        .dot-low {
-            background: var(--green);
-        }
-
-        .dot-medium {
-            background: var(--orange);
-        }
-
-        .dot-high {
-            background: var(--red);
-        }
-
-        .legend-value {
-            font-weight: 800;
-            font-size: 13px;
-        }
-
-        /* ================= RISK SCORE ================= */
-
-        .score-container {
-            text-align: center;
-        }
-
-        .score-circle {
-            width: 145px;
-            height: 145px;
-
-            margin: 8px auto 18px;
-
-            border-radius: 50%;
+        .nav-item.active {
 
             background:
-                conic-gradient(var(--primary) var(--score-angle),
-                    #e9eaf5 var(--score-angle));
+                linear-gradient(
+                    90deg,
+                    #eeecff,
+                    #f6f4ff
+                );
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            color: var(--primary);
 
-        .score-inner {
-            width: 108px;
-            height: 108px;
-
-            border-radius: 50%;
-
-            background: var(--surface);
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .score-number {
-            font-size: 30px;
-            font-weight: 800;
-        }
-
-        .score-label {
-            font-size: 11px;
-            color: var(--muted);
-        }
-
-        .score-description {
-            color: var(--text-2);
-            font-size: 12px;
-            line-height: 1.6;
-            max-width: 300px;
-            margin: auto;
-        }
-
-        /* ================= RISK FACTORS ================= */
-
-        .factor {
-            margin-bottom: 20px;
-        }
-
-        .factor:last-child {
-            margin-bottom: 0;
-        }
-
-        .factor-top {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .factor-name {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .factor-percent {
-            font-size: 12px;
-            color: var(--text-2);
             font-weight: 700;
         }
 
-        .progress {
-            width: 100%;
-            height: 8px;
 
-            border-radius: 20px;
+        .nav-item.active::before {
 
-            background: #edf0f7;
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            width: 3px;
+            height: 19px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--primary),
+                    var(--secondary)
+                );
+        }
+
+
+        .nav-icon {
+
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 15px;
+        }
+
+
+        /* SIDEBAR FOOTER */
+
+        .sidebar-footer {
+
+            margin-top: auto;
+
+            padding: 15px;
+
+            border:
+                1px solid #dedfff;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #f7f5ff,
+                    #eefaff
+                );
+        }
+
+
+        .environment {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 8px;
+
+            color: #4e46b4;
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+
+        .online-dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+
+            box-shadow:
+                0 0 0 4px rgba(22, 166, 106, .10);
+
+            animation:
+                pulse 2s infinite;
+        }
+
+
+        .sidebar-footer p {
+
+            color: #7c83a0;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .45;
+            }
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main {
+
+            width:
+                calc(100% - var(--sidebar));
+
+            margin-left:
+                var(--sidebar);
+
+            padding:
+                27px 38px 55px;
+        }
+
+
+        /* =========================================================
+           TOPBAR
+        ========================================================= */
+
+        .topbar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 26px;
+        }
+
+
+        .breadcrumb {
+
+            font-size: 11px;
+
+            color: var(--muted);
+        }
+
+
+        .breadcrumb strong {
+
+            color: var(--primary);
+        }
+
+
+        .top-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .mode {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            background:
+                rgba(255, 255, 255, .85);
+
+            border:
+                1px solid #dfe2f3;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+
+            font-weight: 650;
+
+            color: var(--text-2);
+
+            box-shadow:
+                var(--shadow-small);
+        }
+
+
+        .mode-dot {
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+        }
+
+
+        .avatar {
+
+            width: 31px;
+            height: 31px;
+
+            border-radius: 50%;
+
+            display: grid;
+
+            place-items: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dedbff,
+                    #d7f8fa
+                );
+
+            color: #5148c9;
+
+            font-size: 9px;
+
+            font-weight: 750;
+        }
+
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+
+        .page-header {
+
+            margin-bottom: 25px;
+        }
+
+
+        .page-header h1 {
+
+            font-size: 32px;
+
+            line-height: 1.1;
+
+            letter-spacing: -1.3px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .page-header p {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           SUMMARY CARDS
+        ========================================================= */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 13px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .summary-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 18px;
+
+            background:
+                rgba(255, 255, 255, .92);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-md);
+
+            box-shadow:
+                var(--shadow-small);
+        }
+
+
+        .summary-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--primary),
+                    var(--cyan)
+                );
+
+            opacity: .7;
+        }
+
+
+        .summary-label {
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            font-weight: 750;
+
+            letter-spacing: .8px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .summary-value {
+
+            font-size: 26px;
+
+            font-weight: 750;
+
+            letter-spacing: -1px;
+        }
+
+
+        /* =========================================================
+           TWO COLUMN SECTION
+        ========================================================= */
+
+        .grid-two {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .card {
+
+            background:
+                rgba(255, 255, 255, .95);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-md);
+
+            box-shadow:
+                var(--shadow-small);
 
             overflow: hidden;
         }
 
-        .progress-bar {
-            height: 100%;
-            border-radius: 20px;
 
-            background: linear-gradient(90deg,
-                    var(--primary),
-                    var(--secondary));
+        .card-header {
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid var(--border);
         }
 
-        /* ================= ALERTS ================= */
 
-        .alerts {
-            display: flex;
-            flex-direction: column;
+        .card-title {
+
+            font-size: 13px;
+
+            font-weight: 750;
+        }
+
+
+        .card-subtitle {
+
+            margin-top: 4px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+
+        .card-body {
+
+            padding: 20px;
+        }
+
+
+        /* =========================================================
+           RISK DISTRIBUTION
+        ========================================================= */
+
+        .risk-row {
+
+            display: grid;
+
+            grid-template-columns:
+                70px 1fr 35px;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 17px;
+        }
+
+
+        .risk-row:last-child {
+
+            margin-bottom: 0;
+        }
+
+
+        .risk-name {
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+
+        .progress {
+
+            height: 9px;
+
+            background:
+                #eef0f7;
+
+            border-radius: 999px;
+
+            overflow: hidden;
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            width: 0%;
+
+            border-radius: 999px;
+
+            transition:
+                width .6s ease;
+        }
+
+
+        .progress-low {
+
+            background: var(--green);
+        }
+
+
+        .progress-medium {
+
+            background: var(--orange);
+        }
+
+
+        .progress-high {
+
+            background: var(--red);
+        }
+
+
+        .risk-count {
+
+            font-size: 10px;
+
+            font-weight: 750;
+
+            text-align: right;
+        }
+
+
+        /* =========================================================
+           DECISION DISTRIBUTION
+        ========================================================= */
+
+        .decision-box {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
             gap: 12px;
         }
 
-        .alert {
-            display: flex;
-            gap: 13px;
-            align-items: flex-start;
 
-            padding: 14px;
+        .decision-item {
+
+            padding: 17px;
 
             border-radius: 12px;
 
-            border: 1px solid var(--border);
+            background:
+                var(--surface-2);
+
+            border:
+                1px solid var(--border);
         }
 
-        .alert-icon {
-            width: 34px;
-            height: 34px;
 
-            border-radius: 9px;
+        .decision-label {
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: var(--muted);
 
-            flex-shrink: 0;
+            font-size: 9px;
+
+            font-weight: 750;
+
+            letter-spacing: .5px;
+
+            margin-bottom: 8px;
         }
 
-        .alert.high {
-            background: var(--red-bg);
-            border-color: #ffd5d5;
+
+        .decision-value {
+
+            font-size: 25px;
+
+            font-weight: 750;
         }
 
-        .alert.high .alert-icon {
-            background: #ffe0e0;
+
+        .decision-item.cancelled
+        .decision-value {
+
             color: var(--red);
         }
 
-        .alert.medium {
-            background: var(--orange-bg);
-            border-color: #ffe8b4;
-        }
 
-        .alert.medium .alert-icon {
-            background: #ffedc9;
-            color: var(--orange);
-        }
+        .decision-item.continued
+        .decision-value {
 
-        .alert.low {
-            background: var(--green-bg);
-            border-color: #d2f0dc;
-        }
-
-        .alert.low .alert-icon {
-            background: #dff5e6;
             color: var(--green);
         }
 
-        .alert-content h3 {
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
 
-        .alert-content p {
-            font-size: 11px;
-            line-height: 1.5;
-            color: var(--text-2);
-        }
+        /* =========================================================
+           SIGNALS
+        ========================================================= */
 
-        /* ================= TREND ================= */
-
-        .trend {
-            height: 230px;
+        .signal-list {
 
             display: flex;
-            align-items: flex-end;
-            gap: 15px;
 
-            padding: 15px 10px 0;
-
-            border-bottom: 1px solid var(--border);
-        }
-
-        .trend-day {
-            flex: 1;
-            height: 100%;
-
-            display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+
+            gap: 11px;
+        }
+
+
+        .signal-item {
+
+            display: flex;
+
+            justify-content: space-between;
+
             align-items: center;
-            gap: 7px;
-        }
 
-        .bar {
-            width: 65%;
+            padding: 12px 13px;
 
-            border-radius: 7px 7px 2px 2px;
+            background:
+                #fafaff;
 
-            background: linear-gradient(180deg,
-                    var(--primary),
-                    var(--secondary));
-
-            min-height: 8px;
-        }
-
-        .bar-value {
-            font-size: 10px;
-            color: var(--text-2);
-        }
-
-        .day-label {
-            font-size: 10px;
-            color: var(--muted);
-            margin-top: 5px;
-        }
-
-        /* ================= RECOMMENDATIONS ================= */
-
-        .recommendations {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .recommendation {
-            padding: 18px;
-
-            border: 1px solid var(--border);
-            border-radius: 13px;
-
-            background: var(--surface-2);
-        }
-
-        .recommendation-icon {
-            width: 36px;
-            height: 36px;
+            border:
+                1px solid var(--border);
 
             border-radius: 10px;
-
-            background: #ecebff;
-            color: var(--primary);
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            margin-bottom: 13px;
         }
 
-        .recommendation h3 {
-            font-size: 13px;
-            margin-bottom: 7px;
-        }
 
-        .recommendation p {
-            font-size: 11px;
-            line-height: 1.6;
+        .signal-name {
+
+            font-size: 10px;
+
             color: var(--text-2);
+
+            font-weight: 650;
         }
+
+
+        .signal-value {
+
+            min-width: 28px;
+
+            text-align: center;
+
+            padding: 4px 7px;
+
+            border-radius: 7px;
+
+            background:
+                #eeecff;
+
+            color:
+                var(--primary);
+
+            font-size: 9px;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================= */
 
         .empty {
-            padding: 35px 20px;
+
             text-align: center;
+
+            padding: 45px 20px;
+
             color: var(--muted);
-            font-size: 13px;
+
+            font-size: 11px;
         }
 
-        /* ================= RESPONSIVE ================= */
 
-        @media (max-width: 1100px) {
+        /* =========================================================
+           REFRESH
+        ========================================================= */
 
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
+        .refresh-btn {
+
+            border:
+                1px solid var(--border);
+
+            background: white;
+
+            color: var(--primary);
+
+            padding: 8px 12px;
+
+            border-radius: 9px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+
+        .refresh-btn:hover {
+
+            background: #f4f2ff;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .header-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media (max-width: 1050px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
+            .grid-two {
 
-            .recommendations {
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
         }
 
-        @media (max-width: 750px) {
+
+        @media (max-width: 850px) {
 
             :root {
                 --sidebar: 0px;
             }
 
+
             .sidebar {
-                position: relative;
+
+                position: static;
+
                 width: 100%;
+
                 height: auto;
 
                 padding: 15px;
 
                 border-right: none;
-                border-bottom: 1px solid var(--border);
+
+                border-bottom:
+                    1px solid var(--border);
             }
 
-            .logo-area {
-                margin-bottom: 15px;
+
+            .app {
+
+                display: block;
             }
 
-            .nav {
-                flex-direction: row;
-                overflow-x: auto;
+
+            .brand {
+
+                margin-bottom: 17px;
             }
 
-            .nav a {
-                white-space: nowrap;
-            }
 
-            .nav-title,
-            .sidebar-bottom {
+            .nav-title {
+
                 display: none;
             }
 
+
+            .nav {
+
+                flex-direction: row;
+
+                overflow-x: auto;
+
+                padding-bottom: 2px;
+            }
+
+
+            .nav-item {
+
+                width: auto;
+
+                white-space: nowrap;
+            }
+
+
+            .sidebar-footer {
+
+                display: none;
+            }
+
+
             .main {
+
+                width: 100%;
+
                 margin-left: 0;
-                padding: 25px 16px;
-            }
 
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .risk-layout {
-                flex-direction: column;
-            }
-
-            .topbar {
-                gap: 15px;
-            }
-
-            .page-title h1 {
-                font-size: 25px;
+                padding:
+                    22px 20px 45px;
             }
         }
+
+
+        @media (max-width: 650px) {
+
+            .top-right {
+
+                display: none;
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .page-header h1 {
+
+                font-size: 28px;
+            }
+
+
+            .decision-box {
+
+                grid-template-columns:
+                    1fr;
+            }
+        }
+
     </style>
+
 </head>
 
 
 <body>
 
-    <!-- ================= SIDEBAR ================= -->
+
+<div class="app">
+
+
+    <!-- =======================================================
+         SIDEBAR
+    ======================================================== -->
 
     <aside class="sidebar">
 
-        <div class="logo-area">
 
-            <div class="logo">
+        <div class="brand">
+
+            <div class="brand-logo">
                 S
             </div>
 
-            <div class="logo-text">
+            <div class="brand-text">
 
-                <h2>
+                <div class="brand-name">
                     Sentinel
-                </h2>
+                </div>
 
-                <span>
-                    Payment Risk Intelligence
-                </span>
+                <div class="brand-sub">
+                    Payment Intelligence
+                </div>
 
             </div>
 
@@ -832,795 +1191,667 @@
 
 
         <div class="nav-title">
-            Navigation
+            Workspace
         </div>
 
 
         <nav class="nav">
 
-            <a href="index.html">
-                <span class="nav-icon">⌂</span>
-                Overview
+
+            <a
+                href="index.html"
+                class="nav-item"
+                data-page="overview"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Overview
+                </span>
+
             </a>
 
 
-            <a href="payment.html">
-                <span class="nav-icon">＋</span>
-                Simulate Payment
+            <a
+                href="payment.html"
+                class="nav-item"
+                data-page="simulate"
+            >
+
+                <span class="nav-icon">
+                    ＋
+                </span>
+
+                <span>
+                    Simulate Payment
+                </span>
+
             </a>
 
 
-            <a href="risk-analysis.html">
-                <span class="nav-icon">◈</span>
-                Risk Analysis
+            <a
+                href="transactions.html"
+                class="nav-item"
+                data-page="transactions"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Transactions
+                </span>
+
             </a>
 
 
-            <a href="decision.html">
-                <span class="nav-icon">✓</span>
-                Decision
+            <a
+                href="insights.html"
+                class="nav-item"
+                data-page="insights"
+            >
+
+                <span class="nav-icon">
+                    ◈
+                </span>
+
+                <span>
+                    Risk Insights
+                </span>
+
             </a>
 
-
-            <a href="transactions.html">
-                <span class="nav-icon">▤</span>
-                Transactions
-            </a>
-
-
-            <a href="insights.html" class="active">
-                <span class="nav-icon">◈</span>
-                Risk Insights
-            </a>
 
         </nav>
 
 
-        <div class="sidebar-bottom">
+        <div class="sidebar-footer">
 
-            <div class="engine-status">
 
-                <span class="status-dot"></span>
+            <div class="environment">
 
-                Sentinel Engine Online
+                <span class="online-dot"></span>
+
+                Simulation environment
 
             </div>
 
-            <div class="engine-text">
-                Risk intelligence system is active
-            </div>
+
+            <p>
+
+                Synthetic data only. No real money,
+                banking credentials, or UPI transactions
+                are processed.
+
+            </p>
 
         </div>
 
     </aside>
 
 
-    <!-- ================= MAIN ================= -->
+    <!-- =======================================================
+         MAIN
+    ======================================================== -->
 
     <main class="main">
 
 
-        <div class="topbar">
+        <!-- TOPBAR -->
 
-            <div class="page-title">
+        <header class="topbar">
 
-                <h1>
+
+            <div class="breadcrumb">
+
+                Workspace /
+
+                <strong>
                     Risk Insights
-                </h1>
-
-                <p>
-                    Understand payment risk patterns and identify potential threats.
-                </p>
+                </strong>
 
             </div>
 
 
-            <button class="refresh-btn" onclick="loadInsights()">
-
-                ↻ Refresh
-
-            </button>
-
-        </div>
+            <div class="top-right">
 
 
-        <!-- ================= STATS ================= -->
+                <div class="mode">
 
-        <section class="stats">
+                    <span class="mode-dot"></span>
 
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span class="stat-label">
-                        Total Transactions
-                    </span>
-
-                    <div class="stat-icon purple-icon">
-                        ▤
-                    </div>
+                    Simulation Mode
 
                 </div>
 
 
-                <div class="stat-number" id="totalTransactions">
-
-                    0
-
-                </div>
-
-
-                <div class="stat-sub">
-                    Transactions analysed
+                <div class="avatar">
+                    FR
                 </div>
 
             </div>
 
+        </header>
 
-            <div class="stat-card">
 
-                <div class="stat-top">
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
 
-                    <span class="stat-label">
-                        Low Risk
-                    </span>
+        <section class="page-header">
 
-                    <div class="stat-icon green-icon">
-                        ✓
-                    </div>
 
-                </div>
+            <div class="header-row">
 
 
-                <div class="stat-number" id="lowRisk">
+                <div>
 
-                    0
+                    <h1>
+                        Risk Insights
+                    </h1>
 
-                </div>
-
-
-                <div class="stat-sub">
-                    Normal transactions
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span class="stat-label">
-                        Medium Risk
-                    </span>
-
-                    <div class="stat-icon orange-icon">
-                        !
-                    </div>
-
-                </div>
-
-
-                <div class="stat-number" id="mediumRisk">
-
-                    0
-
-                </div>
-
-
-                <div class="stat-sub">
-                    Transactions requiring review
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span class="stat-label">
-                        High Risk
-                    </span>
-
-                    <div class="stat-icon red-icon">
-                        !
-                    </div>
-
-                </div>
-
-
-                <div class="stat-number" id="highRisk">
-
-                    0
-
-                </div>
-
-
-                <div class="stat-sub">
-                    Potentially dangerous
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= DISTRIBUTION + SCORE ================= -->
-
-        <section class="content-grid">
-
-
-            <div class="card">
-
-                <div class="card-header">
-
-                    <h2>
-                        Risk Distribution
-                    </h2>
-
-                    <span>
-                        Current dataset
-                    </span>
-
-                </div>
-
-
-                <div class="risk-layout">
-
-
-                    <div class="donut" id="donut">
-
-                        <div class="donut-inner">
-
-                            <div class="donut-number" id="donutTotal">
-
-                                0
-
-                            </div>
-
-                            <div class="donut-label">
-                                Payments
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="legend">
-
-
-                        <div class="legend-row">
-
-                            <div class="legend-name">
-
-                                <span class="legend-dot dot-low"></span>
-
-                                Low Risk
-
-                            </div>
-
-                            <div class="legend-value" id="lowPercent">
-
-                                0%
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="legend-row">
-
-                            <div class="legend-name">
-
-                                <span class="legend-dot dot-medium"></span>
-
-                                Medium Risk
-
-                            </div>
-
-                            <div class="legend-value" id="mediumPercent">
-
-                                0%
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="legend-row">
-
-                            <div class="legend-name">
-
-                                <span class="legend-dot dot-high"></span>
-
-                                High Risk
-
-                            </div>
-
-                            <div class="legend-value" id="highPercent">
-
-                                0%
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-header">
-
-                    <h2>
-                        Average Risk Score
-                    </h2>
-
-                    <span>
-                        0–100 scale
-                    </span>
-
-                </div>
-
-
-                <div class="score-container">
-
-
-                    <div class="score-circle" id="scoreCircle">
-
-                        <div class="score-inner">
-
-                            <div class="score-number" id="averageScore">
-
-                                0
-
-                            </div>
-
-                            <div class="score-label">
-                                Risk Score
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <p class="score-description" id="scoreDescription">
-
-                        No transaction data available yet.
-
+                    <p>
+                        Understand transaction risk patterns
+                        based on Sentinel's simulated payment activity.
                     </p>
 
                 </div>
 
+
+                <button
+                    class="refresh-btn"
+                    id="refreshBtn"
+                >
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =====================================================
+             SUMMARY
+        ====================================================== -->
+
+        <section class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    TOTAL TRANSACTIONS
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="totalTransactions"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    AVERAGE RISK SCORE
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="averageScore"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    REFUND SIGNALS
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="refundSignals"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    URGENCY SIGNALS
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="urgencySignals"
+                >
+                    0
+                </div>
+
             </div>
 
         </section>
 
 
-        <!-- ================= RISK FACTORS ================= -->
+        <!-- =====================================================
+             RISK + DECISIONS
+        ====================================================== -->
 
-        <section class="content-grid">
+        <section class="grid-two">
 
+
+            <!-- RISK DISTRIBUTION -->
 
             <div class="card">
 
+
                 <div class="card-header">
 
-                    <h2>
-                        Common Risk Factors
-                    </h2>
+                    <div class="card-title">
+                        Risk Distribution
+                    </div>
 
-                    <span>
-                        Detected signals
-                    </span>
+                    <div class="card-subtitle">
+                        Distribution of analysed payments
+                    </div>
 
                 </div>
 
 
-                <div id="riskFactors">
+                <div class="card-body">
 
-                    <div class="factor">
 
-                        <div class="factor-top">
+                    <div class="risk-row">
 
-                            <span class="factor-name">
-                                Unusual Transaction Amount
-                            </span>
-
-                            <span class="factor-percent" id="amountFactor">
-
-                                0%
-
-                            </span>
-
+                        <div class="risk-name">
+                            Low
                         </div>
 
                         <div class="progress">
 
-                            <div class="progress-bar" id="amountProgress" style="width:0%">
+                            <div
+                                class="progress-bar progress-low"
+                                id="lowBar"
+                            ></div>
 
-                            </div>
+                        </div>
 
+                        <div
+                            class="risk-count"
+                            id="lowCount"
+                        >
+                            0
                         </div>
 
                     </div>
 
 
-                    <div class="factor">
+                    <div class="risk-row">
 
-                        <div class="factor-top">
-
-                            <span class="factor-name">
-                                New Beneficiary
-                            </span>
-
-                            <span class="factor-percent" id="beneficiaryFactor">
-
-                                0%
-
-                            </span>
-
+                        <div class="risk-name">
+                            Medium
                         </div>
 
                         <div class="progress">
 
-                            <div class="progress-bar" id="beneficiaryProgress" style="width:0%">
+                            <div
+                                class="progress-bar progress-medium"
+                                id="mediumBar"
+                            ></div>
 
-                            </div>
+                        </div>
 
+                        <div
+                            class="risk-count"
+                            id="mediumCount"
+                        >
+                            0
                         </div>
 
                     </div>
 
 
-                    <div class="factor">
+                    <div class="risk-row">
 
-                        <div class="factor-top">
-
-                            <span class="factor-name">
-                                Unusual Transaction Pattern
-                            </span>
-
-                            <span class="factor-percent" id="patternFactor">
-
-                                0%
-
-                            </span>
-
+                        <div class="risk-name">
+                            High
                         </div>
 
                         <div class="progress">
 
-                            <div class="progress-bar" id="patternProgress" style="width:0%">
+                            <div
+                                class="progress-bar progress-high"
+                                id="highBar"
+                            ></div>
 
-                            </div>
+                        </div>
 
+                        <div
+                            class="risk-count"
+                            id="highCount"
+                        >
+                            0
                         </div>
 
                     </div>
 
-
-                    <div class="factor">
-
-                        <div class="factor-top">
-
-                            <span class="factor-name">
-                                Unknown Recipient
-                            </span>
-
-                            <span class="factor-percent" id="recipientFactor">
-
-                                0%
-
-                            </span>
-
-                        </div>
-
-                        <div class="progress">
-
-                            <div class="progress-bar" id="recipientProgress" style="width:0%">
-
-                            </div>
-
-                        </div>
-
-                    </div>
 
                 </div>
 
             </div>
 
 
-            <!-- ================= ALERTS ================= -->
+            <!-- DECISIONS -->
 
             <div class="card">
 
+
                 <div class="card-header">
 
-                    <h2>
-                        Risk Alerts
-                    </h2>
+                    <div class="card-title">
+                        Payment Decisions
+                    </div>
 
-                    <span>
-                        Recent signals
-                    </span>
+                    <div class="card-subtitle">
+                        What users decided after risk analysis
+                    </div>
 
                 </div>
 
 
-                <div class="alerts" id="alerts">
+                <div class="card-body">
+
+
+                    <div class="decision-box">
+
+
+                        <div class="decision-item cancelled">
+
+                            <div class="decision-label">
+                                CANCELLED
+                            </div>
+
+                            <div
+                                class="decision-value"
+                                id="cancelledCount"
+                            >
+                                0
+                            </div>
+
+                        </div>
+
+
+                        <div class="decision-item continued">
+
+                            <div class="decision-label">
+                                CONTINUED
+                            </div>
+
+                            <div
+                                class="decision-value"
+                                id="continuedCount"
+                            >
+                                0
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
 
                 </div>
 
             </div>
+
 
         </section>
 
 
-        <!-- ================= RISK TREND ================= -->
-
-        <section class="card" style="margin-bottom:22px;">
-
-            <div class="card-header">
-
-                <h2>
-                    Risk Activity Trend
-                </h2>
-
-                <span>
-                    Recent transaction activity
-                </span>
-
-            </div>
-
-
-            <div class="trend" id="trend">
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= RECOMMENDATIONS ================= -->
+        <!-- =====================================================
+             SIGNALS
+        ====================================================== -->
 
         <section class="card">
 
+
             <div class="card-header">
 
-                <h2>
-                    Security Recommendations
-                </h2>
+                <div class="card-title">
+                    Detected Risk Signals
+                </div>
 
-                <span>
-                    Based on observed risk signals
-                </span>
+                <div class="card-subtitle">
+                    Frequency of signals recorded across transactions
+                </div>
 
             </div>
 
 
-            <div class="recommendations">
+            <div class="card-body">
 
 
-                <div class="recommendation">
+                <div
+                    class="signal-list"
+                    id="signalList"
+                >
 
-                    <div class="recommendation-icon">
-                        ◉
+                    <div class="empty">
+                        Loading insights...
                     </div>
-
-                    <h3>
-                        Review High-Risk Payments
-                    </h3>
-
-                    <p>
-                        Transactions with high risk scores should be reviewed
-                        before they are allowed to proceed.
-                    </p>
 
                 </div>
 
-
-                <div class="recommendation">
-
-                    <div class="recommendation-icon">
-                        $
-                    </div>
-
-                    <h3>
-                        Monitor Unusual Amounts
-                    </h3>
-
-                    <p>
-                        Large or unusual payment amounts can be an important
-                        signal when identifying suspicious activity.
-                    </p>
-
-                </div>
-
-
-                <div class="recommendation">
-
-                    <div class="recommendation-icon">
-                        ♢
-                    </div>
-
-                    <h3>
-                        Check New Beneficiaries
-                    </h3>
-
-                    <p>
-                        Payments to unfamiliar or newly added beneficiaries
-                        should receive additional verification.
-                    </p>
-
-                </div>
 
             </div>
 
         </section>
 
-    </main>
+
+</main>
+
+</div>
 
 
-    <!-- ================= JAVASCRIPT ================= -->
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
 
-    <script>
-
-        const STORAGE_KEY =
-            "sentinelTransactions";
-
-
-        /* =========================================
-           LOAD TRANSACTIONS
-        ========================================= */
-
-        function getTransactions() {
-
-            try {
-
-                const data =
-                    JSON.parse(
-                        localStorage.getItem(
-                            STORAGE_KEY
-                        )
-                    );
-
-                return Array.isArray(data)
-                    ? data
-                    : [];
-
-            }
-
-            catch (error) {
-
-                return [];
-
-            }
-
-        }
+<script type="module">
 
 
-        /* =========================================
-           NORMALIZE RISK
-        ========================================= */
-
-        function getRiskLevel(transaction) {
-
-            if (transaction.riskLevel) {
-
-                return String(
-                    transaction.riskLevel
-                ).toLowerCase();
-
-            }
+    import {
+        getTransactions
+    } from "./js/database.js";
 
 
-            if (transaction.risk) {
+    /* =========================================================
+       ELEMENTS
+    ========================================================== */
 
-                return String(
-                    transaction.risk
-                ).toLowerCase();
-
-            }
-
-
-            const score =
-                Number(
-                    transaction.riskScore ??
-                    transaction.score ??
-                    0
-                );
+    const totalTransactions =
+        document.getElementById(
+            "totalTransactions"
+        );
 
 
-            if (score >= 60) {
-                return "high";
-            }
+    const averageScore =
+        document.getElementById(
+            "averageScore"
+        );
 
 
-            if (score >= 30) {
-                return "medium";
-            }
+    const refundSignals =
+        document.getElementById(
+            "refundSignals"
+        );
 
 
-            return "low";
-
-        }
-
-
-        /* =========================================
-           SCORE
-        ========================================= */
-
-        function getRiskScore(transaction) {
-
-            return Number(
-                transaction.riskScore ??
-                transaction.score ??
-                0
-            ) || 0;
-
-        }
+    const urgencySignals =
+        document.getElementById(
+            "urgencySignals"
+        );
 
 
-        /* =========================================
-           LOAD INSIGHTS
-        ========================================= */
+    const lowCount =
+        document.getElementById(
+            "lowCount"
+        );
 
-        function loadInsights() {
+
+    const mediumCount =
+        document.getElementById(
+            "mediumCount"
+        );
+
+
+    const highCount =
+        document.getElementById(
+            "highCount"
+        );
+
+
+    const lowBar =
+        document.getElementById(
+            "lowBar"
+        );
+
+
+    const mediumBar =
+        document.getElementById(
+            "mediumBar"
+        );
+
+
+    const highBar =
+        document.getElementById(
+            "highBar"
+        );
+
+
+    const cancelledCount =
+        document.getElementById(
+            "cancelledCount"
+        );
+
+
+    const continuedCount =
+        document.getElementById(
+            "continuedCount"
+        );
+
+
+    const signalList =
+        document.getElementById(
+            "signalList"
+        );
+
+
+    const refreshBtn =
+        document.getElementById(
+            "refreshBtn"
+        );
+
+
+    /* =========================================================
+       LOAD INSIGHTS
+    ========================================================== */
+
+    async function loadInsights() {
+
+
+        try {
+
 
             const transactions =
-                getTransactions();
+                await getTransactions();
 
+
+            /* =================================================
+               EMPTY DATABASE
+            ================================================= */
+
+            if (
+                !transactions ||
+                transactions.length === 0
+            ) {
+
+                resetInsights();
+
+                signalList.innerHTML = `
+
+                    <div class="empty">
+
+                        No transaction data available yet.
+
+                        <br><br>
+
+                        Analyse a simulated payment first.
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            /* =================================================
+               TOTAL
+            ================================================= */
 
             const total =
                 transactions.length;
 
 
-            let low = 0;
-            let medium = 0;
-            let high = 0;
+            totalTransactions.textContent =
+                total;
 
-            let totalScore = 0;
+
+            /* =================================================
+               RISK COUNTS
+            ================================================= */
+
+            let low = 0;
+
+            let medium = 0;
+
+            let high = 0;
 
 
             transactions.forEach(
                 transaction => {
 
-                    const risk =
-                        getRiskLevel(
-                            transaction
-                        );
+                    const level =
+                        String(
+                            transaction.riskLevel || ""
+                        ).toUpperCase();
 
 
-                    const score =
-                        getRiskScore(
-                            transaction
-                        );
-
-
-                    totalScore += score;
-
-
-                    if (risk === "high") {
+                    if (level === "HIGH") {
 
                         high++;
 
-                    }
-
-                    else if (risk === "medium") {
+                    } else if (level === "MEDIUM") {
 
                         medium++;
 
-                    }
-
-                    else {
+                    } else {
 
                         low++;
 
@@ -1630,320 +1861,166 @@
             );
 
 
-            /* =====================================
-               STATISTICS
-            ===================================== */
+            lowCount.textContent =
+                low;
 
-            document.getElementById(
-                "totalTransactions"
-            ).textContent = total;
+            mediumCount.textContent =
+                medium;
 
-
-            document.getElementById(
-                "lowRisk"
-            ).textContent = low;
+            highCount.textContent =
+                high;
 
 
-            document.getElementById(
-                "mediumRisk"
-            ).textContent = medium;
+            lowBar.style.width =
+                `${(low / total) * 100}%`;
 
 
-            document.getElementById(
-                "highRisk"
-            ).textContent = high;
+            mediumBar.style.width =
+                `${(medium / total) * 100}%`;
 
 
-            document.getElementById(
-                "donutTotal"
-            ).textContent = total;
+            highBar.style.width =
+                `${(high / total) * 100}%`;
 
 
-            /* =====================================
-               PERCENTAGES
-            ===================================== */
-
-            const lowPercentage =
-                total
-                    ? Math.round(
-                        (low / total) * 100
-                    )
-                    : 0;
-
-
-            const mediumPercentage =
-                total
-                    ? Math.round(
-                        (medium / total) * 100
-                    )
-                    : 0;
-
-
-            const highPercentage =
-                total
-                    ? 100 -
-                    lowPercentage -
-                    mediumPercentage
-                    : 0;
-
-
-            document.getElementById(
-                "lowPercent"
-            ).textContent =
-                lowPercentage + "%";
-
-
-            document.getElementById(
-                "mediumPercent"
-            ).textContent =
-                mediumPercentage + "%";
-
-
-            document.getElementById(
-                "highPercent"
-            ).textContent =
-                highPercentage + "%";
-
-
-            /* =====================================
-               DONUT
-            ===================================== */
-
-            const lowAngle =
-                lowPercentage * 3.6;
-
-
-            const mediumAngle =
-                lowAngle +
-                mediumPercentage * 3.6;
-
-
-            const donut =
-                document.getElementById(
-                    "donut"
-                );
-
-
-            donut.style.setProperty(
-                "--low-angle",
-                lowAngle + "deg"
-            );
-
-
-            donut.style.setProperty(
-                "--medium-angle",
-                mediumAngle + "deg"
-            );
-
-
-            /* =====================================
+            /* =================================================
                AVERAGE SCORE
-            ===================================== */
+            ================================================= */
 
-            const averageScore =
-                total
-                    ? Math.round(
-                        totalScore / total
-                    )
-                    : 0;
-
-
-            document.getElementById(
-                "averageScore"
-            ).textContent =
-                averageScore;
-
-
-            const scoreAngle =
-                Math.min(
-                    averageScore,
-                    100
-                ) * 3.6;
-
-
-            document.getElementById(
-                "scoreCircle"
-            ).style.setProperty(
-                "--score-angle",
-                scoreAngle + "deg"
-            );
-
-
-            let description =
-                "No transaction data available yet.";
-
-
-            if (total > 0) {
-
-                if (averageScore >= 60) {
-
-                    description =
-                        "The current transaction set contains elevated risk signals that may require careful review.";
-
-                }
-
-                else if (averageScore >= 30) {
-
-                    description =
-                        "The current transaction set contains moderate risk signals that may require additional verification.";
-
-                }
-
-                else {
-
-                    description =
-                        "The current transaction set is showing relatively low average risk.";
-
-                }
-
-            }
-
-
-            document.getElementById(
-                "scoreDescription"
-            ).textContent =
-                description;
-
-
-            updateRiskFactors(
-                transactions
-            );
-
-
-            updateAlerts(
-                low,
-                medium,
-                high,
-                total
-            );
-
-
-            generateTrend(
-                transactions
-            );
-
-        }
-
-
-        /* =========================================
-           RISK FACTORS
-        ========================================= */
-
-        function updateRiskFactors(
-            transactions
-        ) {
-
-            const total =
-                transactions.length;
-
-
-            if (!total) {
-
-                setFactor(
-                    "amountFactor",
-                    "amountProgress",
+            const totalScore =
+                transactions.reduce(
+                    (sum, transaction) =>
+                        sum +
+                        Number(
+                            transaction.score || 0
+                        ),
                     0
                 );
 
-                setFactor(
-                    "beneficiaryFactor",
-                    "beneficiaryProgress",
-                    0
-                );
 
-                setFactor(
-                    "patternFactor",
-                    "patternProgress",
-                    0
-                );
-
-                setFactor(
-                    "recipientFactor",
-                    "recipientProgress",
-                    0
-                );
-
-                return;
-
-            }
+            const average =
+                totalScore / total;
 
 
-            let unusualAmount = 0;
-            let newBeneficiary = 0;
-            let unusualPattern = 0;
-            let unknownRecipient = 0;
+            averageScore.textContent =
+                average.toFixed(1);
+
+
+            /* =================================================
+               DECISIONS
+            ================================================= */
+
+            const cancelled =
+                transactions.filter(
+                    transaction =>
+                        transaction.decision ===
+                        "cancelled"
+                ).length;
+
+
+            const continued =
+                transactions.filter(
+                    transaction =>
+                        transaction.decision ===
+                        "continued"
+                ).length;
+
+
+            cancelledCount.textContent =
+                cancelled;
+
+
+            continuedCount.textContent =
+                continued;
+
+
+            /* =================================================
+               REFUND + URGENCY
+            ================================================= */
+
+            const refundCount =
+                transactions.filter(
+                    transaction =>
+                        transaction.refundDetected === true
+                        ||
+                        Number(
+                            transaction.refundDetected || 0
+                        ) > 0
+                ).length;
+
+
+            const urgencyCount =
+                transactions.filter(
+                    transaction =>
+                        Number(
+                            transaction.urgencyHits || 0
+                        ) > 0
+                ).length;
+
+
+            refundSignals.textContent =
+                refundCount;
+
+
+            urgencySignals.textContent =
+                urgencyCount;
+
+
+            /* =================================================
+               SIGNAL COUNTS
+            ================================================= */
+
+            const signalCounts = {};
 
 
             transactions.forEach(
                 transaction => {
 
-                    const amount =
-                        Number(
-                            transaction.amount ||
-                            0
+                    const signals =
+                        transaction.signals;
+
+
+                    if (
+                        Array.isArray(signals)
+                    ) {
+
+                        signals.forEach(
+                            signal => {
+
+                                let name;
+
+
+                                if (
+                                    typeof signal ===
+                                    "string"
+                                ) {
+
+                                    name =
+                                        signal;
+
+                                } else if (
+                                    signal &&
+                                    signal.name
+                                ) {
+
+                                    name =
+                                        signal.name;
+
+                                } else {
+
+                                    return;
+
+                                }
+
+
+                                signalCounts[name] =
+                                    (
+                                        signalCounts[name]
+                                        || 0
+                                    ) + 1;
+
+                            }
                         );
-
-
-                    const score =
-                        getRiskScore(
-                            transaction
-                        );
-
-
-                    const recipient =
-                        String(
-                            transaction.recipient ||
-                            transaction.upi ||
-                            ""
-                        ).toLowerCase();
-
-
-                    if (
-                        amount > 1500
-                    ) {
-
-                        unusualAmount++;
-
-                    }
-
-
-                    if (
-                        transaction.newBeneficiary === true
-                    ) {
-
-                        newBeneficiary++;
-
-                    }
-                    else if (
-                        ![
-                            "rahul@upi",
-                            "friend@upi",
-                            "family@upi"
-                        ].includes(recipient)
-                        &&
-                        transaction.upi
-                    ) {
-
-                        newBeneficiary++;
-
-                    }
-
-
-                    if (
-                        score >= 30
-                    ) {
-
-                        unusualPattern++;
-
-                    }
-
-
-                    if (
-                        !recipient ||
-                        recipient.includes("unknown")
-                    ) {
-
-                        unknownRecipient++;
 
                     }
 
@@ -1951,366 +2028,265 @@
             );
 
 
-            setFactor(
-                "amountFactor",
-                "amountProgress",
-                Math.round(
-                    (unusualAmount / total) * 100
-                )
+            displaySignals(signalCounts);
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Error loading insights:",
+                error
             );
 
 
-            setFactor(
-                "beneficiaryFactor",
-                "beneficiaryProgress",
-                Math.round(
-                    (newBeneficiary / total) * 100
-                )
-            );
+            signalList.innerHTML = `
 
+                <div class="empty">
 
-            setFactor(
-                "patternFactor",
-                "patternProgress",
-                Math.round(
-                    (unusualPattern / total) * 100
-                )
-            );
-
-
-            setFactor(
-                "recipientFactor",
-                "recipientProgress",
-                Math.round(
-                    (unknownRecipient / total) * 100
-                )
-            );
-
-        }
-
-
-        function setFactor(
-            textId,
-            barId,
-            value
-        ) {
-
-            document.getElementById(
-                textId
-            ).textContent =
-                value + "%";
-
-
-            document.getElementById(
-                barId
-            ).style.width =
-                value + "%";
-
-        }
-
-
-        /* =========================================
-           ALERTS
-        ========================================= */
-
-        function updateAlerts(
-            low,
-            medium,
-            high,
-            total
-        ) {
-
-            const alerts =
-                document.getElementById(
-                    "alerts"
-                );
-
-
-            if (total === 0) {
-
-                alerts.innerHTML = `
-
-                    <div class="alert low">
-
-                        <div class="alert-icon">
-                            ✓
-                        </div>
-
-                        <div class="alert-content">
-
-                            <h3>
-                                No transaction data yet
-                            </h3>
-
-                            <p>
-                                Simulate a payment to start generating risk insights.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-                return;
-
-            }
-
-
-            let html = "";
-
-
-            if (high > 0) {
-
-                html += `
-
-                    <div class="alert high">
-
-                        <div class="alert-icon">
-                            !
-                        </div>
-
-                        <div class="alert-content">
-
-                            <h3>
-                                ${high}
-                                high-risk transaction${high > 1 ? "s" : ""}
-                                detected
-                            </h3>
-
-                            <p>
-                                High-risk payments should be reviewed before proceeding.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-
-
-            if (medium > 0) {
-
-                html += `
-
-                    <div class="alert medium">
-
-                        <div class="alert-icon">
-                            !
-                        </div>
-
-                        <div class="alert-content">
-
-                            <h3>
-                                ${medium}
-                                transaction${medium > 1 ? "s" : ""}
-                                require review
-                            </h3>
-
-                            <p>
-                                Medium-risk payments contain signals that may require verification.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-
-
-            if (
-                high === 0 &&
-                medium === 0
-            ) {
-
-                html += `
-
-                    <div class="alert low">
-
-                        <div class="alert-icon">
-                            ✓
-                        </div>
-
-                        <div class="alert-content">
-
-                            <h3>
-                                No elevated risk detected
-                            </h3>
-
-                            <p>
-                                Current transactions are within the low-risk range.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-
-
-            html += `
-
-                <div class="alert low">
-
-                    <div class="alert-icon">
-                        ✓
-                    </div>
-
-                    <div class="alert-content">
-
-                        <h3>
-                            Sentinel Engine Operational
-                        </h3>
-
-                        <p>
-                            Risk intelligence is actively analysing transaction data.
-                        </p>
-
-                    </div>
+                    Could not load insights
+                    from Firebase.
 
                 </div>
 
             `;
 
+        }
 
-            alerts.innerHTML =
-                html;
+    }
 
+
+    /* =========================================================
+       DISPLAY SIGNALS
+    ========================================================== */
+
+    function displaySignals(
+        signalCounts
+    ) {
+
+
+        const entries =
+            Object.entries(
+                signalCounts
+            );
+
+
+        if (entries.length === 0) {
+
+            signalList.innerHTML = `
+
+                <div class="empty">
+
+                    No risk signals recorded yet.
+
+                </div>
+
+            `;
+
+            return;
         }
 
 
-        /* =========================================
-           TREND
-        ========================================= */
+        entries.sort(
+            (a, b) =>
+                b[1] - a[1]
+        );
 
-        function generateTrend(
-            transactions
-        ) {
 
-            const trend =
-                document.getElementById(
-                    "trend"
+        signalList.innerHTML = "";
+
+
+        entries.forEach(
+            ([name, count]) => {
+
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "signal-item";
+
+
+                item.innerHTML = `
+
+                    <span class="signal-name">
+
+                        ${escapeHTML(name)}
+
+                    </span>
+
+                    <span class="signal-value">
+
+                        ${count}
+
+                    </span>
+
+                `;
+
+
+                signalList.appendChild(
+                    item
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       RESET
+    ========================================================== */
+
+    function resetInsights() {
+
+        totalTransactions.textContent = "0";
+
+        averageScore.textContent = "0";
+
+        refundSignals.textContent = "0";
+
+        urgencySignals.textContent = "0";
+
+        lowCount.textContent = "0";
+
+        mediumCount.textContent = "0";
+
+        highCount.textContent = "0";
+
+        cancelledCount.textContent = "0";
+
+        continuedCount.textContent = "0";
+
+        lowBar.style.width = "0%";
+
+        mediumBar.style.width = "0%";
+
+        highBar.style.width = "0%";
+
+    }
+
+
+    /* =========================================================
+       ESCAPE HTML
+    ========================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =========================================================
+       ACTIVE NAVIGATION
+    ========================================================== */
+
+    const navItems =
+        document.querySelectorAll(
+            ".nav-item"
+        );
+
+
+    const currentFile =
+        window.location.pathname
+            .split("/")
+            .pop()
+        || "index.html";
+
+
+    navItems.forEach(
+        item => {
+
+
+            const href =
+                item.getAttribute(
+                    "href"
                 );
 
 
-            if (!transactions.length) {
-
-                trend.innerHTML = `
-
-                    <div class="empty">
-                        No transaction activity available.
-                    </div>
-
-                `;
+            if (!href) {
 
                 return;
 
             }
 
 
-            const recent =
-                transactions.slice(
-                    -7
-                );
+            const linkFile =
+                href
+                    .split("/")
+                    .pop();
 
 
-            const values =
-                recent.map(
-                    transaction =>
-                        getRiskScore(
-                            transaction
+            if (
+                linkFile === currentFile
+            ) {
+
+
+                navItems.forEach(
+                    nav =>
+                        nav.classList.remove(
+                            "active"
                         )
                 );
 
 
-            const max =
-                Math.max(
-                    ...values,
-                    100
+                item.classList.add(
+                    "active"
                 );
 
-
-            trend.innerHTML =
-                recent.map(
-                    (
-                        transaction,
-                        index
-                    ) => {
-
-                        const score =
-                            getRiskScore(
-                                transaction
-                            );
-
-
-                        const height =
-                            Math.max(
-                                8,
-                                (score / max) * 175
-                            );
-
-
-                        return `
-
-                            <div class="trend-day">
-
-                                <div class="bar-value">
-                                    ${score}
-                                </div>
-
-                                <div
-                                    class="bar"
-                                    style="height:${height}px">
-                                </div>
-
-                                <div class="day-label">
-                                    TXN ${index + 1}
-                                </div>
-
-                            </div>
-
-                        `;
-
-                    }
-                ).join("");
+            }
 
         }
+    );
 
 
-        /* =========================================
-           UPDATE WHEN NEW TRANSACTION IS SAVED
-        ========================================= */
+    /* =========================================================
+       REFRESH
+    ========================================================== */
 
-        window.addEventListener(
-            "storage",
-            event => {
-
-                if (
-                    event.key ===
-                    STORAGE_KEY
-                ) {
-
-                    loadInsights();
-
-                }
-
-            }
-        );
+    refreshBtn.addEventListener(
+        "click",
+        loadInsights
+    );
 
 
-        /* =========================================
-           INITIAL LOAD
-        ========================================= */
+    /* =========================================================
+       INITIAL LOAD
+    ========================================================== */
 
-        loadInsights();
+    loadInsights();
 
-    </script>
+</script>
+
 
 </body>
 
