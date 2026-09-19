@@ -280,6 +280,57 @@
 
 
         /* =====================================================
+           ML ASSESSMENT
+        ===================================================== */
+
+        .ml-box {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+
+        .ml-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+
+        .ml-row:last-child {
+            border-bottom: none;
+        }
+
+
+        .ml-label {
+            color: #6b7280;
+        }
+
+
+        .ml-value {
+            font-weight: bold;
+        }
+
+
+        .probability-bar {
+            width: 100%;
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+
+        .probability-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.8s ease;
+        }
+
+
+        /* =====================================================
            DECISION BUTTONS
         ===================================================== */
 
@@ -456,7 +507,7 @@
 
 
         <a
-            href="risk-insights.html"
+            href="insights.html"
             class="nav-item"
         >
             Risk Insights
@@ -598,6 +649,83 @@
 
                     </div>
 
+
+
+                    <!-- =========================================
+                         ML ASSESSMENT
+                    ========================================== -->
+
+                    <div class="card">
+
+                        <div class="card-title">
+                            ML Assessment
+                        </div>
+
+
+                        <div class="ml-box">
+
+                            <div class="ml-row">
+
+                                <span class="ml-label">
+                                    Model
+                                </span>
+
+                                <span class="ml-value">
+                                    Logistic Regression
+                                </span>
+
+                            </div>
+
+
+                            <div class="ml-row">
+
+                                <span class="ml-label">
+                                    Prediction
+                                </span>
+
+                                <span
+                                    id="mlPrediction"
+                                    class="ml-value"
+                                >
+                                    -
+                                </span>
+
+                            </div>
+
+
+                            <div style="margin-top:15px;">
+
+                                <div class="ml-row">
+
+                                    <span class="ml-label">
+                                        Scam Probability
+                                    </span>
+
+                                    <span
+                                        id="mlProbability"
+                                        class="ml-value"
+                                    >
+                                        -
+                                    </span>
+
+                                </div>
+
+
+                                <div class="probability-bar">
+
+                                    <div
+                                        id="probabilityFill"
+                                        class="probability-fill"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
 
@@ -731,6 +859,26 @@
 
                         </div>
 
+
+                        <div
+                            class="payment-row"
+                            id="refundRow"
+                            style="display:none;"
+                        >
+
+                            <span class="payment-label">
+                                Refund UPI
+                            </span>
+
+                            <span
+                                id="paymentRefundUpi"
+                                class="payment-value"
+                            >
+                                -
+                            </span>
+
+                        </div>
+
                     </div>
 
 
@@ -803,7 +951,9 @@
            FIREBASE
         ===================================================== */
 
-        import { saveTransaction } from "./js/database.js";
+        import {
+            saveTransaction
+        } from "./js/database.js";
 
 
 
@@ -834,26 +984,68 @@
 
         if (!paymentData || !riskData) {
 
-            document.getElementById(
-                "loading"
-            ).innerHTML = `
-                <h3>No payment analysis found.</h3>
-                <p style="margin-top:10px;">
-                    Please return to the payment simulation page
-                    and analyse a payment first.
-                </p>
-                <br>
-                <a href="payment.html">
-                    Go to Payment Simulation
-                </a>
-            `;
+    document.getElementById(
+        "loading"
+    ).innerHTML = `
+        <h3>No payment analysis found.</h3>
 
-        } else {
+        <p style="margin-top:10px;">
+            Please return to the payment simulation page
+            and analyse a payment first.
+        </p>
 
-            displayAnalysis();
+        <br>
 
-        }
+        <a href="payment.html">
+            Go to Payment Simulation
+        </a>
+    `;
 
+} else {
+
+    try {
+
+        displayAnalysis();
+
+    } catch (error) {
+
+        console.error(
+            "Risk Analysis display error:",
+            error
+        );
+
+        document.getElementById(
+            "loading"
+        ).style.display = "block";
+
+        document.getElementById(
+            "loading"
+        ).innerHTML = `
+            <h3>Unable to display risk analysis.</h3>
+
+            <p style="margin-top:10px;">
+                An error occurred while loading the
+                analysis results.
+            </p>
+
+            <p style="margin-top:10px; color:#dc2626;">
+                Check the browser console for details.
+            </p>
+
+            <br>
+
+            <a href="payment.html">
+                Return to Payment Simulation
+            </a>
+        `;
+
+        document.getElementById(
+            "analysisContent"
+        ).style.display = "none";
+
+    }
+
+}
 
 
         /* =====================================================
@@ -868,14 +1060,13 @@
             ================================================= */
 
             document.getElementById(
-                "loading"
-            ).style.display = "none";
-
-
-            document.getElementById(
                 "analysisContent"
             ).style.display = "block";
 
+
+            document.getElementById(
+                "loading"
+            ).style.display = "none";
 
 
             /* =================================================
@@ -935,12 +1126,34 @@
 
 
             /* =================================================
-               RISK SCORE
+               REFUND DETAILS
+            ================================================= */
+
+            if (
+                paymentData.refundUpi
+            ) {
+
+                document.getElementById(
+                    "refundRow"
+                ).style.display = "flex";
+
+
+                document.getElementById(
+                    "paymentRefundUpi"
+                ).textContent =
+                    paymentData.refundUpi;
+
+            }
+
+
+
+            /* =================================================
+               RULE-BASED RISK RESULT
             ================================================= */
 
             const score =
                 Number(
-                    riskData.score || 0
+                    riskData.score ?? 0
                 );
 
 
@@ -986,7 +1199,10 @@
 
 
             scoreFill.style.width =
-                score + "%";
+                Math.min(
+                    Math.max(score, 0),
+                    100
+                ) + "%";
 
 
             scoreFill.style.background =
@@ -1011,12 +1227,109 @@
 
 
             /* =================================================
-               SIGNALS
+               RISK SIGNALS
             ================================================= */
 
             displaySignals(
                 riskData.signals || []
             );
+
+
+
+            /* =================================================
+               ML RESULT
+            ================================================= */
+
+            displayMLResult(
+                riskData.ml
+            );
+
+        }
+
+
+
+        /* =====================================================
+           DISPLAY ML RESULT
+        ===================================================== */
+
+        function displayMLResult(
+            ml
+        ) {
+
+            const predictionElement =
+                document.getElementById(
+                    "mlPrediction"
+                );
+
+
+            const probabilityElement =
+                document.getElementById(
+                    "mlProbability"
+                );
+
+
+            const probabilityFill =
+                document.getElementById(
+                    "probabilityFill"
+                );
+
+
+            if (!ml) {
+
+                predictionElement.textContent =
+                    "Unavailable";
+
+
+                probabilityElement.textContent =
+                    "Unavailable";
+
+
+                return;
+
+            }
+
+
+            const prediction =
+                Number(
+                    ml.prediction
+                );
+
+
+            const probability =
+                Number(
+                    ml.scamProbability
+                );
+
+
+            predictionElement.textContent =
+                prediction === 1
+                    ? "Potential Scam"
+                    : "No Scam Pattern";
+
+
+            const percentage =
+                Math.min(
+                    Math.max(
+                        probability * 100,
+                        0
+                    ),
+                    100
+                );
+
+
+            probabilityElement.textContent =
+                percentage.toFixed(2) +
+                "%";
+
+
+            probabilityFill.style.width =
+                percentage + "%";
+
+
+            probabilityFill.style.background =
+                getProbabilityColor(
+                    percentage
+                );
 
         }
 
@@ -1048,6 +1361,7 @@
                 `;
 
                 return;
+
             }
 
 
@@ -1091,7 +1405,8 @@
 
                             <span class="signal-name">
                                 ${escapeHTML(
-                                    signal.name || "Risk signal"
+                                    signal.name ||
+                                    "Risk signal"
                                 )}
                             </span>
 
@@ -1101,13 +1416,17 @@
 
                         </div>
 
+
                         <div class="signal-bar">
 
                             <div
                                 class="signal-fill"
                                 style="
                                     width:${percentage}%;
-                                    background:${getSignalColor(score, max)};
+                                    background:${getSignalColor(
+                                        score,
+                                        max
+                                    )};
                                 "
                             ></div>
 
@@ -1162,7 +1481,7 @@
 
 
                     /* =========================================
-                       CREATE TRANSACTION RECORD
+                       CREATE TRANSACTION
                     ========================================== */
 
                     const transaction = {
@@ -1184,7 +1503,7 @@
 
 
                     /* =========================================
-                       SAVE TO FIREBASE
+                       SAVE FIREBASE
                     ========================================== */
 
                     const transactionId =
@@ -1200,7 +1519,7 @@
 
 
                     /* =========================================
-                       SAVE LOCAL DECISION
+                       LOCAL DECISION
                     ========================================== */
 
                     sessionStorage.setItem(
@@ -1226,7 +1545,7 @@
 
 
                     /* =========================================
-                       GO TO DECISION PAGE
+                       DECISION PAGE
                     ========================================== */
 
                     window.location.href =
@@ -1301,7 +1620,7 @@
 
 
                     /* =========================================
-                       CREATE TRANSACTION RECORD
+                       CREATE TRANSACTION
                     ========================================== */
 
                     const transaction = {
@@ -1323,7 +1642,7 @@
 
 
                     /* =========================================
-                       SAVE TO FIREBASE
+                       SAVE FIREBASE
                     ========================================== */
 
                     const transactionId =
@@ -1339,7 +1658,7 @@
 
 
                     /* =========================================
-                       SAVE LOCAL DECISION
+                       LOCAL DECISION
                     ========================================== */
 
                     sessionStorage.setItem(
@@ -1365,7 +1684,7 @@
 
 
                     /* =========================================
-                       GO TO DECISION PAGE
+                       DECISION PAGE
                     ========================================== */
 
                     window.location.href =
@@ -1444,11 +1763,6 @@
             riskLevel
         ) {
 
-            /*
-             * No dependency on backend colors.
-             * Used only for the visual risk bar.
-             */
-
             if (
                 riskLevel === "HIGH"
             ) {
@@ -1504,6 +1818,38 @@
 
             if (
                 percentage >= 0.35
+            ) {
+
+                return "#d97706";
+
+            }
+
+
+            return "#16a34a";
+
+        }
+
+
+
+        /* =====================================================
+           ML PROBABILITY COLOR
+        ===================================================== */
+
+        function getProbabilityColor(
+            percentage
+        ) {
+
+            if (
+                percentage >= 70
+            ) {
+
+                return "#dc2626";
+
+            }
+
+
+            if (
+                percentage >= 35
             ) {
 
                 return "#d97706";

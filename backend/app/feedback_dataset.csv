@@ -1,0 +1,3 @@
+transaction_id,amount_deviation,new_beneficiary,urgency,scam_language,refund_redirection,transaction_velocity,behaviour_deviation,combined_context,model_prediction,model_probability,payment_amount,upi,actual_outcome,timestamp
+bUyZiL00wp0yfN4WleZN,1.7142857142857142,1,1,1,0,0,1,1,1,0.99,4500,service.help@upi,0,2026-09-19T04:17:43.292Z
+bUyZiL00wp0yfN4WleZN,1.7142857142857142,1,1,1,0,0,1,1,1,0.99,4500,service.help@upi,0,2026-09-19T04:17:44.864Z

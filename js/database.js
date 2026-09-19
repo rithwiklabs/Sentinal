@@ -14,25 +14,34 @@ const transactionsRef = collection(db, "transactions");
 
 // SAVE TRANSACTION
 export async function saveTransaction(transaction) {
-    try {
-        const docRef = await addDoc(transactionsRef, {
-            ...transaction,
-            createdAt: new Date()
-        });
 
-        console.log("Transaction saved:", docRef.id);
+    try {
+
+        const docRef = await addDoc(
+            transactionsRef,
+            {
+                ...transaction,
+                createdAt: new Date()
+            }
+        );
+
+        console.log(
+            "Transaction saved:",
+            docRef.id
+        );
 
         return docRef.id;
 
     } catch (error) {
-        console.error("Error saving transaction:", error);
 
-        // Send the error back to risk-analysis.html
+        console.error(
+            "Error saving transaction:",
+            error
+        );
+
         throw error;
     }
 }
-
-
 // GET ALL TRANSACTIONS
 export async function getTransactions() {
     try {
@@ -82,5 +91,18 @@ export async function deleteTransaction(id) {
         console.error("Error deleting transaction:", error);
 
         throw error;
+    }
+}
+
+export async function getTransactionsByUser(userId) {
+    try {
+        const transactions = await getTransactions();
+
+        return transactions.filter(
+            transaction => transaction.userId === userId
+        );
+    } catch (error) {
+        console.error("Error loading user transactions:", error);
+        return [];
     }
 }

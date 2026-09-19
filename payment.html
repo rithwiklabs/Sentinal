@@ -1,1447 +1,1435 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sentinel - Payment Simulation</title>
+<title>Sentinel - Payment Simulation</title>
 
+<style>
 
-    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5f7fb;
+        color: #1f2937;
+    }
 
+    /* =====================================================
+       SIDEBAR
+    ===================================================== */
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f5f7fb;
-            color: #1f2937;
-        }
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 240px;
+        height: 100vh;
+        background: #111827;
+        color: white;
+        padding: 25px 15px;
+    }
 
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 35px;
+        padding-left: 15px;
+    }
 
-        /* =====================================================
-           SIDEBAR
-        ===================================================== */
+    .nav-item {
+        display: block;
+        padding: 13px 15px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        color: #d1d5db;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+        background: #1f2937;
+        color: white;
+    }
+
+    /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+    .main {
+        margin-left: 240px;
+        padding: 35px;
+        min-height: 100vh;
+    }
+
+    .page-title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+        color: #6b7280;
+        margin-bottom: 30px;
+    }
+
+    /* =====================================================
+       GRID
+    ===================================================== */
+
+    .grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 14px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    .card-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* =====================================================
+       FORM
+    ===================================================== */
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #6366f1;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 90px;
+    }
+
+    /* =====================================================
+       AUTOMATIC FIELD
+    ===================================================== */
+
+    .auto-field {
+        background: #f9fafb;
+        cursor: not-allowed;
+    }
+
+    .auto-info {
+        font-size: 11px;
+        color: #6b7280;
+        margin-top: 5px;
+    }
+
+    /* =====================================================
+       ADVANCED CONTEXT
+    ===================================================== */
+
+    .advanced {
+        margin-top: 25px;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 25px;
+    }
+
+    .advanced-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .advanced-description {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 20px;
+    }
+
+    .advanced-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    /* =====================================================
+       REFUND FIELD
+    ===================================================== */
+
+    #refundField {
+        display: none;
+    }
+
+    #refundField.show {
+        display: block;
+    }
+
+    /* =====================================================
+       BUTTON
+    ===================================================== */
+
+    .analyse-btn {
+        width: 100%;
+        padding: 14px;
+        margin-top: 10px;
+        background: #4f46e5;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .analyse-btn:hover {
+        background: #4338ca;
+    }
+
+    .analyse-btn:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+    }
+
+    /* =====================================================
+       SCENARIOS
+    ===================================================== */
+
+    .scenario {
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .scenario:hover {
+        border-color: #6366f1;
+    }
+
+    .scenario.selected {
+        border-color: #4f46e5;
+        background: #eef2ff;
+    }
+
+    .scenario-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .scenario-description {
+        font-size: 13px;
+        color: #6b7280;
+    }
+
+    /* =====================================================
+       CHECK LIST
+    ===================================================== */
+
+    .check-list {
+        list-style: none;
+    }
+
+    .check-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 14px;
+    }
+
+    .check-list li:last-child {
+        border-bottom: none;
+    }
+
+    .check-list li::before {
+        content: "✓";
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    /* =====================================================
+       SYNTHETIC DATA BADGE
+    ===================================================== */
+
+    .badge {
+        display: inline-block;
+        background: #ecfdf5;
+        color: #047857;
+        padding: 6px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    .toast {
+        position: fixed;
+        right: 25px;
+        bottom: 25px;
+        background: #111827;
+        color: white;
+        padding: 14px 20px;
+        border-radius: 8px;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: 0.3s;
+        z-index: 1000;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 900px) {
 
         .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 240px;
-            height: 100vh;
-            background: #111827;
-            color: white;
-            padding: 25px 15px;
+            width: 200px;
         }
-
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 35px;
-            padding-left: 15px;
-        }
-
-
-        .nav-item {
-            display: block;
-            padding: 13px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            color: #d1d5db;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-
-        .nav-item:hover,
-        .nav-item.active {
-            background: #1f2937;
-            color: white;
-        }
-
-
-        /* =====================================================
-           MAIN CONTENT
-        ===================================================== */
 
         .main {
-            margin-left: 240px;
-            padding: 35px;
-            min-height: 100vh;
+            margin-left: 200px;
         }
-
-
-        .page-title {
-            font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-
-        .page-subtitle {
-            color: #6b7280;
-            margin-bottom: 30px;
-        }
-
-
-        /* =====================================================
-           GRID
-        ===================================================== */
 
         .grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 25px;
+            grid-template-columns: 1fr;
         }
+    }
 
+    @media (max-width: 650px) {
 
-        .card {
-            background: white;
-            border-radius: 14px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-        }
-
-
-        .card-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-
-        /* =====================================================
-           FORM
-        ===================================================== */
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 7px;
-        }
-
-
-        input,
-        textarea,
-        select {
+        .sidebar {
+            position: relative;
             width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
+            height: auto;
         }
 
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            border-color: #6366f1;
+        .main {
+            margin-left: 0;
+            padding: 20px;
         }
-
-
-        textarea {
-            resize: vertical;
-            min-height: 90px;
-        }
-
-
-        /* =====================================================
-           ADVANCED CONTEXT
-        ===================================================== */
-
-        .advanced {
-            margin-top: 25px;
-            border-top: 1px solid #e5e7eb;
-            padding-top: 25px;
-        }
-
-
-        .advanced-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-
-        .advanced-description {
-            font-size: 13px;
-            color: #6b7280;
-            margin-bottom: 20px;
-        }
-
 
         .advanced-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
+            grid-template-columns: 1fr;
         }
+    }
 
-
-        /* =====================================================
-           REFUND FIELD
-        ===================================================== */
-
-        #refundField {
-            display: none;
-        }
-
-
-        #refundField.show {
-            display: block;
-        }
-
-
-        /* =====================================================
-           BUTTON
-        ===================================================== */
-
-        .analyse-btn {
-            width: 100%;
-            padding: 14px;
-            margin-top: 10px;
-            background: #4f46e5;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-
-        .analyse-btn:hover {
-            background: #4338ca;
-        }
-
-
-        .analyse-btn:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-
-
-        /* =====================================================
-           SCENARIOS
-        ===================================================== */
-
-        .scenario {
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-
-        .scenario:hover {
-            border-color: #6366f1;
-        }
-
-
-        .scenario.selected {
-            border-color: #4f46e5;
-            background: #eef2ff;
-        }
-
-
-        .scenario-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-
-        .scenario-description {
-            font-size: 13px;
-            color: #6b7280;
-        }
-
-
-        /* =====================================================
-           CHECK LIST
-        ===================================================== */
-
-        .check-list {
-            list-style: none;
-        }
-
-
-        .check-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 14px;
-        }
-
-
-        .check-list li:last-child {
-            border-bottom: none;
-        }
-
-
-        .check-list li::before {
-            content: "✓";
-            margin-right: 10px;
-            font-weight: bold;
-        }
-
-
-        /* =====================================================
-           SYNTHETIC DATA BADGE
-        ===================================================== */
-
-        .badge {
-            display: inline-block;
-            background: #ecfdf5;
-            color: #047857;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-
-        /* =====================================================
-           TOAST
-        ===================================================== */
-
-        .toast {
-            position: fixed;
-            right: 25px;
-            bottom: 25px;
-            background: #111827;
-            color: white;
-            padding: 14px 20px;
-            border-radius: 8px;
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            transition: 0.3s;
-            z-index: 1000;
-        }
-
-
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
-
-        @media (max-width: 900px) {
-
-            .sidebar {
-                width: 200px;
-            }
-
-            .main {
-                margin-left: 200px;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-
-        @media (max-width: 650px) {
-
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-            }
-
-            .main {
-                margin-left: 0;
-                padding: 20px;
-            }
-
-            .advanced-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-    </style>
+</style>
+```
 
 </head>
 
-
 <body>
 
+```
+<!-- =====================================================
+     SIDEBAR
+====================================================== -->
 
-    <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
+<aside class="sidebar">
 
-    <aside class="sidebar">
+    <div class="logo">
+        Sentinel
+    </div>
 
-        <div class="logo">
-            Sentinel
-        </div>
+    <a href="index.html" class="nav-item">
+        Overview
+    </a>
 
+    <a href="payment.html" class="nav-item active">
+        Payment Simulation
+    </a>
 
-        <a
-            href="index.html"
-            class="nav-item"
-        >
-            Overview
-        </a>
+    <a href="risk-analysis.html" class="nav-item">
+        Risk Analysis
+    </a>
 
+    <a href="decision.html" class="nav-item">
+        Decision
+    </a>
 
-        <a
-            href="payment.html"
-            class="nav-item active"
-        >
-            Payment Simulation
-        </a>
+    <a href="transactions.html" class="nav-item">
+        Transactions
+    </a>
 
+    <a href="risk-insights.html" class="nav-item">
+        Risk Insights
+    </a>
 
-        <a
-            href="risk-analysis.html"
-            class="nav-item"
-        >
-            Risk Analysis
-        </a>
-
-
-        <a
-            href="decision.html"
-            class="nav-item"
-        >
-            Decision
-        </a>
+</aside>
 
 
-        <a
-            href="transactions.html"
-            class="nav-item"
-        >
-            Transactions
-        </a>
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main class="main">
+
+    <div class="badge">
+        Synthetic Simulation Mode
+    </div>
+
+    <h1 class="page-title">
+        Payment Simulation
+    </h1>
+
+    <p class="page-subtitle">
+        Simulate a UPI payment and let Sentinel analyse the
+        transaction before confirmation.
+    </p>
 
 
-        <a
-            href="risk-insights.html"
-            class="nav-item"
-        >
-            Risk Insights
-        </a>
-
-    </aside>
+    <div class="grid">
 
 
+        <!-- =================================================
+             PAYMENT FORM
+        ================================================== -->
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
+        <div class="card">
 
-    <main class="main">
-
-
-        <div class="badge">
-            Synthetic Simulation Mode
-        </div>
+            <div class="card-title">
+                Enter Payment Details
+            </div>
 
 
-        <h1 class="page-title">
-            Payment Simulation
-        </h1>
+            <!-- UPI -->
+
+            <div class="form-group">
+
+                <label for="upi">
+                    Recipient UPI ID
+                </label>
+
+                <input
+                    type="text"
+                    id="upi"
+                    placeholder="example@upi"
+                >
+
+            </div>
 
 
-        <p class="page-subtitle">
-            Simulate a UPI payment and let Sentinel analyse the
-            transaction before confirmation.
-        </p>
+            <!-- AMOUNT -->
+
+            <div class="form-group">
+
+                <label for="amount">
+                    Amount
+                </label>
+
+                <input
+                    type="number"
+                    id="amount"
+                    placeholder="Enter amount"
+                    min="1"
+                >
+
+            </div>
 
 
+            <!-- MESSAGE -->
 
-        <div class="grid">
+            <div class="form-group">
+
+                <label for="message">
+                    Payment Message
+                </label>
+
+                <textarea
+                    id="message"
+                    placeholder="Enter payment message..."
+                ></textarea>
+
+            </div>
 
 
             <!-- =================================================
-                 PAYMENT FORM
+                 ADVANCED TRANSACTION CONTEXT
+            ================================================== -->
+
+            <div class="advanced">
+
+                <div class="advanced-title">
+                    Advanced Transaction Context
+                </div>
+
+                <div class="advanced-description">
+                    Usual payment amount is calculated from your
+                    previous simulated transactions. Enter the
+                    remaining transaction context manually.
+                </div>
+
+
+                <div class="advanced-grid">
+
+
+                    <!-- USUAL AMOUNT -->
+
+                    <div class="form-group">
+
+                        <label for="usualAmount">
+                            Usual Payment Amount
+                        </label>
+
+                        <input
+                            type="number"
+                            id="usualAmount"
+                            class="auto-field"
+                            placeholder="Calculated automatically"
+                            min="0"
+                            readonly
+                        >
+
+                        <div class="auto-info">
+                            Calculated from your previous payments
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECENT PAYMENTS -->
+
+                    <div class="form-group">
+
+                        <label for="recentPayments">
+                            Payments in Last 10 Minutes
+                        </label>
+
+                        <input
+                            type="number"
+                            id="recentPayments"
+                            placeholder="Enter number of recent payments"
+                            min="0"
+                        >
+
+                        <div class="auto-info">
+                            Enter the number manually
+                        </div>
+
+                    </div>
+
+
+                    <!-- BENEFICIARY -->
+
+                    <div class="form-group">
+
+                        <label for="beneficiaryStatus">
+                            Beneficiary History
+                        </label>
+
+                        <select id="beneficiaryStatus">
+
+                            <option value="new">
+                                New beneficiary
+                            </option>
+
+                            <option value="known">
+                                Known beneficiary
+                            </option>
+
+                            <option value="unknown">
+                                Unknown beneficiary
+                            </option>
+
+                        </select>
+
+                        <div class="auto-info">
+                            Select the recipient's history manually
+                        </div>
+
+                    </div>
+
+
+                    <!-- PREVIOUS PAYMENTS -->
+
+                    <div class="form-group">
+
+                        <label for="previousPayments">
+                            Previous Payments to Recipient
+                        </label>
+
+                        <input
+                            type="number"
+                            id="previousPayments"
+                            placeholder="Enter previous payments"
+                            min="0"
+                        >
+
+                        <div class="auto-info">
+                            Enter the number manually
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REFUND UPI -->
+
+                <div
+                    class="form-group"
+                    id="refundField"
+                >
+
+                    <label for="refundUpi">
+                        Refund Destination UPI ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="refundUpi"
+                        placeholder="Different UPI ID for refund"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ANALYSE BUTTON -->
+
+            <button
+                id="analyseBtn"
+                class="analyse-btn"
+                onclick="analysePayment()"
+            >
+                Analyse Payment Risk →
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT SIDE
+        ================================================== -->
+
+        <div>
+
+
+            <!-- =================================================
+                 SCENARIOS
             ================================================== -->
 
             <div class="card">
 
                 <div class="card-title">
-                    Enter Payment Details
+                    Quick Scenarios
                 </div>
 
 
-                <!-- UPI -->
-
-                <div class="form-group">
-
-                    <label for="upi">
-                        Recipient UPI ID
-                    </label>
-
-                    <input
-                        type="text"
-                        id="upi"
-                        placeholder="example@upi"
-                    >
-
-                </div>
-
-
-
-                <!-- AMOUNT -->
-
-                <div class="form-group">
-
-                    <label for="amount">
-                        Amount
-                    </label>
-
-                    <input
-                        type="number"
-                        id="amount"
-                        placeholder="Enter amount"
-                        min="1"
-                    >
-
-                </div>
-
-
-
-                <!-- MESSAGE -->
-
-                <div class="form-group">
-
-                    <label for="message">
-                        Payment Message
-                    </label>
-
-                    <textarea
-                        id="message"
-                        placeholder="Enter payment message..."
-                    ></textarea>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     ADVANCED TRANSACTION CONTEXT
-                ================================================== -->
-
-                <div class="advanced">
-
-                    <div class="advanced-title">
-                        Advanced Transaction Context
-                    </div>
-
-
-                    <div class="advanced-description">
-                        These synthetic signals help Sentinel detect
-                        unusual or socially engineered payments.
-                    </div>
-
-
-
-                    <div class="advanced-grid">
-
-
-                        <!-- USUAL AMOUNT -->
-
-                        <div class="form-group">
-
-                            <label for="usualAmount">
-                                Usual Payment Amount
-                            </label>
-
-                            <input
-                                type="number"
-                                id="usualAmount"
-                                placeholder="Example: 1000"
-                                min="0"
-                            >
-
-                        </div>
-
-
-
-                        <!-- RECENT PAYMENTS -->
-
-                        <div class="form-group">
-
-                            <label for="recentPayments">
-                                Payments in Last 10 Minutes
-                            </label>
-
-                            <input
-                                type="number"
-                                id="recentPayments"
-                                placeholder="Example: 2"
-                                min="0"
-                            >
-
-                        </div>
-
-
-
-                        <!-- BENEFICIARY -->
-
-                        <div class="form-group">
-
-                            <label for="beneficiaryStatus">
-                                Beneficiary History
-                            </label>
-
-                            <select
-                                id="beneficiaryStatus"
-                            >
-
-                                <option value="known">
-                                    Known beneficiary
-                                </option>
-
-                                <option
-                                    value="new"
-                                    selected
-                                >
-                                    New beneficiary
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-
-                        <!-- PREVIOUS PAYMENTS -->
-
-                        <div class="form-group">
-
-                            <label for="previousPayments">
-                                Previous Payments to Recipient
-                            </label>
-
-                            <input
-                                type="number"
-                                id="previousPayments"
-                                placeholder="Example: 5"
-                                min="0"
-                            >
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <!-- REFUND UPI -->
-
-                    <div
-                        class="form-group"
-                        id="refundField"
-                    >
-
-                        <label for="refundUpi">
-                            Refund Destination UPI ID
-                        </label>
-
-                        <input
-                            type="text"
-                            id="refundUpi"
-                            placeholder="Different UPI ID for refund"
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ANALYSE BUTTON -->
-
-                <button
-                    id="analyseBtn"
-                    class="analyse-btn"
-                    onclick="analysePayment()"
+                <!-- REFUND -->
+
+                <div
+                    class="scenario refund"
+                    onclick="loadScenario('refund', this)"
                 >
-                    Analyse Payment Risk →
-                </button>
+
+                    <div class="scenario-title">
+                        🔄 Refund Scam
+                    </div>
+
+                    <div class="scenario-description">
+                        Simulates a fake accidental transfer
+                        requesting money to another UPI ID.
+                    </div>
+
+                </div>
+
+
+                <!-- URGENT -->
+
+                <div
+                    class="scenario urgent"
+                    onclick="loadScenario('urgent', this)"
+                >
+
+                    <div class="scenario-title">
+                        ⚠️ Urgent Payment
+                    </div>
+
+                    <div class="scenario-description">
+                        Simulates a payment using pressure,
+                        urgency and account-blocking threats.
+                    </div>
+
+                </div>
+
+
+                <!-- NORMAL -->
+
+                <div
+                    class="scenario normal"
+                    onclick="loadScenario('normal', this)"
+                >
+
+                    <div class="scenario-title">
+                        ✓ Normal Payment
+                    </div>
+
+                    <div class="scenario-description">
+                        Simulates a familiar, low-value payment.
+                    </div>
+
+                </div>
 
             </div>
 
 
-
             <!-- =================================================
-                 RIGHT SIDE
+                 WHAT SENTINEL CHECKS
             ================================================== -->
 
-            <div>
+            <div
+                class="card"
+                style="margin-top: 25px;"
+            >
 
-
-                <!-- =================================================
-                     SCENARIOS
-                ================================================== -->
-
-                <div class="card">
-
-                    <div class="card-title">
-                        Quick Scenarios
-                    </div>
-
-
-                    <!-- REFUND -->
-
-                    <div
-                        class="scenario refund"
-                        onclick="loadScenario('refund', this)"
-                    >
-
-                        <div class="scenario-title">
-                            🔄 Refund Scam
-                        </div>
-
-                        <div class="scenario-description">
-                            Simulates a fake accidental transfer
-                            requesting money to another UPI ID.
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- URGENT -->
-
-                    <div
-                        class="scenario urgent"
-                        onclick="loadScenario('urgent', this)"
-                    >
-
-                        <div class="scenario-title">
-                            ⚠️ Urgent Payment
-                        </div>
-
-                        <div class="scenario-description">
-                            Simulates a payment using pressure,
-                            urgency and account-blocking threats.
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- NORMAL -->
-
-                    <div
-                        class="scenario normal"
-                        onclick="loadScenario('normal', this)"
-                    >
-
-                        <div class="scenario-title">
-                            ✓ Normal Payment
-                        </div>
-
-                        <div class="scenario-description">
-                            Simulates a familiar, low-value payment.
-                        </div>
-
-                    </div>
-
+                <div class="card-title">
+                    What Sentinel Checks
                 </div>
 
+                <ul class="check-list">
 
+                    <li>
+                        Amount anomaly
+                    </li>
 
-                <!-- =================================================
-                     WHAT SENTINEL CHECKS
-                ================================================== -->
+                    <li>
+                        New beneficiary
+                    </li>
 
-                <div
-                    class="card"
-                    style="margin-top: 25px;"
-                >
+                    <li>
+                        Urgency signals
+                    </li>
 
-                    <div class="card-title">
-                        What Sentinel Checks
-                    </div>
+                    <li>
+                        Refund redirection
+                    </li>
 
+                    <li>
+                        Scam language patterns
+                    </li>
 
-                    <ul class="check-list">
+                    <li>
+                        Transaction velocity
+                    </li>
 
-                        <li>
-                            Amount anomaly
-                        </li>
+                    <li>
+                        Behaviour deviation
+                    </li>
 
-                        <li>
-                            New beneficiary
-                        </li>
+                    <li>
+                        Combined transaction context
+                    </li>
 
-                        <li>
-                            Urgency signals
-                        </li>
-
-                        <li>
-                            Refund redirection
-                        </li>
-
-                        <li>
-                            Scam language patterns
-                        </li>
-
-                        <li>
-                            Transaction velocity
-                        </li>
-
-                        <li>
-                            Behaviour deviation
-                        </li>
-
-                        <li>
-                            Combined transaction context
-                        </li>
-
-                    </ul>
-
-                </div>
+                </ul>
 
             </div>
 
         </div>
 
-    </main>
+    </div>
+
+</main>
 
 
+<!-- =====================================================
+     TOAST
+====================================================== -->
 
-    <!-- =====================================================
-         TOAST
-    ====================================================== -->
-
-    <div
-        id="toast"
-        class="toast"
-    ></div>
-
+<div
+    id="toast"
+    class="toast"
+></div>
 
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
 
-    <script>
+<script type="module">
+
+    import {
+        getTransactionsByUser
+    } from "./js/database.js";
 
 
-        /* =====================================================
-           SCENARIO LOADER
-        ===================================================== */
+    /* =====================================================
+       USER
+    ===================================================== */
 
-        function loadScenario(type, element) {
+    const userId = "demo_user_01";
+
+
+    /* =====================================================
+       SCENARIO LOADER
+    ===================================================== */
+
+    function loadScenario(type, element) {
+
+        document
+            .querySelectorAll(".scenario")
+            .forEach(card => {
+
+                card.classList.remove("selected");
+
+            });
+
+
+        if (element) {
+
+            element.classList.add("selected");
+
+        }
+
+
+        const upi =
+            document.getElementById("upi");
+
+        const amount =
+            document.getElementById("amount");
+
+        const message =
+            document.getElementById("message");
+
+        const refundUpi =
+            document.getElementById("refundUpi");
+
+
+        if (type === "refund") {
+
+            upi.value =
+                "refund.support@upi";
+
+            amount.value =
+                "8000";
+
+            message.value =
+                "Hi, I accidentally transferred ₹8,000 to you. Please return the money immediately to another UPI ID.";
+
+            refundUpi.value =
+                "another.account@upi";
 
             document
-                .querySelectorAll(".scenario")
-                .forEach(card => {
+                .getElementById("recentPayments")
+                .value = "3";
 
-                    card.classList.remove(
-                        "selected"
-                    );
+            document
+                .getElementById("previousPayments")
+                .value = "0";
 
-                });
+            document
+                .getElementById("beneficiaryStatus")
+                .value = "new";
 
-
-            if (element) {
-
-                element.classList.add(
-                    "selected"
-                );
-
-            }
-
-
-            const upi =
-                document.getElementById("upi");
-
-            const amount =
-                document.getElementById("amount");
-
-            const message =
-                document.getElementById("message");
-
-            const usualAmount =
-                document.getElementById("usualAmount");
-
-            const recentPayments =
-                document.getElementById("recentPayments");
-
-            const beneficiaryStatus =
-                document.getElementById(
-                    "beneficiaryStatus"
-                );
-
-            const previousPayments =
-                document.getElementById(
-                    "previousPayments"
-                );
-
-            const refundUpi =
-                document.getElementById(
-                    "refundUpi"
-                );
-
-
-            /* =================================================
-               REFUND SCENARIO
-            ================================================== */
-
-            if (type === "refund") {
-
-                upi.value =
-                    "refund.support@upi";
-
-                amount.value =
-                    "8000";
-
-                message.value =
-                    "Hi, I accidentally transferred ₹8,000 to you. Please return the money immediately to another UPI ID.";
-
-                usualAmount.value =
-                    "1000";
-
-                recentPayments.value =
-                    "1";
-
-                beneficiaryStatus.value =
-                    "new";
-
-                previousPayments.value =
-                    "0";
-
-                refundUpi.value =
-                    "another.account@upi";
-
-                updateRefundVisibility(
-                    "refund"
-                );
-            }
-
-
-            /* =================================================
-               URGENT SCENARIO
-            ================================================== */
-
-            else if (type === "urgent") {
-
-                upi.value =
-                    "service.help@upi";
-
-                amount.value =
-                    "4500";
-
-                message.value =
-                    "URGENT! Please complete this payment immediately. Your account will be blocked if you don't pay now.";
-
-                usualAmount.value =
-                    "1200";
-
-                recentPayments.value =
-                    "3";
-
-                beneficiaryStatus.value =
-                    "new";
-
-                previousPayments.value =
-                    "0";
-
-                refundUpi.value =
-                    "";
-
-                updateRefundVisibility(
-                    "urgent"
-                );
-            }
-
-
-            /* =================================================
-               NORMAL SCENARIO
-            ================================================== */
-
-            else if (type === "normal") {
-
-                upi.value =
-                    "rahul@upi";
-
-                amount.value =
-                    "750";
-
-                message.value =
-                    "Dinner yesterday. Sending my share.";
-
-                usualAmount.value =
-                    "1000";
-
-                recentPayments.value =
-                    "0";
-
-                beneficiaryStatus.value =
-                    "known";
-
-                previousPayments.value =
-                    "8";
-
-                refundUpi.value =
-                    "";
-
-                updateRefundVisibility(
-                    "normal"
-                );
-            }
+            updateRefundVisibility("refund");
 
         }
 
 
+        else if (type === "urgent") {
 
-        /* =====================================================
-           REFUND FIELD VISIBILITY
-        ===================================================== */
+            upi.value =
+                "service.help@upi";
 
-        function updateRefundVisibility(type) {
+            amount.value =
+                "4500";
 
-            const refundField =
-                document.getElementById(
-                    "refundField"
-                );
+            message.value =
+                "URGENT! Please complete this payment immediately. Your account will be blocked if you don't pay now.";
 
+            refundUpi.value =
+                "";
 
-            if (type === "refund") {
+            document
+                .getElementById("recentPayments")
+                .value = "4";
 
-                refundField.classList.add(
-                    "show"
-                );
+            document
+                .getElementById("previousPayments")
+                .value = "0";
 
-            } else {
+            document
+                .getElementById("beneficiaryStatus")
+                .value = "new";
 
-                refundField.classList.remove(
-                    "show"
-                );
-
-            }
+            updateRefundVisibility("urgent");
 
         }
 
 
+        else if (type === "normal") {
 
-        /* =====================================================
-           ANALYSE PAYMENT
-        ===================================================== */
+            upi.value =
+                "rahul@upi";
 
-        async function analysePayment() {
+            amount.value =
+                "750";
 
+            message.value =
+                "Dinner yesterday. Sending my share.";
 
-            /* =================================================
-               GET FORM VALUES
-            ================================================= */
+            refundUpi.value =
+                "";
 
-            const upi =
-                document
-                    .getElementById("upi")
-                    .value
-                    .trim();
+            document
+                .getElementById("recentPayments")
+                .value = "1";
 
+            document
+                .getElementById("previousPayments")
+                .value = "5";
 
-            const amount =
-                document
-                    .getElementById("amount")
-                    .value
-                    .trim();
+            document
+                .getElementById("beneficiaryStatus")
+                .value = "known";
 
+            updateRefundVisibility("normal");
 
-            const message =
-                document
-                    .getElementById("message")
-                    .value
-                    .trim();
+        }
 
+    }
 
-            const usualAmount =
-                document
-                    .getElementById("usualAmount")
-                    .value
-                    .trim();
 
+    /* =====================================================
+       REFUND FIELD VISIBILITY
+    ===================================================== */
 
-            const recentPayments =
-                document
-                    .getElementById("recentPayments")
-                    .value
-                    .trim();
+    function updateRefundVisibility(type) {
 
-
-            const beneficiaryStatus =
-                document
-                    .getElementById(
-                        "beneficiaryStatus"
-                    )
-                    .value;
-
-
-            const previousPayments =
-                document
-                    .getElementById(
-                        "previousPayments"
-                    )
-                    .value
-                    .trim();
-
-
-            const refundUpi =
-                document
-                    .getElementById(
-                        "refundUpi"
-                    )
-                    .value
-                    .trim();
-
-
-
-            /* =================================================
-               VALIDATION
-            ================================================= */
-
-            if (!upi) {
-
-                showToast(
-                    "Please enter a recipient UPI ID."
-                );
-
-                return;
-            }
-
-
-            if (!amount) {
-
-                showToast(
-                    "Please enter a payment amount."
-                );
-
-                return;
-            }
-
-
-            const numericAmount =
-                Number(amount);
-
-
-            if (
-                isNaN(numericAmount) ||
-                numericAmount <= 0
-            ) {
-
-                showToast(
-                    "Please enter a valid amount."
-                );
-
-                return;
-            }
-
-
-
-            /* =================================================
-               CONVERT ADVANCED VALUES
-            ================================================= */
-
-            const numericUsualAmount =
-                Number(usualAmount) || 0;
-
-
-            const numericRecentPayments =
-                Number(recentPayments) || 0;
-
-
-            const numericPreviousPayments =
-                Number(previousPayments) || 0;
-
-
-
-            /* =================================================
-               REFUND DESTINATION CHECK
-            ================================================= */
-
-            const differentRefundUpi =
-                refundUpi !== "" &&
-                refundUpi.toLowerCase() !==
-                upi.toLowerCase();
-
-
-
-            /* =================================================
-               PAYMENT DATA
-            ================================================= */
-
-            const paymentData = {
-
-                upi:
-                    upi,
-
-                amount:
-                    numericAmount,
-
-                message:
-                    message,
-
-                usualAmount:
-                    numericUsualAmount,
-
-                recentPayments:
-                    numericRecentPayments,
-
-                beneficiaryStatus:
-                    beneficiaryStatus,
-
-                previousPayments:
-                    numericPreviousPayments,
-
-                refundUpi:
-                    refundUpi,
-
-                differentRefundUpi:
-                    Boolean(
-                        differentRefundUpi
-                    ),
-
-                createdAt:
-                    new Date().toISOString(),
-
-                scenario:
-                    detectScenario(
-                        message,
-                        refundUpi
-                    )
-
-            };
-
-
-
-            /* =================================================
-               BUTTON
-            ================================================= */
-
-            const button =
-                document.getElementById(
-                    "analyseBtn"
-                );
-
-
-            button.disabled =
-                true;
-
-
-            button.innerHTML =
-                "Analysing signals...";
-
-
-            showToast(
-                "Checking payment risk..."
+        const refundField =
+            document.getElementById(
+                "refundField"
             );
 
 
+        if (type === "refund") {
+
+            refundField.classList.add(
+                "show"
+            );
+
+        } else {
+
+            refundField.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       GET USER TRANSACTIONS
+       
+       ONLY USED FOR USUAL PAYMENT AMOUNT
+    ===================================================== */
+
+    async function getUserTransactions() {
+
+        try {
+
+            const transactions =
+                await getTransactionsByUser(
+                    userId
+                );
+
+            console.log(
+                "Firebase transactions:",
+                transactions
+            );
+
+            return transactions || [];
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Error loading Firebase transactions:",
+                error
+            );
+
+            return [];
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CALCULATE USUAL PAYMENT AMOUNT
+    ===================================================== */
+
+    function calculateUsualAmount(
+        transactions
+    ) {
+
+        if (
+            !transactions ||
+            transactions.length === 0
+        ) {
+
+            return 0;
+
+        }
+
+
+        const validTransactions =
+            transactions.filter(
+                transaction =>
+                    Number(
+                        transaction.amount || 0
+                    ) > 0
+            );
+
+
+        if (
+            validTransactions.length === 0
+        ) {
+
+            return 0;
+
+        }
+
+
+        const totalAmount =
+            validTransactions.reduce(
+                (sum, transaction) => {
+
+                    return (
+                        sum +
+                        Number(
+                            transaction.amount || 0
+                        )
+                    );
+
+                },
+                0
+            );
+
+
+        const averageAmount =
+            totalAmount /
+            validTransactions.length;
+
+
+        return averageAmount;
+
+    }
+
+
+    /* =====================================================
+       ANALYSE PAYMENT
+    ===================================================== */
+
+    async function analysePayment() {
+
+
+        /* =================================================
+           BASIC FORM VALUES
+        ================================================= */
+
+        const upi =
+            document
+                .getElementById("upi")
+                .value
+                .trim();
+
+
+        const amount =
+            document
+                .getElementById("amount")
+                .value
+                .trim();
+
+
+        const message =
+            document
+                .getElementById("message")
+                .value
+                .trim();
+
+
+        const recentPayments =
+            document
+                .getElementById("recentPayments")
+                .value
+                .trim();
+
+
+        const beneficiaryStatus =
+            document
+                .getElementById("beneficiaryStatus")
+                .value;
+
+
+        const previousPayments =
+            document
+                .getElementById("previousPayments")
+                .value
+                .trim();
+
+
+        /* =================================================
+           VALIDATION
+        ================================================= */
+
+        if (!upi) {
+
+            showToast(
+                "Please enter a recipient UPI ID."
+            );
+
+            return;
+
+        }
+
+
+        if (!amount) {
+
+            showToast(
+                "Please enter a payment amount."
+            );
+
+            return;
+
+        }
+
+
+        const numericAmount =
+            Number(amount);
+
+
+        if (
+            isNaN(numericAmount) ||
+            numericAmount <= 0
+        ) {
+
+            showToast(
+                "Please enter a valid amount."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            recentPayments === "" ||
+            isNaN(Number(recentPayments)) ||
+            Number(recentPayments) < 0
+        ) {
+
+            showToast(
+                "Please enter valid recent payment count."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            previousPayments === "" ||
+            isNaN(Number(previousPayments)) ||
+            Number(previousPayments) < 0
+        ) {
+
+            showToast(
+                "Please enter valid previous payment count."
+            );
+
+            return;
+
+        }
+
+
+        /* =================================================
+           LOAD FIREBASE TRANSACTIONS
+           
+           ONLY FOR USUAL AMOUNT
+        ================================================= */
+
+        showToast(
+            "Calculating your usual payment amount..."
+        );
+
+
+        const transactions =
+            await getUserTransactions();
+
+
+        const calculatedUsualAmount =
+            calculateUsualAmount(
+                transactions
+            );
+
+
+        const numericUsualAmount =
+            Number(
+                calculatedUsualAmount
+            ) || 0;
+
+
+        /* =================================================
+           UPDATE USUAL AMOUNT
+        ================================================= */
+
+        document
+            .getElementById("usualAmount")
+            .value =
+                numericUsualAmount > 0
+                    ? numericUsualAmount.toFixed(2)
+                    : "0";
+
+
+        /* =================================================
+           REFUND DESTINATION
+        ================================================= */
+
+        const refundUpi =
+            document
+                .getElementById("refundUpi")
+                .value
+                .trim();
+
+
+        const differentRefundUpi =
+            refundUpi !== "" &&
+            refundUpi.toLowerCase() !==
+            upi.toLowerCase();
+
+
+        /* =================================================
+           PAYMENT DATA
+        ================================================= */
+
+        const paymentData = {
+
+            userId:
+                userId,
+
+            upi:
+                upi,
+
+            amount:
+                numericAmount,
+
+            message:
+                message,
+
+            usualAmount:
+                numericUsualAmount,
+
+            recentPayments:
+                Number(recentPayments),
+
+            beneficiaryStatus:
+                beneficiaryStatus,
+
+            previousPayments:
+                Number(previousPayments),
+
+            refundUpi:
+                refundUpi,
+
+            differentRefundUpi:
+                Boolean(
+                    differentRefundUpi
+                ),
+
+            createdAt:
+                new Date().toISOString(),
+
+            scenario:
+                detectScenario(
+                    message,
+                    refundUpi
+                )
+
+        };
+
+
+        /* =================================================
+           DEBUG
+        ================================================= */
+
+        console.log(
+            "Usual payment amount:",
+            numericUsualAmount
+        );
+
+        console.log(
+            "Recent payments:",
+            Number(recentPayments)
+        );
+
+        console.log(
+            "Beneficiary status:",
+            beneficiaryStatus
+        );
+
+        console.log(
+            "Previous payments:",
+            Number(previousPayments)
+        );
+
+
+        /* =================================================
+           BUTTON
+        ================================================= */
+
+        const button =
+            document.getElementById(
+                "analyseBtn"
+            );
+
+
+        button.disabled =
+            true;
+
+
+        button.innerHTML =
+            "Analysing signals...";
+
+
+        showToast(
+            "Checking payment risk..."
+        );
+
+
+        /* =================================================
+           SEND TO FLASK BACKEND
+        ================================================= */
+
+        try {
+
+            const response =
+                await fetch(
+                    "http://127.0.0.1:5000/api/analyze-payment",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                upi:
+                                    upi,
+
+                                amount:
+                                    numericAmount,
+
+                                message:
+                                    message,
+
+                                usualAmount:
+                                    numericUsualAmount,
+
+                                recentPayments:
+                                    Number(
+                                        recentPayments
+                                    ),
+
+                                beneficiaryStatus:
+                                    beneficiaryStatus,
+
+                                previousPayments:
+                                    Number(
+                                        previousPayments
+                                    ),
+
+                                refundUpi:
+                                    refundUpi,
+
+                                differentRefundUpi:
+                                    Boolean(
+                                        differentRefundUpi
+                                    )
+
+                            })
+
+                    }
+                );
+
 
             /* =================================================
-               SEND TO FLASK BACKEND
+               READ BACKEND RESPONSE
             ================================================= */
 
-            try {
+            const result =
+                await response.json();
 
 
-                const response =
-                    await fetch(
-                        "http://127.0.0.1:5000/api/analyze-payment",
-                        {
+            /* =================================================
+               BACKEND ERROR
+            ================================================= */
 
-                            method:
-                                "POST",
+            if (!response.ok) {
 
-                            headers: {
-
-                                "Content-Type":
-                                    "application/json"
-
-                            },
-
-                            body:
-                                JSON.stringify({
-
-                                    upi:
-                                        upi,
-
-                                    amount:
-                                        numericAmount,
-
-                                    message:
-                                        message,
-
-                                    usualAmount:
-                                        numericUsualAmount,
-
-                                    recentPayments:
-                                        numericRecentPayments,
-
-                                    beneficiaryStatus:
-                                        beneficiaryStatus,
-
-                                    previousPayments:
-                                        numericPreviousPayments,
-
-                                    refundUpi:
-                                        refundUpi,
-
-                                    differentRefundUpi:
-                                        Boolean(
-                                            differentRefundUpi
-                                        )
-
-                                })
-
-                        }
-                    );
-
-
-
-                /* =================================================
-                   READ BACKEND RESPONSE
-                ================================================= */
-
-                const result =
-                    await response.json();
-
-
-
-                /* =================================================
-                   BACKEND ERROR
-                ================================================= */
-
-                if (!response.ok) {
-
-                    console.error(
-                        "Backend error:",
-                        result
-                    );
-
-
-                    showToast(
-                        result.error ||
-                        "Risk analysis failed."
-                    );
-
-
-                    button.disabled =
-                        false;
-
-
-                    button.innerHTML =
-                        "Analyse Payment Risk →";
-
-
-                    return;
-                }
-
-
-
-                /* =================================================
-                   SAVE PAYMENT DATA
-                ================================================= */
-
-                sessionStorage.setItem(
-                    "sentinelPayment",
-                    JSON.stringify(
-                        paymentData
-                    )
-                );
-
-
-
-                /* =================================================
-                   SAVE BACKEND RISK RESULT
-                ================================================= */
-
-                sessionStorage.setItem(
-                    "sentinelRisk",
-                    JSON.stringify(
-                        result
-                    )
-                );
-
-
-
-                /* =================================================
-                   DEBUG INFORMATION
-                ================================================= */
-
-                console.log(
-                    "Payment Data:",
-                    paymentData
-                );
-
-
-                console.log(
-                    "Backend Risk Result:",
+                console.error(
+                    "Backend error:",
                     result
                 );
 
 
-
-                /* =================================================
-                   SUCCESS
-                ================================================= */
-
                 showToast(
-                    "Risk analysis completed."
-                );
-
-
-                setTimeout(
-                    () => {
-
-                        window.location.href =
-                            "risk-analysis.html";
-
-                    },
-                    700
-                );
-
-            }
-
-
-            /* =================================================
-               CONNECTION ERROR
-            ================================================= */
-
-            catch (error) {
-
-                console.error(
-                    "Backend connection error:",
-                    error
-                );
-
-
-                showToast(
-                    "Could not connect to Sentinel backend."
+                    result.error ||
+                    "Risk analysis failed."
                 );
 
 
@@ -1452,160 +1440,260 @@
                 button.innerHTML =
                     "Analyse Payment Risk →";
 
-            }
 
-        }
-
-
-
-        /* =====================================================
-           SCENARIO DETECTION
-        ===================================================== */
-
-        function detectScenario(
-            message,
-            refundUpi
-        ) {
-
-            const text =
-                message.toLowerCase();
-
-
-            const refundWords = [
-
-                "refund",
-
-                "return",
-
-                "accidentally transferred",
-
-                "sent by mistake",
-
-                "money back"
-
-            ];
-
-
-            const urgencyWords = [
-
-                "urgent",
-
-                "immediately",
-
-                "now",
-
-                "blocked",
-
-                "within",
-
-                "as soon as possible"
-
-            ];
-
-
-            const hasRefund =
-                refundWords.some(
-                    word =>
-                        text.includes(word)
-                );
-
-
-            const hasUrgency =
-                urgencyWords.some(
-                    word =>
-                        text.includes(word)
-                );
-
-
-            if (
-                hasRefund &&
-                refundUpi
-            ) {
-
-                return "refund-redirection";
+                return;
 
             }
 
 
-            if (hasRefund) {
+            /* =================================================
+               SAVE PAYMENT DATA
+            ================================================= */
 
-                return "refund";
-
-            }
-
-
-            if (hasUrgency) {
-
-                return "urgent";
-
-            }
+            sessionStorage.setItem(
+                "sentinelPayment",
+                JSON.stringify(
+                    paymentData
+                )
+            );
 
 
-            return "normal";
+            /* =================================================
+               SAVE BACKEND RISK RESULT
+            ================================================= */
 
-        }
-
-
-
-        /* =====================================================
-           TOAST MESSAGE
-        ===================================================== */
-
-        function showToast(text) {
-
-            const toast =
-                document.getElementById(
-                    "toast"
-                );
+            sessionStorage.setItem(
+                "sentinelRisk",
+                JSON.stringify(
+                    result
+                )
+            );
 
 
-            toast.innerText =
-                text;
+            /* =================================================
+               DEBUG
+            ================================================= */
+
+            console.log(
+                "Payment Data:",
+                paymentData
+            );
+
+            console.log(
+                "Backend Risk Result:",
+                result
+            );
 
 
-            toast.classList.add(
-                "show"
+            /* =================================================
+               SUCCESS
+            ================================================= */
+
+            showToast(
+                "Risk analysis completed."
             );
 
 
             setTimeout(
                 () => {
 
-                    toast.classList.remove(
-                        "show"
-                    );
+                    window.location.href =
+                        "risk-analysis.html";
 
                 },
-                2300
+                700
             );
 
         }
 
 
+        /* =================================================
+           CONNECTION ERROR
+        ================================================= */
 
-        /* =====================================================
-           DEFAULT SCENARIO
-        ===================================================== */
+        catch (error) {
 
-        window.addEventListener(
-            "DOMContentLoaded",
-            () => {
-
-                const refundScenario =
-                    document.querySelector(
-                        ".scenario.refund"
-                    );
+            console.error(
+                "Backend connection error:",
+                error
+            );
 
 
-                loadScenario(
-                    "refund",
-                    refundScenario
-                );
+            showToast(
+                "Could not connect to Sentinel backend."
+            );
 
-            }
+
+            button.disabled =
+                false;
+
+
+            button.innerHTML =
+                "Analyse Payment Risk →";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SCENARIO DETECTION
+    ===================================================== */
+
+    function detectScenario(
+        message,
+        refundUpi
+    ) {
+
+        const text =
+            message.toLowerCase();
+
+
+        const refundWords = [
+
+            "refund",
+
+            "return",
+
+            "accidentally transferred",
+
+            "sent by mistake",
+
+            "money back"
+
+        ];
+
+
+        const urgencyWords = [
+
+            "urgent",
+
+            "immediately",
+
+            "now",
+
+            "blocked",
+
+            "within",
+
+            "as soon as possible"
+
+        ];
+
+
+        const hasRefund =
+            refundWords.some(
+                word =>
+                    text.includes(word)
+            );
+
+
+        const hasUrgency =
+            urgencyWords.some(
+                word =>
+                    text.includes(word)
+            );
+
+
+        if (
+            hasRefund &&
+            refundUpi
+        ) {
+
+            return "refund-redirection";
+
+        }
+
+
+        if (hasRefund) {
+
+            return "refund";
+
+        }
+
+
+        if (hasUrgency) {
+
+            return "urgent";
+
+        }
+
+
+        return "normal";
+
+    }
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    function showToast(text) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        toast.innerText =
+            text;
+
+
+        toast.classList.add(
+            "show"
         );
 
-    </script>
+
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2300
+        );
+
+    }
+
+
+    /* =====================================================
+       MAKE FUNCTIONS AVAILABLE TO HTML
+    ===================================================== */
+
+    window.loadScenario =
+        loadScenario;
+
+    window.analysePayment =
+        analysePayment;
+
+
+    /* =====================================================
+       DEFAULT SCENARIO
+    ===================================================== */
+
+    window.addEventListener(
+        "DOMContentLoaded",
+        () => {
+
+            const refundScenario =
+                document.querySelector(
+                    ".scenario.refund"
+                );
+
+
+            loadScenario(
+                "refund",
+                refundScenario
+            );
+
+        }
+    );
+
+</script>
+```
 
 </body>
 

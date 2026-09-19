@@ -1,718 +1,810 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sentinel — Payment Decision</title>
+    <title>Payment Decision - Sentinel</title>
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Inter, Arial, sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            background: #f4f5ff;
-            color: #17172b;
+            background: #f5f3ff;
+            display: flex;
             min-height: 100vh;
+            color: #222;
         }
 
-        /* ==============================
-           SIDEBAR
-        ============================== */
-
+        /* Sidebar */
         .sidebar {
-            width: 248px;
+            width: 240px;
             background: #ffffff;
-            border-right: 1px solid #e8e8f2;
-            padding: 28px 18px;
+            padding: 25px 18px;
+            border-right: 1px solid #e5e7eb;
             position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 10;
+            height: 100vh;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: 800;
-            padding: 0 14px;
-            margin-bottom: 6px;
-            color: #17172b;
-        }
-
-        .logo span {
-            color: #635bff;
-        }
-
-        .tagline {
-            font-size: 11px;
-            color: #8b8b9f;
-            padding: 0 14px;
-            margin-bottom: 35px;
-        }
-
-        .nav-title {
-            font-size: 10px;
-            color: #9999aa;
-            padding: 0 14px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
+            font-size: 25px;
+            font-weight: bold;
+            color: #6d28d9;
+            margin-bottom: 40px;
+            padding-left: 10px;
         }
 
         .nav-item {
             display: block;
             text-decoration: none;
-            padding: 12px 14px;
+            color: #555;
+            padding: 13px 15px;
+            margin: 7px 0;
             border-radius: 10px;
-            margin-bottom: 6px;
-            color: #77778b;
-            cursor: pointer;
             transition: 0.2s;
-            font-size: 13px;
-            font-weight: 600;
         }
 
         .nav-item:hover {
-            background: #f2f1ff;
-            color: #635bff;
+            background: #f3e8ff;
+            color: #6d28d9;
         }
 
         .nav-item.active {
-            background: #eeecff;
-            color: #635bff;
+            background: #ede9fe;
+            color: #6d28d9;
+            font-weight: bold;
         }
 
-        .simulation {
-            position: absolute;
-            bottom: 25px;
-            left: 18px;
-            right: 18px;
-            background: #f6f6fb;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 11px;
-            color: #88889b;
-        }
-
-        .simulation strong {
-            display: block;
-            color: #19a66a;
-            margin-bottom: 5px;
-        }
-
-
-        /* ==============================
-           MAIN
-        ============================== */
-
+        /* Main */
         .main {
-            margin-left: 248px;
-            width: calc(100% - 248px);
-            padding: 34px 48px;
-            max-width: 1500px;
+            margin-left: 240px;
+            width: calc(100% - 240px);
+            padding: 40px;
         }
 
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 35px;
-        }
-
-        .back {
-            color: #66667c;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .back:hover {
-            color: #635bff;
-        }
-
-        .badge {
-            background: #e9e7ff;
-            color: #635bff;
-            padding: 8px 13px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-
-        /* ==============================
-           HEADER
-        ============================== */
-
-        h1 {
-            font-size: 34px;
+        .page-title {
+            font-size: 30px;
+            font-weight: bold;
             margin-bottom: 8px;
         }
 
         .subtitle {
-            color: #77778a;
+            color: #777;
             margin-bottom: 30px;
         }
 
-
-        /* ==============================
-           DECISION CARD
-        ============================== */
-
+        /* Card */
         .decision-card {
             background: white;
-            border-radius: 20px;
+            max-width: 750px;
+            margin: auto;
             padding: 35px;
-            border: 1px solid #ebeafd;
-            box-shadow: 0 12px 40px rgba(40, 35, 90, 0.08);
-            max-width: 850px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
         }
 
-        .decision-icon {
-            width: 65px;
-            height: 65px;
-            border-radius: 18px;
-            background: #eeecff;
-            color: #635bff;
+        .icon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #ede9fe;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            margin-bottom: 20px;
+            font-size: 35px;
+            margin: 0 auto 20px;
         }
 
         .decision-title {
+            text-align: center;
             font-size: 25px;
-            font-weight: 800;
+            font-weight: bold;
             margin-bottom: 10px;
         }
 
         .decision-message {
-            color: #68687b;
-            line-height: 1.7;
-            font-size: 15px;
-            margin-bottom: 28px;
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
         }
 
-
-        /* ==============================
-           PAYMENT SUMMARY
-        ============================== */
-
-        .payment-summary {
-            background: #f8f8ff;
-            border-radius: 15px;
+        /* Summary */
+        .summary {
+            background: #fafafa;
             padding: 20px;
-            margin-bottom: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
 
-        .payment-row {
+        .summary h3 {
+            margin-bottom: 15px;
+        }
+
+        .row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 11px 0;
-            border-bottom: 1px solid #e8e8f2;
-            font-size: 14px;
+            padding: 9px 0;
+            border-bottom: 1px solid #eee;
         }
 
-        .payment-row:last-child {
+        .row:last-child {
             border-bottom: none;
         }
 
         .label {
-            color: #85859a;
+            color: #777;
         }
 
         .value {
-            font-weight: 700;
+            font-weight: bold;
+            text-align: right;
         }
 
-
-        /* ==============================
-           RESULT
-        ============================== */
-
-        .result {
-            padding: 18px;
-            border-radius: 14px;
+        /* Result */
+        .result-box {
+            background: #f5f3ff;
+            border: 1px solid #ddd6fe;
+            padding: 20px;
+            border-radius: 12px;
             margin-bottom: 25px;
-            border: 1px solid #e7e7ef;
         }
 
-        .result-title {
-            font-size: 13px;
-            font-weight: 800;
-            margin-bottom: 6px;
+        .result-box h3 {
+            margin-bottom: 15px;
+            color: #6d28d9;
         }
 
-        .result-text {
-            font-size: 13px;
-            color: #737388;
-            line-height: 1.6;
+        /* Feedback */
+        .feedback-box {
+            background: #fafafa;
+            border: 1px solid #e5e7eb;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 25px;
         }
 
-        .result.continued {
-            background: #eefbf5;
-            border-color: #cdeedd;
+        .feedback-box h3 {
+            margin-bottom: 8px;
         }
 
-        .result.continued .result-title {
-            color: #168457;
+        .feedback-description {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.5;
         }
 
-        .result.cancelled {
-            background: #fff5f4;
-            border-color: #f2d8d5;
+        .feedback-buttons {
+            display: flex;
+            gap: 12px;
         }
 
-        .result.cancelled .result-title {
-            color: #d45b50;
+        .feedback-button {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
         }
 
+        .fraud-button {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
 
-        /* ==============================
-           BUTTONS
-        ============================== */
+        .legitimate-button {
+            background: #dcfce7;
+            color: #15803d;
+        }
 
-        .actions {
+        .feedback-button:hover {
+            opacity: 0.85;
+        }
+
+        .feedback-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .feedback-status {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        /* Buttons */
+        .buttons {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
         }
 
-        button,
-        .button-link {
+        button {
+            flex: 1;
+            padding: 13px;
             border: none;
-            border-radius: 11px;
-            padding: 13px 20px;
-            font-size: 13px;
-            font-weight: 700;
+            border-radius: 10px;
             cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.2s;
+            font-size: 15px;
+            font-weight: bold;
         }
 
         .primary {
-            background: #635bff;
+            background: #6d28d9;
             color: white;
         }
 
-        .primary:hover {
-            background: #5149e8;
-        }
-
         .secondary {
-            background: #f1f1f7;
-            color: #39394c;
+            background: #eee;
+            color: #333;
         }
 
-        .secondary:hover {
-            background: #e5e5ee;
+        button:hover {
+            opacity: 0.9;
         }
 
-
-        /* ==============================
-           NOTE
-        ============================== */
-
-        .note {
-            margin-top: 18px;
-            color: #85859a;
-            font-size: 12px;
-            line-height: 1.6;
-        }
-
-
-        /* ==============================
-           RESPONSIVE
-        ============================== */
-
-        @media(max-width: 900px) {
+        @media (max-width: 800px) {
 
             .sidebar {
-                width: 210px;
+                width: 190px;
             }
 
             .main {
-                margin-left: 210px;
-                width: calc(100% - 210px);
-                padding: 25px;
-            }
-        }
-
-        @media(max-width: 650px) {
-
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
+                margin-left: 190px;
+                width: calc(100% - 190px);
                 padding: 20px;
             }
 
-            .simulation {
-                position: static;
-                margin-top: 20px;
-            }
-
-            .main {
-                margin-left: 0;
-                width: 100%;
-                padding: 25px 18px;
-            }
-
-            .topbar {
-                margin-bottom: 25px;
-            }
-
-            h1 {
-                font-size: 28px;
-            }
-
-            .actions {
+            .feedback-buttons {
                 flex-direction: column;
-            }
-
-            button,
-            .button-link {
-                width: 100%;
-                text-align: center;
             }
         }
     </style>
 </head>
 
-
 <body>
 
-    <!-- ==============================
-         SIDEBAR
-    ============================== -->
-
-    <aside class="sidebar">
+    <!-- Sidebar -->
+    <div class="sidebar">
 
         <div class="logo">
-            Sentinel<span>.</span>
+            Sentinel
         </div>
 
-        <div class="tagline">
-            Payment safety before you press pay
-        </div>
-
-
-        <div class="nav-title">
-            Workspace
-        </div>
-
-
-        <a class="nav-item" href="index.html">
-            Overview
+        <a href="index.html" class="nav-item">
+            Dashboard
         </a>
 
-
-        <a class="nav-item" href="payment.html">
+        <a href="payment.html" class="nav-item">
             Payment Simulation
         </a>
 
-
-        <a class="nav-item" href="risk-analysis.html">
-            Risk Analysis
-        </a>
-
-
-        <a class="nav-item active" href="decision.html">
-            Decision
-        </a>
-
-
-        <a class="nav-item" href="transactions.html">
+        <a href="transactions.html" class="nav-item">
             Transactions
         </a>
 
-
-        <a class="nav-item" href="insights.html">
+        <a href="insights.html" class="nav-item">
             Risk Insights
         </a>
 
-
-        <div class="simulation">
-
-            <strong>● Simulation Mode</strong>
-
-            Synthetic data only
-
-        </div>
-
-    </aside>
-
-
-    <!-- ==============================
-         MAIN
-    ============================== -->
-
-    <main class="main">
-
-
-        <div class="topbar">
-
-            <div class="back" onclick="goRisk()">
-
-                ← Back to risk analysis
-
-            </div>
-
-
-            <div class="badge">
-                DECISION RECORDED
-            </div>
-
-        </div>
-
-
-        <h1>
+        <a href="decision.html" class="nav-item active">
             Payment Decision
-        </h1>
+        </a>
+
+    </div>
 
 
-        <p class="subtitle">
-            Your choice has been recorded for this simulation.
-        </p>
+    <!-- Main Content -->
+    <div class="main">
 
+        <div class="page-title">
+            Payment Decision
+        </div>
 
-        <!-- ==============================
-             DECISION CARD
-        ============================== -->
+        <div class="subtitle">
+            Review the result of your simulated payment.
+        </div>
+
 
         <div class="decision-card">
 
-
-            <div class="decision-icon" id="decisionIcon">
-
+            <div class="icon" id="decisionIcon">
                 ✓
-
             </div>
-
 
             <div class="decision-title" id="decisionTitle">
-
-                Decision recorded
-
+                Payment Decision
             </div>
-
 
             <div class="decision-message" id="decisionMessage">
-
                 Your payment decision has been recorded.
-
             </div>
 
 
-            <!-- PAYMENT SUMMARY -->
+            <!-- Payment Summary -->
+            <div class="summary">
 
-            <div class="payment-summary">
+                <h3>Payment Summary</h3>
 
-
-                <div class="payment-row">
-
-                    <span class="label">
-                        Recipient
-                    </span>
-
-                    <span class="value" id="upiDisplay">
-
-                        —
-
-                    </span>
-
+                <div class="row">
+                    <span class="label">UPI ID</span>
+                    <span class="value" id="upiDisplay">—</span>
                 </div>
 
-
-                <div class="payment-row">
-
-                    <span class="label">
-                        Amount
-                    </span>
-
-                    <span class="value" id="amountDisplay">
-
-                        —
-
-                    </span>
-
+                <div class="row">
+                    <span class="label">Amount</span>
+                    <span class="value" id="amountDisplay">—</span>
                 </div>
 
-
-                <div class="payment-row">
-
-                    <span class="label">
-                        Risk Score
-                    </span>
-
-                    <span class="value" id="scoreDisplay">
-
-                        —
-
-                    </span>
-
+                <div class="row">
+                    <span class="label">Message</span>
+                    <span class="value" id="messageDisplay">—</span>
                 </div>
 
-
-                <div class="payment-row">
-
-                    <span class="label">
-                        Risk Level
-                    </span>
-
-                    <span class="value" id="riskDisplay">
-
-                        —
-
-                    </span>
-
+                <div class="row" id="refundRow" style="display:none;">
+                    <span class="label">Refund UPI</span>
+                    <span class="value" id="refundDisplay">—</span>
                 </div>
 
-
-                <div class="payment-row">
-
-                    <span class="label">
-                        Decision
-                    </span>
-
-                    <span class="value" id="decisionDisplay">
-
-                        —
-
-                    </span>
-
+                <div class="row">
+                    <span class="label">Risk Score</span>
+                    <span class="value" id="scoreDisplay">—</span>
                 </div>
 
-
-            </div>
-
-
-            <!-- RESULT -->
-
-            <div class="result" id="resultBox">
-
-                <div class="result-title" id="resultTitle">
-
-                    Decision status
-
+                <div class="row">
+                    <span class="label">Risk Level</span>
+                    <span class="value" id="riskDisplay">—</span>
                 </div>
 
-
-                <div class="result-text" id="resultText">
-
-                    —
-
+                <div class="row">
+                    <span class="label">ML Scam Probability</span>
+                    <span class="value" id="mlProbabilityDisplay">—</span>
                 </div>
 
             </div>
 
 
-            <!-- ACTIONS -->
+            <!-- Result -->
+            <div class="result-box">
 
-            <div class="actions">
+                <h3>Analysis Result</h3>
+
+                <p id="resultText">
+                    Risk analysis information will appear here.
+                </p>
+
+            </div>
 
 
-                <a href="transactions.html" class="button-link primary">
+            <!-- NEW: Feedback -->
+            <div class="feedback-box">
 
+                <h3>Was this transaction actually fraudulent?</h3>
+
+                <p class="feedback-description">
+                    Your feedback helps Sentinel identify incorrect predictions
+                    and improve future fraud detection.
+                </p>
+
+                <div class="feedback-buttons">
+
+                    <button
+                        id="fraudButton"
+                        class="feedback-button fraud-button"
+                        onclick="submitFeedback(1)">
+                        🔴 Yes, This Was Fraud
+                    </button>
+
+                    <button
+                        id="legitimateButton"
+                        class="feedback-button legitimate-button"
+                        onclick="submitFeedback(0)">
+                        🟢 No, This Was Legitimate
+                    </button>
+
+                </div>
+
+                <div
+                    id="feedbackStatus"
+                    class="feedback-status">
+                </div>
+
+            </div>
+
+
+            <!-- Navigation Buttons -->
+            <div class="buttons">
+
+                <button
+                    class="primary"
+                    onclick="goTransactions()">
                     View Transactions
+                </button>
 
-                </a>
+                <button
+                    class="secondary"
+                    onclick="goInsights()">
+                    Risk Insights
+                </button>
 
-
-                <a href="insights.html" class="button-link secondary">
-
-                    View Risk Insights
-
-                </a>
-
-
-                <a href="payment.html" class="button-link secondary">
-
+                <button
+                    class="secondary"
+                    onclick="newSimulation()">
                     New Simulation
-
-                </a>
-
-            </div>
-
-
-            <div class="note">
-
-                Sentinel only highlights unusual payment signals.
-                The final payment decision remains with the user.
+                </button>
 
             </div>
-
 
         </div>
 
-    </main>
+    </div>
 
 
-    <script>
+<script>
 
-        /* =================================
-           GET DATA
-        ================================= */
+    /*
+        Get the current payment and risk information.
 
-        const paymentData =
-            JSON.parse(
-                sessionStorage.getItem(
-                    "sentinelPayment"
-                )
-            );
+        ARCHITECTURE:
+
+        payment.html
+             ↓
+        Flask API
+             ↓
+        risk-analysis.html
+             ↓
+        sessionStorage
+             ↓
+        decision.html
+             ↓
+        User Feedback
+             ↓
+        Flask /api/feedback
+    */
 
 
-        const decision =
-            sessionStorage.getItem(
-                "sentinelDecision"
-            );
+    const paymentData =
+        JSON.parse(sessionStorage.getItem("sentinelPayment"));
+
+    const riskData =
+        JSON.parse(sessionStorage.getItem("sentinelRisk"));
+
+    const decision =
+        sessionStorage.getItem("sentinelDecision");
+
+    const decisionTime =
+        sessionStorage.getItem("sentinelDecisionTime");
 
 
-        const decisionTime =
-            sessionStorage.getItem(
-                "sentinelDecisionTime"
-            );
+    /* -----------------------------
+       Create Transaction ID
+    ----------------------------- */
 
+    let transactionId =
+        sessionStorage.getItem("sentinelTransactionId");
+
+    if (!transactionId) {
+
+        transactionId =
+            "TXN-" +
+            Date.now() +
+            "-" +
+            Math.random()
+                .toString(36)
+                .substring(2, 8)
+                .toUpperCase();
+
+        sessionStorage.setItem(
+            "sentinelTransactionId",
+            transactionId
+        );
+
+    }
+
+
+    /* -----------------------------
+       Payment Details
+    ----------------------------- */
+
+    if (paymentData) {
+
+        document.getElementById("upiDisplay").textContent =
+            paymentData.upi || "—";
+
+        document.getElementById("amountDisplay").textContent =
+            paymentData.amount !== undefined
+                ? "₹" + Number(paymentData.amount).toLocaleString("en-IN")
+                : "—";
+
+        document.getElementById("messageDisplay").textContent =
+            paymentData.message || "—";
+
+
+        /* Refund UPI */
+
+        if (paymentData.refundUpi) {
+
+            document.getElementById("refundRow").style.display = "flex";
+
+            document.getElementById("refundDisplay").textContent =
+                paymentData.refundUpi;
+
+        }
+
+    }
+
+
+    /* -----------------------------
+       Risk Information
+    ----------------------------- */
+
+    if (riskData) {
+
+        /* Rule-based Risk Score */
+
+        document.getElementById("scoreDisplay").textContent =
+            riskData.score !== undefined
+                ? riskData.score
+                : "—";
+
+
+        /* Rule-based Risk Level */
+
+        document.getElementById("riskDisplay").textContent =
+            riskData.riskLevel
+                ? riskData.riskLevel.toUpperCase()
+                : "—";
+
+
+        /* ML Probability */
+
+        if (
+            riskData.ml &&
+            riskData.ml.scamProbability !== undefined
+        ) {
+
+            const probability =
+                Number(riskData.ml.scamProbability) * 100;
+
+            document.getElementById("mlProbabilityDisplay").textContent =
+                probability.toFixed(2) + "%";
+
+        }
+
+
+        /* Analysis Result */
+
+        if (riskData.signals && riskData.signals.length > 0) {
+
+            const resultText =
+                document.getElementById("resultText");
+
+            resultText.innerHTML =
+                riskData.signals.map(signal => {
+
+                    if (typeof signal === "string") {
+
+                        return `
+                            <div style="margin-bottom:10px;">
+                                • ${signal}
+                            </div>
+                        `;
+
+                    }
+
+                    return `
+                        <div style="margin-bottom:10px;">
+                            • ${signal.name || "Risk signal detected"}
+                        </div>
+                    `;
+
+                }).join("");
+
+        }
+
+        else {
+
+            document.getElementById("resultText").textContent =
+                "No major risk signals were detected.";
+
+        }
+
+    }
+
+
+    /* -----------------------------
+       Decision Result
+    ----------------------------- */
+
+    if (decision === "continue") {
+
+        document.getElementById("decisionIcon").textContent = "✓";
+
+        document.getElementById("decisionTitle").textContent =
+            "Payment Continued";
+
+        document.getElementById("decisionMessage").textContent =
+            "You chose to continue with the simulated payment.";
+
+    }
+
+    else if (decision === "cancel") {
+
+        document.getElementById("decisionIcon").textContent = "✕";
+
+        document.getElementById("decisionTitle").textContent =
+            "Payment Cancelled";
+
+        document.getElementById("decisionMessage").textContent =
+            "You chose to cancel the simulated payment.";
+
+    }
+
+
+    /* -----------------------------
+       Submit Feedback
+    ----------------------------- */
+
+    async function submitFeedback(actualOutcome) {
 
         /*
-         * Get the most recent analysed
-         * transaction for this payment.
-         */
+            actualOutcome:
 
-        let transaction = null;
+            1 = Fraud
+            0 = Legitimate
+        */
+
+        if (!riskData || !riskData.mlFeatures) {
+
+            showFeedbackStatus(
+                "Risk data is missing. Feedback cannot be recorded.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const fraudButton =
+            document.getElementById("fraudButton");
+
+        const legitimateButton =
+            document.getElementById("legitimateButton");
+
+
+        fraudButton.disabled = true;
+        legitimateButton.disabled = true;
+
+
+        const mlFeatures =
+            riskData.mlFeatures;
+
+
+        const feedbackData = {
+
+            transactionId: transactionId,
+
+            actualOutcome: actualOutcome,
+
+            amount_deviation:
+                mlFeatures.amount_deviation,
+
+            new_beneficiary:
+                mlFeatures.new_beneficiary,
+
+            urgency:
+                mlFeatures.urgency,
+
+            scam_language:
+                mlFeatures.scam_language,
+
+            refund_redirection:
+                mlFeatures.refund_redirection,
+
+            transaction_velocity:
+                mlFeatures.transaction_velocity,
+
+            behaviour_deviation:
+                mlFeatures.behaviour_deviation,
+
+            combined_context:
+                mlFeatures.combined_context,
+
+            model_prediction:
+                riskData.ml
+                    ? riskData.ml.prediction
+                    : null,
+
+            model_probability:
+                riskData.ml
+                    ? riskData.ml.scamProbability
+                    : null,
+
+            paymentAmount:
+                paymentData
+                    ? paymentData.amount
+                    : null,
+
+            upi:
+                paymentData
+                    ? paymentData.upi
+                    : null,
+
+            timestamp:
+                new Date().toISOString()
+
+        };
 
 
         try {
 
-            const transactions =
-                JSON.parse(
-                    localStorage.getItem(
-                        "sentinelTransactions"
-                    )
-                ) || [];
+            const response =
+                await fetch(
+                    "http://127.0.0.1:5000/api/feedback",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(feedbackData)
+                    }
+                );
 
 
-            if (
-                paymentData &&
-                transactions.length
-            ) {
+            const result =
+                await response.json();
 
-                transaction =
-                    transactions.find(item =>
-                        item.upi === paymentData.upi &&
-                        Number(item.amount) ===
-                        Number(paymentData.amount)
+
+            if (response.ok) {
+
+                if (actualOutcome === 1) {
+
+                    showFeedbackStatus(
+                        "✓ Fraud report recorded. This case can be used for future model improvement.",
+                        "success"
                     );
+
+                }
+
+                else {
+
+                    showFeedbackStatus(
+                        "✓ Legitimate transaction recorded. This case can be used for future model improvement.",
+                        "success"
+                    );
+
+                }
+
+                /*
+                    Prevent duplicate feedback
+                */
+
+                sessionStorage.setItem(
+                    "sentinelFeedbackSubmitted",
+                    "true"
+                );
+
+            }
+
+            else {
+
+                throw new Error(
+                    result.error ||
+                    "Failed to submit feedback."
+                );
 
             }
 
@@ -721,205 +813,113 @@
         catch (error) {
 
             console.error(
-                "Could not read transactions",
+                "Feedback error:",
                 error
             );
 
-        }
+            fraudButton.disabled = false;
+            legitimateButton.disabled = false;
 
-
-        /* =================================
-           DISPLAY PAYMENT
-        ================================= */
-
-        if (paymentData) {
-
-            document.getElementById(
-                "upiDisplay"
-            ).textContent =
-                paymentData.upi || "—";
-
-
-            document.getElementById(
-                "amountDisplay"
-            ).textContent =
-                "₹" +
-                Number(paymentData.amount || 0)
-                    .toLocaleString("en-IN");
+            showFeedbackStatus(
+                "Unable to record feedback. Make sure the Sentinel backend is running.",
+                "error"
+            );
 
         }
 
+    }
 
-        /* =================================
-           DISPLAY RISK
-        ================================= */
 
-        if (transaction) {
+    /* -----------------------------
+       Feedback Status
+    ----------------------------- */
 
+    function showFeedbackStatus(
+        message,
+        type
+    ) {
+
+        const status =
             document.getElementById(
-                "scoreDisplay"
-            ).textContent =
-                transaction.riskScore ?? "—";
+                "feedbackStatus"
+            );
 
+        status.style.display = "block";
 
-            document.getElementById(
-                "riskDisplay"
-            ).textContent =
-                transaction.riskLevel
-                    ? transaction.riskLevel.toUpperCase()
-                    : "—";
+        status.textContent = message;
+
+        if (type === "success") {
+
+            status.style.color = "#15803d";
 
         }
-
-
-        /* =================================
-           DECISION UI
-        ================================= */
-
-        const decisionIcon =
-            document.getElementById(
-                "decisionIcon"
-            );
-
-
-        const decisionTitle =
-            document.getElementById(
-                "decisionTitle"
-            );
-
-
-        const decisionMessage =
-            document.getElementById(
-                "decisionMessage"
-            );
-
-
-        const decisionDisplay =
-            document.getElementById(
-                "decisionDisplay"
-            );
-
-
-        const resultBox =
-            document.getElementById(
-                "resultBox"
-            );
-
-
-        const resultTitle =
-            document.getElementById(
-                "resultTitle"
-            );
-
-
-        const resultText =
-            document.getElementById(
-                "resultText"
-            );
-
-
-        if (decision === "continued") {
-
-            decisionIcon.textContent = "✓";
-
-
-            decisionTitle.textContent =
-                "You chose to continue";
-
-
-            decisionMessage.textContent =
-                "You've reviewed the signals and decided to continue with this payment simulation.";
-
-
-            decisionDisplay.textContent =
-                "Continued";
-
-
-            resultBox.className =
-                "result continued";
-
-
-            resultTitle.textContent =
-                "Payment continued";
-
-
-            resultText.textContent =
-                "Your decision has been recorded. In this prototype, continuing means you acknowledged the risk signals and chose to proceed.";
-
-        }
-
-
-        else if (decision === "cancelled") {
-
-            decisionIcon.textContent = "×";
-
-
-            decisionTitle.textContent =
-                "You chose to cancel";
-
-
-            decisionMessage.textContent =
-                "You've reviewed the signals and decided not to continue with this payment simulation.";
-
-
-            decisionDisplay.textContent =
-                "Cancelled";
-
-
-            resultBox.className =
-                "result cancelled";
-
-
-            resultTitle.textContent =
-                "Payment cancelled";
-
-
-            resultText.textContent =
-                "Your decision has been recorded. The simulated payment was stopped before proceeding.";
-
-        }
-
 
         else {
 
-            decisionIcon.textContent = "•";
-
-
-            decisionTitle.textContent =
-                "No decision recorded";
-
-
-            decisionMessage.textContent =
-                "We couldn't find a decision for the current payment simulation.";
-
-
-            decisionDisplay.textContent =
-                "Not recorded";
-
-
-            resultTitle.textContent =
-                "No decision found";
-
-
-            resultText.textContent =
-                "Return to the risk analysis page and choose whether to cancel or continue.";
+            status.style.color = "#b91c1c";
 
         }
 
+    }
 
-        /* =================================
-           NAVIGATION
-        ================================= */
 
-        function goRisk() {
+    /* -----------------------------
+       Navigation
+    ----------------------------- */
 
-            window.location.href =
-                "risk-analysis.html";
+    function goTransactions() {
 
-        }
+        window.location.href =
+            "transactions.html";
 
-    </script>
+    }
+
+
+    function goInsights() {
+
+        window.location.href =
+            "insights.html";
+
+    }
+
+
+    function newSimulation() {
+
+        /*
+            Remove only the current simulation data
+            before starting a new payment.
+        */
+
+        sessionStorage.removeItem(
+            "sentinelPayment"
+        );
+
+        sessionStorage.removeItem(
+            "sentinelRisk"
+        );
+
+        sessionStorage.removeItem(
+            "sentinelDecision"
+        );
+
+        sessionStorage.removeItem(
+            "sentinelDecisionTime"
+        );
+
+        sessionStorage.removeItem(
+            "sentinelTransactionId"
+        );
+
+        sessionStorage.removeItem(
+            "sentinelFeedbackSubmitted"
+        );
+
+        window.location.href =
+            "payment.html";
+
+    }
+
+</script>
 
 </body>
-
 </html>
