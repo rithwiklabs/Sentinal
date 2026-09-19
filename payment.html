@@ -20,10 +20,6 @@
             min-height: 100vh;
         }
 
-        /* =========================
-           SIDEBAR
-        ========================== */
-
         .sidebar {
             position: fixed;
             left: 0;
@@ -115,10 +111,6 @@
             font-size: 16px;
         }
 
-        /* =========================
-           MAIN
-        ========================== */
-
         .main {
             margin-left: 250px;
             min-height: 100vh;
@@ -164,10 +156,6 @@
             background: #20a464;
             border-radius: 50%;
         }
-
-        /* =========================
-           SCENARIOS
-        ========================== */
 
         .section-label {
             font-size: 13px;
@@ -221,10 +209,6 @@
             line-height: 1.35;
         }
 
-        /* =========================
-           CONTENT
-        ========================== */
-
         .content {
             max-width: 1000px;
         }
@@ -251,10 +235,6 @@
             color: #8a94a1;
             margin-top: 5px;
         }
-
-        /* =========================
-           FORM
-        ========================== */
 
         .form-grid {
             display: grid;
@@ -342,9 +322,11 @@
             line-height: 1.4;
         }
 
-        /* =========================
-           REFUND FIELD
-        ========================== */
+        #usualAmount {
+            background: #f8fafc;
+            color: #3d4754;
+            cursor: not-allowed;
+        }
 
         #refundUpiField {
             display: none;
@@ -357,10 +339,6 @@
         #refundUpiField label {
             color: #765d25;
         }
-
-        /* =========================
-           BUTTON
-        ========================== */
 
         .button-row {
             display: flex;
@@ -393,10 +371,6 @@
             transform: none;
         }
 
-        /* =========================
-           TOAST
-        ========================== */
-
         .toast {
             position: fixed;
             right: 28px;
@@ -419,10 +393,6 @@
             transform: translateY(0);
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================== */
-
         @media (max-width: 1100px) {
             .scenario-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -434,7 +404,6 @@
         }
 
         @media (max-width: 760px) {
-
             .sidebar {
                 position: relative;
                 width: 100%;
@@ -467,7 +436,6 @@
         }
 
         @media (max-width: 450px) {
-
             .scenario-grid {
                 grid-template-columns: 1fr;
             }
@@ -481,30 +449,19 @@
 
 <body>
 
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
-
     <aside class="sidebar">
 
         <div class="brand">
-
-            <div class="brand-icon">
-                S
-            </div>
+            <div class="brand-icon">S</div>
 
             <div>
-                <div class="brand-name">
-                    Sentinel
-                </div>
+                <div class="brand-name">Sentinel</div>
 
                 <div class="brand-subtitle">
                     PAYMENT RISK INTELLIGENCE
                 </div>
             </div>
-
         </div>
-
 
         <div class="nav-section">
 
@@ -512,99 +469,45 @@
                 Main
             </div>
 
-
             <a href="index.html" class="nav-item">
-
-                <span class="nav-icon">
-                    ⌂
-                </span>
-
-                <span>
-                    Overview
-                </span>
-
+                <span class="nav-icon">⌂</span>
+                <span>Overview</span>
             </a>
-
 
             <a href="payment.html" class="nav-item active">
-
-                <span class="nav-icon">
-                    ₹
-                </span>
-
-                <span>
-                    Simulate Payment
-                </span>
-
+                <span class="nav-icon">₹</span>
+                <span>Simulate Payment</span>
             </a>
-
 
             <a href="risk-analysis.html" class="nav-item">
-
-                <span class="nav-icon">
-                    ◈
-                </span>
-
-                <span>
-                    Risk Analysis
-                </span>
-
+                <span class="nav-icon">◈</span>
+                <span>Risk Analysis</span>
             </a>
-
 
             <a href="decision.html" class="nav-item">
-
-                <span class="nav-icon">
-                    ✓
-                </span>
-
-                <span>
-                    Decision
-                </span>
-
+                <span class="nav-icon">✓</span>
+                <span>Decision</span>
             </a>
-
 
             <a href="transactions.html" class="nav-item">
-
-                <span class="nav-icon">
-                    ▤
-                </span>
-
-                <span>
-                    Transactions
-                </span>
-
+                <span class="nav-icon">▤</span>
+                <span>Transactions</span>
             </a>
 
-
             <a href="risk-insights.html" class="nav-item">
-
-                <span class="nav-icon">
-                    ◒
-                </span>
-
-                <span>
-                    Risk Insights
-                </span>
-
+                <span class="nav-icon">◒</span>
+                <span>Risk Insights</span>
             </a>
 
         </div>
-
     </aside>
 
-
-    <!-- =========================
-         MAIN
-    ========================== -->
 
     <main class="main">
 
         <div class="topbar">
 
             <div>
-
                 <div class="page-title">
                     Simulate Payment
                 </div>
@@ -612,24 +515,15 @@
                 <div class="page-description">
                     Enter transaction details to evaluate payment risk before proceeding.
                 </div>
-
             </div>
 
-
             <div class="security-badge">
-
                 <span class="security-dot"></span>
-
                 Sentinel protection active
-
             </div>
 
         </div>
 
-
-        <!-- =========================
-             SCENARIOS
-        ========================== -->
 
         <div class="section-label">
             Try a scenario
@@ -638,15 +532,11 @@
 
         <div class="scenario-grid">
 
-            <div
-                class="scenario-card"
-                data-scenario="normal"
-                onclick="loadScenario('normal')"
-            >
+            <div class="scenario-card"
+                 data-scenario="normal"
+                 onclick="loadScenario('normal')">
 
-                <div class="scenario-icon">
-                    🟢
-                </div>
+                <div class="scenario-icon">🟢</div>
 
                 <div class="scenario-name">
                     Normal Payment
@@ -659,15 +549,11 @@
             </div>
 
 
-            <div
-                class="scenario-card"
-                data-scenario="urgent"
-                onclick="loadScenario('urgent')"
-            >
+            <div class="scenario-card"
+                 data-scenario="urgent"
+                 onclick="loadScenario('urgent')">
 
-                <div class="scenario-icon">
-                    ⚡
-                </div>
+                <div class="scenario-icon">⚡</div>
 
                 <div class="scenario-name">
                     Urgency Scam
@@ -680,15 +566,11 @@
             </div>
 
 
-            <div
-                class="scenario-card"
-                data-scenario="refund"
-                onclick="loadScenario('refund')"
-            >
+            <div class="scenario-card"
+                 data-scenario="refund"
+                 onclick="loadScenario('refund')">
 
-                <div class="scenario-icon">
-                    ↩️
-                </div>
+                <div class="scenario-icon">↩️</div>
 
                 <div class="scenario-name">
                     Refund Scam
@@ -701,15 +583,11 @@
             </div>
 
 
-            <div
-                class="scenario-card"
-                data-scenario="blocked"
-                onclick="loadScenario('blocked')"
-            >
+            <div class="scenario-card"
+                 data-scenario="blocked"
+                 onclick="loadScenario('blocked')">
 
-                <div class="scenario-icon">
-                    🔒
-                </div>
+                <div class="scenario-icon">🔒</div>
 
                 <div class="scenario-name">
                     Account Block
@@ -722,15 +600,11 @@
             </div>
 
 
-            <div
-                class="scenario-card"
-                data-scenario="verify"
-                onclick="loadScenario('verify')"
-            >
+            <div class="scenario-card"
+                 data-scenario="verify"
+                 onclick="loadScenario('verify')">
 
-                <div class="scenario-icon">
-                    🪪
-                </div>
+                <div class="scenario-icon">🪪</div>
 
                 <div class="scenario-name">
                     KYC Verification
@@ -743,15 +617,11 @@
             </div>
 
 
-            <div
-                class="scenario-card"
-                data-scenario="unknown"
-                onclick="loadScenario('unknown')"
-            >
+            <div class="scenario-card"
+                 data-scenario="unknown"
+                 onclick="loadScenario('unknown')">
 
-                <div class="scenario-icon">
-                    ❓
-                </div>
+                <div class="scenario-icon">❓</div>
 
                 <div class="scenario-name">
                     Unknown Recipient
@@ -764,15 +634,11 @@
             </div>
 
 
-            <div
-                class="scenario-card"
-                data-scenario="fee"
-                onclick="loadScenario('fee')"
-            >
+            <div class="scenario-card"
+                 data-scenario="fee"
+                 onclick="loadScenario('fee')">
 
-                <div class="scenario-icon">
-                    🎁
-                </div>
+                <div class="scenario-icon">🎁</div>
 
                 <div class="scenario-name">
                     Prize / Fee Scam
@@ -785,15 +651,11 @@
             </div>
 
 
-            <div
-                class="scenario-card"
-                data-scenario="lastchance"
-                onclick="loadScenario('lastchance')"
-            >
+            <div class="scenario-card"
+                 data-scenario="lastchance"
+                 onclick="loadScenario('lastchance')">
 
-                <div class="scenario-icon">
-                    ⏰
-                </div>
+                <div class="scenario-icon">⏰</div>
 
                 <div class="scenario-name">
                     Last Chance
@@ -807,10 +669,6 @@
 
         </div>
 
-
-        <!-- =========================
-             PAYMENT FORM
-        ========================== -->
 
         <div class="content">
 
@@ -832,8 +690,6 @@
                 <div class="form-grid">
 
 
-                    <!-- UPI -->
-
                     <div class="field">
 
                         <label for="upi">
@@ -854,8 +710,6 @@
                     </div>
 
 
-                    <!-- AMOUNT -->
-
                     <div class="field">
 
                         <label for="amount">
@@ -864,9 +718,7 @@
 
                         <div class="input-prefix">
 
-                            <span>
-                                ₹
-                            </span>
+                            <span>₹</span>
 
                             <input
                                 type="number"
@@ -884,8 +736,6 @@
 
                     </div>
 
-
-                    <!-- BENEFICIARY -->
 
                     <div class="field">
 
@@ -912,8 +762,6 @@
                     </div>
 
 
-                    <!-- VELOCITY -->
-
                     <div class="field">
 
                         <label for="transactionVelocity">
@@ -934,8 +782,6 @@
 
                     </div>
 
-
-                    <!-- PREVIOUS PAYMENTS -->
 
                     <div class="field">
 
@@ -958,7 +804,33 @@
                     </div>
 
 
-                    <!-- REFUND UPI -->
+                    <!-- USUAL AMOUNT -->
+
+                    <div class="field">
+
+                        <label for="usualAmount">
+                            Usual Payment Amount
+                        </label>
+
+                        <div class="input-prefix">
+
+                            <span>₹</span>
+
+                            <input
+                                type="number"
+                                id="usualAmount"
+                                value="0.00"
+                                readonly
+                            >
+
+                        </div>
+
+                        <div class="field-hint">
+                            Automatically calculated from previous Firebase transactions.
+                        </div>
+
+                    </div>
+
 
                     <div
                         class="field"
@@ -982,8 +854,6 @@
 
                     </div>
 
-
-                    <!-- MESSAGE -->
 
                     <div class="field full">
 
@@ -1011,8 +881,6 @@
                 </div>
 
 
-                <!-- BUTTON -->
-
                 <div class="button-row">
 
                     <button
@@ -1036,40 +904,30 @@
     </main>
 
 
-    <!-- =========================
-         TOAST
-    ========================== -->
+    <div class="toast" id="toast"></div>
 
-    <div
-        class="toast"
-        id="toast"
-    ></div>
-
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
 
     <script type="module">
 
         /*
-         * Existing Firebase database module.
+         * ==========================================
+         * FIREBASE DATABASE
+         * ==========================================
+         *
+         * IMPORTANT:
+         * The older working version of Sentinel
+         * used getTransactions().
          */
+
         import {
-            getTransactionsByUser
+            getTransactions
         } from "./js/database.js";
 
 
         /*
-         * Demo user used by Sentinel.
+         * Stores calculated usual amount.
          */
-        const DEMO_USER_ID =
-            "demo_user_01";
 
-
-        /*
-         * Stores the calculated usual amount.
-         */
         let currentUsualAmount = 0;
 
 
@@ -1082,208 +940,83 @@
         const SCENARIOS = {
 
             normal: {
-
                 upi: "rahul@upi",
-
                 amount: 750,
-
-                message:
-                    "Dinner yesterday. Sending my share.",
-
-                beneficiaryStatus:
-                    "existing",
-
-                transactionVelocity:
-                    0,
-
-                previousPayments:
-                    8,
-
-                refundUpi:
-                    ""
-
+                message: "Dinner yesterday. Sending my share.",
+                beneficiaryStatus: "existing",
+                transactionVelocity: 0,
+                previousPayments: 8,
+                refundUpi: ""
             },
-
 
             urgent: {
-
-                upi:
-                    "service.help@upi",
-
-                amount:
-                    4500,
-
-                message:
-                    "URGENT! Please complete this payment immediately. Your account will be blocked if you don't pay within the next 30 minutes.",
-
-                beneficiaryStatus:
-                    "new",
-
-                transactionVelocity:
-                    1,
-
-                previousPayments:
-                    0,
-
-                refundUpi:
-                    ""
-
+                upi: "service.help@upi",
+                amount: 4500,
+                message: "URGENT! Please complete this payment immediately. Your account will be blocked if you don't pay within the next 30 minutes.",
+                beneficiaryStatus: "new",
+                transactionVelocity: 1,
+                previousPayments: 0,
+                refundUpi: ""
             },
-
 
             refund: {
-
-                upi:
-                    "refund.support@upi",
-
-                amount:
-                    8000,
-
-                message:
-                    "Hi, I accidentally transferred ₹8,000 to you. Please return the money immediately to this UPI ID. It's urgent — my family needs it.",
-
-                beneficiaryStatus:
-                    "new",
-
-                transactionVelocity:
-                    1,
-
-                previousPayments:
-                    0,
-
-                refundUpi:
-                    "refund.receiver@upi"
-
+                upi: "refund.support@upi",
+                amount: 8000,
+                message: "Hi, I accidentally transferred ₹8,000 to you. Please return the money immediately to this UPI ID. It's urgent — my family needs it.",
+                beneficiaryStatus: "new",
+                transactionVelocity: 1,
+                previousPayments: 0,
+                refundUpi: "refund.receiver@upi"
             },
-
 
             blocked: {
-
-                upi:
-                    "bank.helpdesk@upi",
-
-                amount:
-                    1,
-
-                message:
-                    "Your bank account will be suspended in 2 hours. To prevent this, please pay a ₹1 verification amount to verify your account immediately. Failure to comply will result in account block.",
-
-                beneficiaryStatus:
-                    "new",
-
-                transactionVelocity:
-                    1,
-
-                previousPayments:
-                    0,
-
-                refundUpi:
-                    ""
-
+                upi: "bank.helpdesk@upi",
+                amount: 1,
+                message: "Your bank account will be suspended in 2 hours. To prevent this, please pay a ₹1 verification amount to verify your account immediately. Failure to comply will result in account block.",
+                beneficiaryStatus: "new",
+                transactionVelocity: 1,
+                previousPayments: 0,
+                refundUpi: ""
             },
-
 
             verify: {
-
-                upi:
-                    "kyc.verify@upi",
-
-                amount:
-                    10,
-
-                message:
-                    "This is your bank calling. We need to verify your account as part of your KYC process. Please send ₹10 to verify your UPI account. Your account will be activated after this.",
-
-                beneficiaryStatus:
-                    "new",
-
-                transactionVelocity:
-                    1,
-
-                previousPayments:
-                    0,
-
-                refundUpi:
-                    ""
-
+                upi: "kyc.verify@upi",
+                amount: 10,
+                message: "This is your bank calling. We need to verify your account as part of your KYC process. Please send ₹10 to verify your UPI account. Your account will be activated after this.",
+                beneficiaryStatus: "new",
+                transactionVelocity: 1,
+                previousPayments: 0,
+                refundUpi: ""
             },
-
 
             unknown: {
-
-                upi:
-                    "unknown.user7823@upi",
-
-                amount:
-                    25000,
-
-                message:
-                    "Please send the amount as discussed. Time-sensitive. You will get it back with profit.",
-
-                beneficiaryStatus:
-                    "new",
-
-                transactionVelocity:
-                    1,
-
-                previousPayments:
-                    0,
-
-                refundUpi:
-                    ""
-
+                upi: "unknown.user7823@upi",
+                amount: 25000,
+                message: "Please send the amount as discussed. Time-sensitive. You will get it back with profit.",
+                beneficiaryStatus: "new",
+                transactionVelocity: 1,
+                previousPayments: 0,
+                refundUpi: ""
             },
-
 
             fee: {
-
-                upi:
-                    "prize.claim@upi",
-
-                amount:
-                    2000,
-
-                message:
-                    "Congratulations! You have won a prize of ₹5,00,000. To claim your prize, please pay a processing fee of ₹2,000 as a security deposit. This is refundable.",
-
-                beneficiaryStatus:
-                    "new",
-
-                transactionVelocity:
-                    1,
-
-                previousPayments:
-                    0,
-
-                refundUpi:
-                    ""
-
+                upi: "prize.claim@upi",
+                amount: 2000,
+                message: "Congratulations! You have won a prize of ₹5,00,000. To claim your prize, please pay a processing fee of ₹2,000 as a security deposit. This is refundable.",
+                beneficiaryStatus: "new",
+                transactionVelocity: 1,
+                previousPayments: 0,
+                refundUpi: ""
             },
 
-
             lastchance: {
-
-                upi:
-                    "offer.expire@upi",
-
-                amount:
-                    15000,
-
-                message:
-                    "LAST CHANCE! This offer expires in 10 minutes. Pay now or lose your slot forever. Deadline pressure — act immediately before the window closes.",
-
-                beneficiaryStatus:
-                    "new",
-
-                transactionVelocity:
-                    1,
-
-                previousPayments:
-                    0,
-
-                refundUpi:
-                    ""
-
+                upi: "offer.expire@upi",
+                amount: 15000,
+                message: "LAST CHANCE! This offer expires in 10 minutes. Pay now or lose your slot forever. Deadline pressure — act immediately before the window closes.",
+                beneficiaryStatus: "new",
+                transactionVelocity: 1,
+                previousPayments: 0,
+                refundUpi: ""
             }
 
         };
@@ -1300,15 +1033,12 @@
             const toast =
                 document.getElementById("toast");
 
-            toast.textContent =
-                message;
+            toast.textContent = message;
 
             toast.classList.add("show");
 
             setTimeout(() => {
-
                 toast.classList.remove("show");
-
             }, 2800);
         }
 
@@ -1318,82 +1048,177 @@
          * CALCULATE USUAL AMOUNT
          * ==========================================
          *
-         * This happens in the background.
+         * IMPORTANT FIX:
          *
-         * The user does NOT see transaction history.
+         * We now use:
+         *
+         *     getTransactions()
+         *
+         * instead of:
+         *
+         *     getTransactionsByUser()
+         *
+         * This matches the older working Sentinel
+         * implementation.
+         *
+         * The average is calculated using:
+         *
+         *     transaction.amount
          */
 
         async function calculateUsualAmount() {
 
             try {
 
-                const transactions =
-                    await getTransactionsByUser(
-                        DEMO_USER_ID
-                    );
+                console.log(
+                    "Loading Firebase transaction history..."
+                );
 
+
+                /*
+                 * Get all stored transactions.
+                 */
+
+                const transactions =
+                    await getTransactions();
+
+
+                console.log(
+                    "Firebase transactions:",
+                    transactions
+                );
+
+
+                /*
+                 * Make sure we actually received
+                 * an array.
+                 */
 
                 if (
                     !Array.isArray(transactions) ||
                     transactions.length === 0
                 ) {
 
+                    console.log(
+                        "No transaction history found."
+                    );
+
+
                     currentUsualAmount = 0;
+
+
+                    document.getElementById(
+                        "usualAmount"
+                    ).value = "0.00";
+
 
                     return 0;
                 }
 
+
+                /*
+                 * Extract transaction.amount
+                 */
 
                 const amounts =
                     transactions
                         .map(transaction => {
 
-                            const value =
-                                transaction.amount ??
-                                transaction.paymentAmount ??
-                                transaction.payment_amount ??
-                                transaction.transactionAmount ??
-                                0;
-
-                            return Number(value);
+                            return Number(
+                                transaction.amount
+                            );
 
                         })
-                        .filter(amount =>
-                            Number.isFinite(amount) &&
-                            amount > 0
-                        );
+                        .filter(amount => {
 
+                            return (
+                                Number.isFinite(amount) &&
+                                amount > 0
+                            );
+
+                        });
+
+
+                console.log(
+                    "Valid transaction amounts:",
+                    amounts
+                );
+
+
+                /*
+                 * No valid amounts.
+                 */
 
                 if (amounts.length === 0) {
 
                     currentUsualAmount = 0;
 
+
+                    document.getElementById(
+                        "usualAmount"
+                    ).value = "0.00";
+
+
                     return 0;
                 }
 
 
+                /*
+                 * Calculate total.
+                 */
+
                 const total =
                     amounts.reduce(
-                        (sum, amount) =>
-                            sum + amount,
+                        (sum, amount) => {
+
+                            return sum + amount;
+
+                        },
                         0
                     );
 
 
+                /*
+                 * Calculate average.
+                 */
+
                 currentUsualAmount =
                     total / amounts.length;
+
+
+                /*
+                 * Display it.
+                 */
+
+                document.getElementById(
+                    "usualAmount"
+                ).value =
+                    currentUsualAmount.toFixed(2);
+
+
+                console.log(
+                    "Auto calculated usual amount:",
+                    currentUsualAmount
+                );
 
 
                 return currentUsualAmount;
 
             } catch (error) {
 
-                console.warn(
-                    "Could not calculate usual amount:",
+                console.error(
+                    "Could not load transaction history:",
                     error
                 );
 
+
                 currentUsualAmount = 0;
+
+
+                document.getElementById(
+                    "usualAmount"
+                ).value = "0.00";
+
 
                 return 0;
             }
@@ -1452,10 +1277,6 @@
             }
 
 
-            /*
-             * Remove previous selection.
-             */
-
             document
                 .querySelectorAll(".scenario-card")
                 .forEach(card => {
@@ -1466,10 +1287,6 @@
 
                 });
 
-
-            /*
-             * Highlight selected scenario.
-             */
 
             const selectedCard =
                 document.querySelector(
@@ -1484,10 +1301,6 @@
                 );
             }
 
-
-            /*
-             * Fill fields.
-             */
 
             document.getElementById("upi").value =
                 scenario.upi;
@@ -1525,10 +1338,6 @@
                 scenario.refundUpi || "";
 
 
-            /*
-             * Update refund visibility.
-             */
-
             updateRefundField();
 
 
@@ -1550,13 +1359,12 @@
                 "change",
                 function () {
 
-                    if (
-                        this.value === "new"
-                    ) {
+                    if (this.value === "new") {
 
                         document.getElementById(
                             "previousPayments"
                         ).value = 0;
+
                     }
 
                 }
@@ -1606,10 +1414,6 @@
                     .trim();
 
 
-            /*
-             * Validate UPI.
-             */
-
             if (!upi) {
 
                 showToast(
@@ -1623,10 +1427,6 @@
                 return;
             }
 
-
-            /*
-             * Validate amount.
-             */
 
             if (!amount) {
 
@@ -1656,10 +1456,6 @@
             }
 
 
-            /*
-             * Disable button.
-             */
-
             const button =
                 document.getElementById(
                     "analyseBtn"
@@ -1680,10 +1476,6 @@
 
 
             try {
-
-                /*
-                 * Read user-entered fields.
-                 */
 
                 const beneficiaryStatus =
                     document.getElementById(
@@ -1707,10 +1499,6 @@
                     );
 
 
-                /*
-                 * New beneficiary = no previous payments.
-                 */
-
                 const finalPreviousPayments =
                     beneficiaryStatus === "new"
                         ? 0
@@ -1720,10 +1508,6 @@
                         );
 
 
-                /*
-                 * Refund destination.
-                 */
-
                 const refundUpi =
                     document
                         .getElementById("refundUpi")
@@ -1732,7 +1516,8 @@
 
 
                 /*
-                 * Get latest Firebase history.
+                 * Calculate latest usual amount
+                 * from Firebase.
                  */
 
                 buttonText.textContent =
@@ -1770,10 +1555,6 @@
                             transactionVelocity
                         ),
 
-                    /*
-                     * Backend currently expects
-                     * recentPayments.
-                     */
                     recentPayments:
                         Math.max(
                             0,
@@ -1784,16 +1565,23 @@
                         refundUpi,
 
                     /*
-                     * Calculated from Firebase.
+                     * Firebase calculated value.
                      */
+
                     usualAmount:
                         Number(usualAmount) || 0
 
                 };
 
 
+                console.log(
+                    "Final payment data:",
+                    paymentData
+                );
+
+
                 /*
-                 * Save payment for risk-analysis.html.
+                 * Save payment data.
                  */
 
                 sessionStorage.setItem(
@@ -1802,18 +1590,10 @@
                 );
 
 
-                /*
-                 * Remove previous analysis.
-                 */
-
                 sessionStorage.removeItem(
                     "sentinelRisk"
                 );
 
-
-                /*
-                 * Remove previous feedback.
-                 */
 
                 sessionStorage.removeItem(
                     "sentinelFeedbackSubmitted"
@@ -1833,11 +1613,6 @@
                     "🔍 Payment details prepared."
                 );
 
-
-                /*
-                 * Continue to existing
-                 * risk-analysis.html.
-                 */
 
                 setTimeout(() => {
 
@@ -1867,6 +1642,18 @@
                 );
             }
         }
+
+
+        /*
+         * ==========================================
+         * INITIAL LOAD
+         * ==========================================
+         *
+         * This runs immediately when the page
+         * opens and fills Usual Payment Amount.
+         */
+
+        calculateUsualAmount();
 
 
         /*
