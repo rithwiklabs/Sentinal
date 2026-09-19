@@ -1,934 +1,943 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Sentinel - Risk Analysis</title>
 
-
     <style>
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, sans-serif;
             background: #f5f7fb;
-            color: #1f2937;
-        }
-
-
-        /* =====================================================
-           SIDEBAR
-        ===================================================== */
-
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 240px;
-            height: 100vh;
-            background: #111827;
-            color: white;
-            padding: 25px 15px;
-        }
-
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 35px;
-            padding-left: 15px;
-        }
-
-
-        .nav-item {
-            display: block;
-            padding: 13px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            color: #d1d5db;
-            text-decoration: none;
-        }
-
-
-        .nav-item:hover,
-        .nav-item.active {
-            background: #1f2937;
-            color: white;
-        }
-
-
-        /* =====================================================
-           MAIN
-        ===================================================== */
-
-        .main {
-            margin-left: 240px;
-            padding: 35px;
+            color: #172033;
             min-height: 100vh;
         }
 
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
 
-        .page-title {
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            width: 250px;
+            background: #101828;
+            color: white;
+            padding: 28px 18px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: 800;
+            margin-bottom: 38px;
+            padding-left: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .brand span {
+            color: #6d5dfc;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #aeb8c8;
+            padding: 13px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+
+        .nav a:hover {
+            background: #1d2939;
+            color: white;
+        }
+
+        .nav a.active {
+            background: #344054;
+            color: white;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 34px;
+        }
+
+        .page-header {
+            margin-bottom: 26px;
+        }
+
+        .page-header h1 {
             font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
         }
 
-
-        .page-subtitle {
-            color: #6b7280;
-            margin-bottom: 30px;
+        .page-header p {
+            color: #667085;
+            font-size: 15px;
         }
 
-
-        /* =====================================================
+        /* =========================
            GRID
-        ===================================================== */
+        ========================= */
 
         .grid {
             display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 25px;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 22px;
+            align-items: start;
         }
 
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
 
         .card {
             background: white;
-            border-radius: 14px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-            margin-bottom: 25px;
+            border: 1px solid #e4e7ec;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 8px 25px rgba(16, 24, 40, 0.04);
         }
-
 
         .card-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            font-size: 17px;
+            font-weight: 750;
+            margin-bottom: 18px;
         }
 
+        /* =========================
+           OVERALL RISK
+        ========================= */
 
-        /* =====================================================
-           PAYMENT SUMMARY
-        ===================================================== */
+        .risk-card {
+            text-align: center;
+        }
 
-        .payment-row {
+        .risk-circle {
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            margin: 10px auto 20px;
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 10px solid #e9ecef;
+            background: #f8f9fc;
+        }
+
+        .risk-score {
+            font-size: 34px;
+            font-weight: 800;
+        }
+
+        .risk-label {
+            font-size: 13px;
+            color: #667085;
+            margin-top: 3px;
+        }
+
+        .risk-level {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .risk-low {
+            background: #ecfdf3;
+            color: #027a48;
+        }
+
+        .risk-medium {
+            background: #fffaeb;
+            color: #b54708;
+        }
+
+        .risk-high {
+            background: #fef3f2;
+            color: #b42318;
+        }
+
+        /* =========================
+           ADAPTIVE WARNING
+        ========================= */
+
+        .adaptive-warning {
+            border: 1px solid #fecdca;
+            background: #fffafa;
+        }
+
+        .warning-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .warning-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fef3f2;
+            font-size: 21px;
+        }
+
+        .warning-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #b42318;
+        }
+
+        .warning-message {
+            color: #475467;
+            line-height: 1.65;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .warning-reasons {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .warning-reason {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            padding: 11px 12px;
+            border-radius: 10px;
+            background: #fff;
+            border: 1px solid #fee4e2;
+            font-size: 13px;
+            color: #344054;
+        }
+
+        .warning-reason span:first-child {
+            color: #d92d20;
+            font-weight: 800;
+        }
+
+        /* =========================
+           ML CARD
+        ========================= */
+
+        .ml-card {
+            border: 1px solid #d9d6fe;
+            background: linear-gradient(
+                145deg,
+                #ffffff 0%,
+                #fafaff 100%
+            );
+        }
+
+        .ml-header {
+            display: flex;
+            align-items: center;
             justify-content: space-between;
-            padding: 13px 0;
-            border-bottom: 1px solid #eeeeee;
+            gap: 15px;
+            margin-bottom: 18px;
         }
 
-
-        .payment-row:last-child {
-            border-bottom: none;
+        .ml-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #344054;
         }
 
-
-        .payment-label {
-            color: #6b7280;
+        .ml-status {
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            background: #f2f4f7;
+            color: #667085;
         }
 
+        .ml-result-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
 
-        .payment-value {
+        .ml-result {
+            background: #f9fafb;
+            border: 1px solid #eaecf0;
+            border-radius: 13px;
+            padding: 17px;
+        }
+
+        .ml-result-label {
+            font-size: 12px;
+            color: #667085;
+            margin-bottom: 8px;
+        }
+
+        .ml-result-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #344054;
+        }
+
+        .ml-probability {
+            color: #6941c6;
+        }
+
+        .ml-explanation {
+            padding: 13px 15px;
+            background: #f9f8ff;
+            border-radius: 11px;
+            border: 1px solid #ebe9fe;
+            color: #475467;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           RISK SIGNALS
+        ========================= */
+
+        .signals {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .signal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 13px 14px;
+            border-radius: 11px;
+            border: 1px solid #eaecf0;
+            background: #fff;
+        }
+
+        .signal-name {
+            font-size: 13px;
+            color: #344054;
             font-weight: 600;
-            text-align: right;
-            max-width: 60%;
+        }
+
+        .signal-value {
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .signal-positive {
+            background: #ecfdf3;
+            color: #027a48;
+        }
+
+        .signal-negative {
+            background: #fef3f2;
+            color: #b42318;
+        }
+
+        /* =========================
+           PAYMENT DETAILS
+        ========================= */
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+        }
+
+        .detail {
+            padding: 14px;
+            border-radius: 11px;
+            background: #f9fafb;
+            border: 1px solid #eaecf0;
+        }
+
+        .detail-label {
+            color: #667085;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: #101828;
+            font-size: 14px;
+            font-weight: 700;
             word-break: break-word;
         }
 
+        /* =========================
+           PAUSE & VERIFY
+        ========================= */
 
-        /* =====================================================
-           RISK HEADER
-        ===================================================== */
+        .pause-verify {
+            border: 1px solid #fedf89;
+            background: #fffdf5;
+        }
 
-        .risk-header {
+        .pause-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            gap: 13px;
+            margin-bottom: 14px;
         }
 
-
-        .risk-score {
-            font-size: 52px;
-            font-weight: bold;
+        .pause-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #fffaeb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 21px;
         }
 
-
-        .risk-label {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-
-        .risk-low {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-
-        .risk-medium {
-            background: #fef3c7;
+        .pause-title {
+            font-size: 18px;
+            font-weight: 800;
             color: #92400e;
         }
 
-
-        .risk-high {
-            background: #fee2e2;
-            color: #991b1b;
+        .pause-description {
+            color: #667085;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 17px;
         }
 
-
-        /* =====================================================
-           SCORE BAR
-        ===================================================== */
-
-        .score-bar {
-            width: 100%;
-            height: 12px;
-            background: #e5e7eb;
-            border-radius: 20px;
+        .pause-progress {
+            height: 7px;
+            background: #f2f4f7;
+            border-radius: 999px;
             overflow: hidden;
-            margin-bottom: 25px;
+            margin-bottom: 18px;
         }
 
-
-        .score-fill {
+        .pause-progress-bar {
             height: 100%;
             width: 0%;
-            transition: width 0.8s ease;
+            background: #f79009;
+            transition: width 0.25s ease;
         }
 
-
-        /* =====================================================
-           SIGNALS
-        ===================================================== */
-
-        .signal {
-            padding: 17px 0;
-            border-bottom: 1px solid #eeeeee;
+        .detected-box {
+            margin-bottom: 17px;
+            padding: 13px;
+            border-radius: 11px;
+            background: #fff;
+            border: 1px solid #fef0c7;
         }
 
-
-        .signal:last-child {
-            border-bottom: none;
-        }
-
-
-        .signal-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .detected-title {
+            font-size: 12px;
+            color: #667085;
             margin-bottom: 9px;
         }
 
-
-        .signal-name {
-            font-weight: 600;
-        }
-
-
-        .signal-score {
-            font-weight: bold;
-        }
-
-
-        .signal-bar {
-            width: 100%;
-            height: 7px;
-            background: #e5e7eb;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-
-        .signal-fill {
-            height: 100%;
-            width: 0%;
-            transition: width 0.6s ease;
-        }
-
-
-        /* =====================================================
-           EXPLANATION
-        ===================================================== */
-
-        .explanation {
-            background: #f9fafb;
-            border-radius: 10px;
-            padding: 18px;
-            line-height: 1.6;
-            color: #4b5563;
-        }
-
-
-        /* =====================================================
-           ML ASSESSMENT
-        ===================================================== */
-
-        .ml-box {
-            background: #f9fafb;
-            border-radius: 10px;
-            padding: 18px;
-        }
-
-
-        .ml-row {
+        .reason-badges {
             display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+            gap: 7px;
         }
 
-
-        .ml-row:last-child {
-            border-bottom: none;
+        .reason-badge {
+            background: #fffaeb;
+            color: #b54708;
+            border: 1px solid #fedf89;
+            padding: 6px 9px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
         }
 
-
-        .ml-label {
-            color: #6b7280;
+        .check-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-
-        .ml-value {
-            font-weight: bold;
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            background: white;
+            border: 1px solid #eaecf0;
+            border-radius: 12px;
+            transition: 0.2s ease;
         }
 
-
-        .probability-bar {
-            width: 100%;
-            height: 10px;
-            background: #e5e7eb;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-top: 8px;
+        .check-item.checked {
+            border-color: #a6f4c5;
+            background: #f6fef9;
         }
 
-
-        .probability-fill {
-            height: 100%;
-            width: 0%;
-            transition: width 0.8s ease;
-        }
-
-
-        /* =====================================================
-           DECISION BUTTONS
-        ===================================================== */
-
-        .decision-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-
-        .decision-btn {
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: bold;
+        .checkpoint-checkbox {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
             cursor: pointer;
+            accent-color: #12b76a;
         }
 
-
-        .cancel-btn {
-            background: #dc2626;
-            color: white;
+        .check-content {
+            flex: 1;
         }
 
-
-        .cancel-btn:hover {
-            background: #b91c1c;
+        .check-title {
+            font-size: 13px;
+            font-weight: 750;
+            color: #344054;
+            margin-bottom: 4px;
         }
 
-
-        .continue-btn {
-            background: #16a34a;
-            color: white;
+        .check-question {
+            font-size: 13px;
+            color: #667085;
+            line-height: 1.5;
         }
 
-
-        .continue-btn:hover {
-            background: #15803d;
-        }
-
-
-        .decision-btn:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-
-
-        /* =====================================================
-           BADGE
-        ===================================================== */
-
-        .badge {
-            display: inline-block;
-            background: #ecfdf5;
-            color: #047857;
-            padding: 6px 10px;
-            border-radius: 20px;
+        .pause-status {
+            margin-top: 16px;
+            padding: 11px 13px;
+            border-radius: 10px;
             font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            background: #f2f4f7;
+            color: #667085;
         }
 
-
-        /* =====================================================
-           LOADING
-        ===================================================== */
-
-        .loading {
-            text-align: center;
-            padding: 50px;
-            color: #6b7280;
+        .pause-status.ready {
+            background: #ecfdf3;
+            color: #027a48;
+            font-weight: 700;
         }
 
+        /* =========================
+           DECISION
+        ========================= */
 
-        /* =====================================================
+        .decision {
+            display: flex;
+            gap: 13px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 11px;
+            padding: 13px 22px;
+            font-size: 14px;
+            font-weight: 750;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-cancel {
+            background: #f2f4f7;
+            color: #344054;
+        }
+
+        .btn-continue {
+            background: #12b76a;
+            color: white;
+        }
+
+        .btn-continue:disabled {
+            background: #d0d5dd;
+            color: #98a2b3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* =========================
            RESPONSIVE
-        ===================================================== */
+        ========================= */
 
-        @media (max-width: 900px) {
-
+        @media (max-width: 950px) {
             .sidebar {
-                width: 200px;
+                width: 210px;
             }
 
             .main {
-                margin-left: 200px;
+                margin-left: 210px;
+                width: calc(100% - 210px);
             }
 
             .grid {
                 grid-template-columns: 1fr;
             }
 
+            .full {
+                grid-column: auto;
+            }
         }
 
-
-        @media (max-width: 650px) {
-
+        @media (max-width: 700px) {
             .sidebar {
                 position: relative;
                 width: 100%;
                 height: auto;
             }
 
+            .app {
+                display: block;
+            }
+
             .main {
                 margin-left: 0;
+                width: 100%;
                 padding: 20px;
             }
 
-            .decision-buttons {
+            .details,
+            .ml-result-box {
                 grid-template-columns: 1fr;
             }
 
+            .decision {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-
-    <!-- =====================================================
-         SIDEBAR
-    ===================================================== -->
+<div class="app">
 
     <aside class="sidebar">
 
-        <div class="logo">
-            Sentinel
+        <div class="brand">
+            Senti<span>nel</span>
         </div>
 
+        <nav class="nav">
 
-        <a
-            href="index.html"
-            class="nav-item"
-        >
-            Overview
-        </a>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
+            <a href="payment.html">
+                New Payment
+            </a>
 
-        <a
-            href="payment.html"
-            class="nav-item"
-        >
-            Payment Simulation
-        </a>
+            <a href="transactions.html">
+                Transactions
+            </a>
 
+            <a href="risk-analysis.html" class="active">
+                Risk Analysis
+            </a>
 
-        <a
-            href="risk-analysis.html"
-            class="nav-item active"
-        >
-            Risk Analysis
-        </a>
+            <a href="insights.html">
+                Insights
+            </a>
 
-
-        <a
-            href="decision.html"
-            class="nav-item"
-        >
-            Decision
-        </a>
-
-
-        <a
-            href="transactions.html"
-            class="nav-item"
-        >
-            Transactions
-        </a>
-
-
-        <a
-            href="insights.html"
-            class="nav-item"
-        >
-            Risk Insights
-        </a>
+        </nav>
 
     </aside>
 
-
-
-    <!-- =====================================================
-         MAIN
-    ===================================================== -->
-
     <main class="main">
 
-        <div class="badge">
-            Synthetic Simulation Mode
+        <div class="page-header">
+
+            <h1>
+                Payment Risk Analysis
+            </h1>
+
+            <p>
+                Sentinel is analyzing the contextual signals surrounding this payment.
+            </p>
+
         </div>
 
+        <div class="grid">
 
-        <h1 class="page-title">
-            Risk Analysis
-        </h1>
+            <div class="card risk-card">
 
+                <div class="card-title">
+                    Overall Risk
+                </div>
 
-        <p class="page-subtitle">
-            Sentinel has analysed this payment using multiple
-            transaction and social-engineering risk signals.
-        </p>
+                <div
+                    id="riskCircle"
+                    class="risk-circle"
+                >
 
+                    <div
+                        id="riskScore"
+                        class="risk-score"
+                    >
+                        -
+                    </div>
 
+                    <div class="risk-label">
+                        Risk Score
+                    </div>
 
-        <!-- =================================================
-             LOADING
-        ================================================== -->
+                </div>
 
-        <div
-            id="loading"
-            class="card loading"
-        >
-            Loading risk analysis...
-        </div>
+                <div
+                    id="riskLevel"
+                    class="risk-level"
+                >
+                    Analyzing...
+                </div>
 
+            </div>
 
+            <div class="card">
 
-        <!-- =================================================
-             CONTENT
-        ================================================== -->
+                <div class="card-title">
+                    Payment Details
+                </div>
 
-        <div
-            id="analysisContent"
-            style="display:none;"
-        >
+                <div
+                    id="paymentDetails"
+                    class="details"
+                >
+                </div>
 
+            </div>
 
-            <div class="grid">
+            <div class="card adaptive-warning full">
 
+                <div class="warning-header">
 
-                <!-- =============================================
-                     LEFT COLUMN
-                ============================================== -->
+                    <div class="warning-icon">
+                        ⚠️
+                    </div>
 
-                <div>
+                    <div class="warning-title">
+                        Adaptive Warning
+                    </div>
 
+                </div>
 
-                    <!-- =========================================
-                         RISK SUMMARY
-                    ========================================== -->
+                <div
+                    id="warningMessage"
+                    class="warning-message"
+                >
+                    Sentinel is analyzing this payment.
+                </div>
 
-                    <div class="card">
+                <div
+                    id="warningReasons"
+                    class="warning-reasons"
+                >
+                </div>
 
-                        <div class="card-title">
-                            Overall Risk
+            </div>
+
+            <div class="card ml-card full">
+
+                <div class="ml-header">
+
+                    <div class="ml-title">
+                        🤖 ML Evaluation
+                    </div>
+
+                    <div
+                        id="mlStatus"
+                        class="ml-status"
+                    >
+                        Waiting for model
+                    </div>
+
+                </div>
+
+                <div class="ml-result-box">
+
+                    <div class="ml-result">
+
+                        <div class="ml-result-label">
+                            Prediction
                         </div>
-
-
-                        <div class="risk-header">
-
-                            <div>
-
-                                <div
-                                    id="riskScore"
-                                    class="risk-score"
-                                >
-                                    0
-                                </div>
-
-                                <div>
-                                    out of 100
-                                </div>
-
-                            </div>
-
-
-                            <div
-                                id="riskLabel"
-                                class="risk-label"
-                            >
-                                LOW
-                            </div>
-
-                        </div>
-
-
-                        <div class="score-bar">
-
-                            <div
-                                id="scoreFill"
-                                class="score-fill"
-                            ></div>
-
-                        </div>
-
 
                         <div
-                            id="riskExplanation"
-                            class="explanation"
+                            id="mlClassification"
+                            class="ml-result-value"
                         >
-                            Sentinel is analysing the payment.
+                            -
                         </div>
 
                     </div>
 
+                    <div class="ml-result">
 
-
-                    <!-- =========================================
-                         RISK SIGNALS
-                    ========================================== -->
-
-                    <div class="card">
-
-                        <div class="card-title">
-                            Risk Signals
+                        <div class="ml-result-label">
+                            Scam Probability
                         </div>
 
-
-                        <div id="signalsContainer">
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- =========================================
-                         ML ASSESSMENT
-                    ========================================== -->
-
-                    <div class="card">
-
-                        <div class="card-title">
-                            ML Assessment
-                        </div>
-
-
-                        <div class="ml-box">
-
-                            <div class="ml-row">
-
-                                <span class="ml-label">
-                                    Model
-                                </span>
-
-                                <span class="ml-value">
-                                    Logistic Regression
-                                </span>
-
-                            </div>
-
-
-                            <div class="ml-row">
-
-                                <span class="ml-label">
-                                    Prediction
-                                </span>
-
-                                <span
-                                    id="mlPrediction"
-                                    class="ml-value"
-                                >
-                                    -
-                                </span>
-
-                            </div>
-
-
-                            <div style="margin-top:15px;">
-
-                                <div class="ml-row">
-
-                                    <span class="ml-label">
-                                        Scam Probability
-                                    </span>
-
-                                    <span
-                                        id="mlProbability"
-                                        class="ml-value"
-                                    >
-                                        -
-                                    </span>
-
-                                </div>
-
-
-                                <div class="probability-bar">
-
-                                    <div
-                                        id="probabilityFill"
-                                        class="probability-fill"
-                                    ></div>
-
-                                </div>
-
-                            </div>
-
+                        <div
+                            id="mlProbability"
+                            class="ml-result-value ml-probability"
+                        >
+                            -
                         </div>
 
                     </div>
 
                 </div>
 
+                <div
+                    id="mlRawOutput"
+                    class="ml-explanation"
+                >
+                    The Logistic Regression model will evaluate the contextual
+                    payment signals.
+                </div>
 
+            </div>
 
-                <!-- =============================================
-                     RIGHT COLUMN
-                ============================================== -->
+            <div class="card">
 
-                <div>
+                <div class="card-title">
+                    Detected Risk Signals
+                </div>
 
+                <div
+                    id="riskSignals"
+                    class="signals"
+                >
+                </div>
 
-                    <!-- =========================================
-                         PAYMENT DETAILS
-                    ========================================== -->
+            </div>
 
-                    <div class="card">
+            <div
+                id="pauseVerifyCard"
+                class="card pause-verify"
+            >
 
-                        <div class="card-title">
-                            Payment Details
-                        </div>
+                <div class="pause-header">
 
-
-                        <div class="payment-row">
-
-                            <span class="payment-label">
-                                Recipient
-                            </span>
-
-                            <span
-                                id="paymentUpi"
-                                class="payment-value"
-                            >
-                                -
-                            </span>
-
-                        </div>
-
-
-                        <div class="payment-row">
-
-                            <span class="payment-label">
-                                Amount
-                            </span>
-
-                            <span
-                                id="paymentAmount"
-                                class="payment-value"
-                            >
-                                -
-                            </span>
-
-                        </div>
-
-
-                        <div class="payment-row">
-
-                            <span class="payment-label">
-                                Message
-                            </span>
-
-                            <span
-                                id="paymentMessage"
-                                class="payment-value"
-                            >
-                                -
-                            </span>
-
-                        </div>
-
-
-                        <div class="payment-row">
-
-                            <span class="payment-label">
-                                Usual Amount
-                            </span>
-
-                            <span
-                                id="paymentUsualAmount"
-                                class="payment-value"
-                            >
-                                -
-                            </span>
-
-                        </div>
-
-
-                        <div class="payment-row">
-
-                            <span class="payment-label">
-                                Recent Payments
-                            </span>
-
-                            <span
-                                id="paymentRecent"
-                                class="payment-value"
-                            >
-                                -
-                            </span>
-
-                        </div>
-
-
-                        <div class="payment-row">
-
-                            <span class="payment-label">
-                                Beneficiary
-                            </span>
-
-                            <span
-                                id="paymentBeneficiary"
-                                class="payment-value"
-                            >
-                                -
-                            </span>
-
-                        </div>
-
-
-                        <div class="payment-row">
-
-                            <span class="payment-label">
-                                Previous Payments
-                            </span>
-
-                            <span
-                                id="paymentPrevious"
-                                class="payment-value"
-                            >
-                                -
-                            </span>
-
-                        </div>
-
-
-                        <div
-                            class="payment-row"
-                            id="refundRow"
-                            style="display:none;"
-                        >
-
-                            <span class="payment-label">
-                                Refund UPI
-                            </span>
-
-                            <span
-                                id="paymentRefundUpi"
-                                class="payment-value"
-                            >
-                                -
-                            </span>
-
-                        </div>
-
+                    <div class="pause-icon">
+                        🛑
                     </div>
 
-
-
-                    <!-- =========================================
-                         DECISION
-                    ========================================== -->
-
-                    <div class="card">
-
-                        <div class="card-title">
-                            What do you want to do?
-                        </div>
-
-
-                        <p
-                            style="
-                                color:#6b7280;
-                                line-height:1.6;
-                            "
-                        >
-                            Sentinel provides a risk signal to help
-                            you make an informed decision. This is a
-                            simulated payment and no real money will
-                            be transferred.
-                        </p>
-
-
-                        <div class="decision-buttons">
-
-                            <button
-                                id="cancelBtn"
-                                class="decision-btn cancel-btn"
-                                onclick="cancelPayment()"
-                            >
-                                Cancel Payment
-                            </button>
-
-
-                            <button
-                                id="continueBtn"
-                                class="decision-btn continue-btn"
-                                onclick="continuePayment()"
-                            >
-                                Continue Payment
-                            </button>
-
-                        </div>
-
+                    <div class="pause-title">
+                        Pause & Verify
                     </div>
+
+                </div>
+
+                <div class="pause-description">
+
+                    Before continuing, Sentinel asks you to verify the
+                    specific conditions that contributed to this payment's
+                    risk assessment.
+
+                </div>
+
+                <div class="pause-progress">
+
+                    <div
+                        id="pauseProgressBar"
+                        class="pause-progress-bar"
+                    >
+                    </div>
+
+                </div>
+
+                <div
+                    id="detectedSignalsBox"
+                    class="detected-box"
+                >
+
+                    <div class="detected-title">
+                        Signals requiring verification
+                    </div>
+
+                    <div
+                        id="reasonBadges"
+                        class="reason-badges"
+                    >
+                    </div>
+
+                </div>
+
+                <div
+                    id="checkList"
+                    class="check-list"
+                >
+                </div>
+
+                <div
+                    id="pauseStatus"
+                    class="pause-status"
+                >
+                    Complete the verification checks before continuing.
+                </div>
+
+            </div>
+
+            <div class="card full">
+
+                <div class="decision">
+
+                    <button
+                        id="cancelBtn"
+                        class="btn btn-cancel"
+                    >
+                        Cancel Payment
+                    </button>
+
+                    <button
+                        id="continueBtn"
+                        class="btn btn-continue"
+                        disabled
+                    >
+                        Continue Payment
+                    </button>
 
                 </div>
 
@@ -938,1001 +947,1912 @@
 
     </main>
 
+</div>
 
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ===================================================== -->
+<script type="module">
 
-    <script type="module">
+    import { saveTransaction } from "./js/database.js";
 
 
-        /* =====================================================
-           FIREBASE
-        ===================================================== */
+    /* =====================================================
+       SENTINEL FLASK ML BACKEND
+    ===================================================== */
 
-        import {
-            saveTransaction
-        } from "./js/database.js";
-
+    const ML_API_URL =
+        "http://127.0.0.1:5000/api/analyze-payment";
 
 
-        /* =====================================================
-           GET STORED DATA
-        ===================================================== */
+    /* =====================================================
+       SESSION DATA
+    ===================================================== */
 
-        const paymentData =
-            JSON.parse(
-                sessionStorage.getItem(
-                    "sentinelPayment"
-                )
-            );
-
-
-        const riskData =
-            JSON.parse(
-                sessionStorage.getItem(
-                    "sentinelRisk"
-                )
-            );
-
-
-
-        /* =====================================================
-           CHECK DATA
-        ===================================================== */
-
-        if (!paymentData || !riskData) {
-
-    document.getElementById(
-        "loading"
-    ).innerHTML = `
-        <h3>No payment analysis found.</h3>
-
-        <p style="margin-top:10px;">
-            Please return to the payment simulation page
-            and analyse a payment first.
-        </p>
-
-        <br>
-
-        <a href="payment.html">
-            Go to Payment Simulation
-        </a>
-    `;
-
-} else {
-
-    try {
-
-        displayAnalysis();
-
-    } catch (error) {
-
-        console.error(
-            "Risk Analysis display error:",
-            error
+    const paymentData =
+        JSON.parse(
+            sessionStorage.getItem("sentinelPayment")
         );
 
-        document.getElementById(
-            "loading"
-        ).style.display = "block";
+    let riskData =
+        JSON.parse(
+            sessionStorage.getItem("sentinelRisk")
+        );
 
-        document.getElementById(
-            "loading"
-        ).innerHTML = `
-            <h3>Unable to display risk analysis.</h3>
 
-            <p style="margin-top:10px;">
-                An error occurred while loading the
-                analysis results.
-            </p>
+    if (!paymentData) {
 
-            <p style="margin-top:10px; color:#dc2626;">
-                Check the browser console for details.
-            </p>
+        alert("Payment information was not found.");
 
-            <br>
-
-            <a href="payment.html">
-                Return to Payment Simulation
-            </a>
-        `;
-
-        document.getElementById(
-            "analysisContent"
-        ).style.display = "none";
+        window.location.href = "payment.html";
 
     }
 
-}
+
+    /* =====================================================
+       SAFE DATA
+    ===================================================== */
+
+    let safeRiskData =
+        riskData || {
+
+            score: 0,
+
+            level: "LOW",
+
+            signals: []
+
+        };
 
 
-        /* =====================================================
-           DISPLAY ANALYSIS
-        ===================================================== */
+    let mlResult = null;
 
-        function displayAnalysis() {
+    let mlFeatures = {};
 
+    let checkpointCount = 0;
 
-            /* =================================================
-               SHOW CONTENT
-            ================================================= */
-
-            document.getElementById(
-                "analysisContent"
-            ).style.display = "block";
+    let completedCheckpoints = 0;
 
 
-            document.getElementById(
-                "loading"
-            ).style.display = "none";
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const riskScoreElement =
+        document.getElementById("riskScore");
+
+    const riskLevelElement =
+        document.getElementById("riskLevel");
+
+    const riskCircle =
+        document.getElementById("riskCircle");
+
+    const paymentDetails =
+        document.getElementById("paymentDetails");
+
+    const riskSignals =
+        document.getElementById("riskSignals");
+
+    const warningMessage =
+        document.getElementById("warningMessage");
+
+    const warningReasons =
+        document.getElementById("warningReasons");
+
+    const mlStatus =
+        document.getElementById("mlStatus");
+
+    const mlClassification =
+        document.getElementById("mlClassification");
+
+    const mlProbability =
+        document.getElementById("mlProbability");
+
+    const mlRawOutput =
+        document.getElementById("mlRawOutput");
+
+    const pauseVerifyCard =
+        document.getElementById("pauseVerifyCard");
+
+    const reasonBadges =
+        document.getElementById("reasonBadges");
+
+    const checkList =
+        document.getElementById("checkList");
+
+    const pauseProgressBar =
+        document.getElementById("pauseProgressBar");
+
+    const pauseStatus =
+        document.getElementById("pauseStatus");
+
+    const continueBtn =
+        document.getElementById("continueBtn");
+
+    const cancelBtn =
+        document.getElementById("cancelBtn");
 
 
-            /* =================================================
-               PAYMENT DETAILS
-            ================================================= */
+    /* =====================================================
+       INITIAL DISPLAY
+    ===================================================== */
 
-            document.getElementById(
-                "paymentUpi"
-            ).textContent =
-                paymentData.upi || "-";
+    displayAnalysis();
 
 
-            document.getElementById(
-                "paymentAmount"
-            ).textContent =
-                "₹" +
-                Number(
-                    paymentData.amount || 0
-                ).toLocaleString("en-IN");
+    /* =====================================================
+       MAIN ANALYSIS
+    ===================================================== */
+
+    async function displayAnalysis() {
+
+        displayPaymentData();
+
+        /*
+         * FIRST:
+         * Send payment information to Flask.
+         *
+         * Flask:
+         * 1. Runs risk_engine.py
+         * 2. Calculates the 8 ML features
+         * 3. Loads sentinel_model.pkl
+         * 4. Runs Logistic Regression
+         * 5. Returns prediction + probability
+         */
+
+        await getMLPrediction();
+
+        /*
+         * AFTER BACKEND RESPONSE:
+         * Display the updated risk information.
+         */
+
+        displayOverallRisk();
+
+        displaySignals();
+
+        generateAdaptiveWarning();
+
+        renderPauseCheckpoint();
+
+    }
 
 
-            document.getElementById(
-                "paymentMessage"
-            ).textContent =
-                paymentData.message || "-";
+    /* =====================================================
+       OVERALL RISK
+    ===================================================== */
 
+    function displayOverallRisk() {
 
-            document.getElementById(
-                "paymentUsualAmount"
-            ).textContent =
-                paymentData.usualAmount
-                    ? "₹" +
-                      Number(
-                          paymentData.usualAmount
-                      ).toLocaleString("en-IN")
-                    : "-";
-
-
-            document.getElementById(
-                "paymentRecent"
-            ).textContent =
-                paymentData.recentPayments ?? 0;
-
-
-            document.getElementById(
-                "paymentBeneficiary"
-            ).textContent =
-                paymentData.beneficiaryStatus ||
-                "-";
-
-
-            document.getElementById(
-                "paymentPrevious"
-            ).textContent =
-                paymentData.previousPayments ?? 0;
-
-
-
-            /* =================================================
-               REFUND DETAILS
-            ================================================= */
-
-            if (
-                paymentData.refundUpi
-            ) {
-
-                document.getElementById(
-                    "refundRow"
-                ).style.display = "flex";
-
-
-                document.getElementById(
-                    "paymentRefundUpi"
-                ).textContent =
-                    paymentData.refundUpi;
-
-            }
-
-
-
-            /* =================================================
-               RULE-BASED RISK RESULT
-            ================================================= */
-
-            const score =
-                Number(
-                    riskData.score ?? 0
-                );
-
-
-            const riskLevel =
-                (
-                    riskData.riskLevel ||
-                    "LOW"
-                ).toUpperCase();
-
-
-            document.getElementById(
-                "riskScore"
-            ).textContent =
-                score;
-
-
-            const riskLabel =
-                document.getElementById(
-                    "riskLabel"
-                );
-
-
-            riskLabel.textContent =
-                riskLevel;
-
-
-            riskLabel.className =
-                "risk-label " +
-                getRiskClass(
-                    riskLevel
-                );
-
-
-
-            /* =================================================
-               SCORE BAR
-            ================================================= */
-
-            const scoreFill =
-                document.getElementById(
-                    "scoreFill"
-                );
-
-
-            scoreFill.style.width =
-                Math.min(
-                    Math.max(score, 0),
-                    100
-                ) + "%";
-
-
-            scoreFill.style.background =
-                getRiskColor(
-                    riskLevel
-                );
-
-
-
-            /* =================================================
-               EXPLANATION
-            ================================================= */
-
-            document.getElementById(
-                "riskExplanation"
-            ).textContent =
-                getExplanation(
-                    riskLevel,
-                    score
-                );
-
-
-
-            /* =================================================
-               RISK SIGNALS
-            ================================================= */
-
-            displaySignals(
-                riskData.signals || []
+        const score =
+            Number(
+                safeRiskData.score ??
+                safeRiskData.riskScore ??
+                0
             );
 
 
+        const level =
+            String(
+                safeRiskData.level ??
+                safeRiskData.riskLevel ??
+                getRiskLevel(score)
+            ).toUpperCase();
 
-            /* =================================================
-               ML RESULT
-            ================================================= */
 
-            displayMLResult(
-                riskData.ml
+        riskScoreElement.textContent =
+            score;
+
+
+        riskLevelElement.textContent =
+            level;
+
+
+        riskLevelElement.className =
+            "risk-level";
+
+
+        if (level === "HIGH") {
+
+            riskLevelElement.classList.add(
+                "risk-high"
             );
+
+            riskCircle.style.borderColor =
+                "#fecdca";
+
+        }
+
+        else if (level === "MEDIUM") {
+
+            riskLevelElement.classList.add(
+                "risk-medium"
+            );
+
+            riskCircle.style.borderColor =
+                "#fedf89";
+
+        }
+
+        else {
+
+            riskLevelElement.classList.add(
+                "risk-low"
+            );
+
+            riskCircle.style.borderColor =
+                "#a6f4c5";
+
+        }
+
+    }
+
+
+    function getRiskLevel(score) {
+
+        if (score >= 60) {
+
+            return "HIGH";
+
+        }
+
+        if (score >= 30) {
+
+            return "MEDIUM";
+
+        }
+
+        return "LOW";
+
+    }
+
+
+    /* =====================================================
+       PAYMENT DETAILS
+    ===================================================== */
+
+    function displayPaymentData() {
+
+        const amount =
+            Number(paymentData.amount || 0);
+
+
+        const usualAmount =
+            Number(paymentData.usualAmount || 0);
+
+
+        const beneficiary =
+            paymentData.beneficiary ||
+            paymentData.recipient ||
+            "Unknown";
+
+
+        const reason =
+            paymentData.reason ||
+            paymentData.description ||
+            paymentData.message ||
+            "Not provided";
+
+
+        const details = [
+
+            [
+                "Amount",
+                formatCurrency(amount)
+            ],
+
+            [
+                "Usual Amount",
+                formatCurrency(usualAmount)
+            ],
+
+            [
+                "Beneficiary",
+                beneficiary
+            ],
+
+            [
+                "Reason",
+                reason
+            ],
+
+            [
+                "UPI ID",
+                paymentData.upiId ||
+                paymentData.upi ||
+                "Not provided"
+            ],
+
+            [
+                "Transaction Type",
+                paymentData.transactionType ||
+                "UPI Payment"
+            ]
+
+        ];
+
+
+        paymentDetails.innerHTML =
+            details.map(
+                ([label, value]) => `
+
+                    <div class="detail">
+
+                        <div class="detail-label">
+                            ${escapeHtml(label)}
+                        </div>
+
+                        <div class="detail-value">
+                            ${escapeHtml(String(value))}
+                        </div>
+
+                    </div>
+
+                `
+            ).join("");
+
+    }
+
+
+    function formatCurrency(value) {
+
+        if (!Number.isFinite(value)) {
+
+            return "₹0";
 
         }
 
 
+        return new Intl.NumberFormat(
+            "en-IN",
+            {
+                style: "currency",
+                currency: "INR",
+                maximumFractionDigits: 2
+            }
+        ).format(value);
 
-        /* =====================================================
-           DISPLAY ML RESULT
-        ===================================================== */
-
-        function displayMLResult(
-            ml
-        ) {
-
-            const predictionElement =
-                document.getElementById(
-                    "mlPrediction"
-                );
+    }
 
 
-            const probabilityElement =
-                document.getElementById(
-                    "mlProbability"
-                );
+    /* =====================================================
+       SIGNAL HELPERS
+    ===================================================== */
+
+    function getSignalFlag(signalName) {
+
+        const signals =
+            Array.isArray(safeRiskData.signals)
+                ? safeRiskData.signals
+                : [];
 
 
-            const probabilityFill =
-                document.getElementById(
-                    "probabilityFill"
-                );
+        const normalizedTarget =
+            normalizeSignalName(signalName);
 
 
-            if (!ml) {
+        const signal =
+            signals.find(
+                item =>
+                    normalizeSignalName(
+                        item.name ||
+                        item.signal ||
+                        item.label ||
+                        ""
+                    ) === normalizedTarget
+            );
 
-                predictionElement.textContent =
-                    "Unavailable";
 
+        if (signal) {
 
-                probabilityElement.textContent =
-                    "Unavailable";
+            if (isSignalDetected(signal)) {
 
-
-                return;
+                return 1;
 
             }
 
+            return 0;
+
+        }
+
+
+        /*
+         * If risk_engine does not provide the signal,
+         * use the exact ML feature returned by Flask.
+         */
+
+        const featureMap = {
+
+            "New Beneficiary":
+                "new_beneficiary",
+
+            "Urgency Signals":
+                "urgency",
+
+            "Scam Language":
+                "scam_language",
+
+            "Refund Redirection":
+                "refund_redirection",
+
+            "Transaction Velocity":
+                "transaction_velocity",
+
+            "Behaviour Deviation":
+                "behaviour_deviation",
+
+            "Combined Context":
+                "combined_context"
+
+        };
+
+
+        const featureName =
+            featureMap[signalName];
+
+
+        if (
+            featureName &&
+            Number(mlFeatures[featureName]) > 0
+        ) {
+
+            return 1;
+
+        }
+
+
+        return 0;
+
+    }
+
+
+    function normalizeSignalName(name) {
+
+        return String(name)
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "");
+
+    }
+
+
+    function isSignalDetected(signal) {
+
+        if (!signal) {
+
+            return false;
+
+        }
+
+
+        if (
+            signal.detected === true ||
+            signal.flag === 1 ||
+            signal.risk === true
+        ) {
+
+            return true;
+
+        }
+
+
+        const value =
+            signal.value;
+
+
+        return (
+            value === true ||
+            value === 1 ||
+            value === "1" ||
+            value === "yes" ||
+            value === "YES" ||
+            value === "true" ||
+            value === "True" ||
+            value === "detected" ||
+            value === "Detected" ||
+            value === "high" ||
+            value === "HIGH"
+        );
+
+    }
+
+
+    /* =====================================================
+       DISPLAY RISK SIGNALS
+    ===================================================== */
+
+    function displaySignals() {
+
+        const signals =
+            Array.isArray(safeRiskData.signals)
+                ? safeRiskData.signals
+                : [];
+
+
+        if (!signals.length) {
+
+            riskSignals.innerHTML = `
+
+                <div class="signal">
+
+                    <div class="signal-name">
+                        No detailed signals available
+                    </div>
+
+                    <div class="signal-value signal-positive">
+                        NORMAL
+                    </div>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        riskSignals.innerHTML =
+            signals.map(signal => {
+
+                const name =
+                    signal.name ||
+                    signal.signal ||
+                    signal.label ||
+                    "Unknown Signal";
+
+
+                const detected =
+                    isSignalDetected(signal);
+
+
+                return `
+
+                    <div class="signal">
+
+                        <div class="signal-name">
+                            ${escapeHtml(name)}
+                        </div>
+
+                        <div class="
+                            signal-value
+                            ${
+                                detected
+                                    ? "signal-negative"
+                                    : "signal-positive"
+                            }
+                        ">
+                            ${
+                                detected
+                                    ? "DETECTED"
+                                    : "NORMAL"
+                            }
+                        </div>
+
+                    </div>
+
+                `;
+
+            }).join("");
+
+    }
+
+
+    /* =====================================================
+       ADAPTIVE WARNING
+    ===================================================== */
+
+    function generateAdaptiveWarning() {
+
+        const reasons = [];
+
+
+        const amount =
+            Number(paymentData.amount || 0);
+
+
+        const usualAmount =
+            Number(paymentData.usualAmount || 0);
+
+
+        /*
+         * Use the EXACT amount_deviation returned
+         * by the backend ML feature calculation.
+         */
+
+        const backendAmountDeviation =
+            Number(
+                mlFeatures.amount_deviation || 0
+            );
+
+
+        const beneficiaryStatus =
+            String(
+                paymentData.beneficiaryStatus ||
+                paymentData.recipientStatus ||
+                ""
+            ).toLowerCase();
+
+
+        /*
+         * Amount deviation
+         */
+
+        if (
+            (
+                usualAmount > 0 &&
+                amount >= usualAmount * 2
+            ) ||
+            backendAmountDeviation >= 2
+        ) {
+
+            reasons.push({
+                title: "Amount deviation",
+                text:
+                    "This payment is significantly higher than the user's usual transaction amount."
+            });
+
+        }
+
+
+        /*
+         * New beneficiary
+         */
+
+        if (
+            beneficiaryStatus === "new" ||
+            beneficiaryStatus === "unknown" ||
+            getSignalFlag("New Beneficiary") === 1
+        ) {
+
+            reasons.push({
+                title: "New beneficiary",
+                text:
+                    "The recipient appears to be new or not previously trusted."
+            });
+
+        }
+
+
+        /*
+         * Urgency
+         */
+
+        if (
+            getSignalFlag("Urgency Signals") === 1
+        ) {
+
+            reasons.push({
+                title: "Urgency detected",
+                text:
+                    "The payment context contains pressure or urgency that may reduce careful decision-making."
+            });
+
+        }
+
+
+        /*
+         * Scam language
+         */
+
+        if (
+            getSignalFlag("Scam Language") === 1
+        ) {
+
+            reasons.push({
+                title: "Suspicious language",
+                text:
+                    "The payment request contains language commonly associated with suspicious requests."
+            });
+
+        }
+
+
+        /*
+         * Refund redirection
+         */
+
+        if (
+            getSignalFlag("Refund Redirection") === 1
+        ) {
+
+            reasons.push({
+                title: "Refund redirection",
+                text:
+                    "The context suggests the user may be redirected into making a payment while expecting a refund."
+            });
+
+        }
+
+
+        /*
+         * Transaction velocity
+         */
+
+        if (
+            getSignalFlag("Transaction Velocity") === 1
+        ) {
+
+            reasons.push({
+                title: "High transaction velocity",
+                text:
+                    "Multiple payment attempts or unusual transaction frequency were detected."
+            });
+
+        }
+
+
+        /*
+         * Behaviour deviation
+         */
+
+        if (
+            getSignalFlag("Behaviour Deviation") === 1
+        ) {
+
+            reasons.push({
+                title: "Behaviour deviation",
+                text:
+                    "The payment differs from the user's normal transaction behaviour."
+            });
+
+        }
+
+
+        /*
+         * Combined context
+         */
+
+        if (
+            getSignalFlag("Combined Context") === 1
+        ) {
+
+            reasons.push({
+                title: "Combined risk context",
+                text:
+                    "Multiple contextual signals appear together, increasing the need for verification."
+            });
+
+        }
+
+
+        if (!reasons.length) {
+
+            warningMessage.textContent =
+                "No major suspicious contextual signal was detected. Sentinel recommends reviewing the payment details before continuing.";
+
+
+            warningReasons.innerHTML = `
+
+                <div class="warning-reason">
+
+                    <span>✓</span>
+
+                    <div>
+                        No strong contextual anomaly was detected.
+                    </div>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        if (reasons.length >= 3) {
+
+            warningMessage.textContent =
+                "Sentinel detected multiple contextual signals associated with potentially risky payment behaviour. Pause and independently verify the payment before continuing.";
+
+        }
+
+        else if (reasons.some(
+            reason =>
+                reason.title === "Urgency detected"
+        )) {
+
+            warningMessage.textContent =
+                "This payment contains urgency-related signals. Do not allow pressure or time limits to replace independent verification.";
+
+        }
+
+        else if (reasons.some(
+            reason =>
+                reason.title === "New beneficiary"
+        )) {
+
+            warningMessage.textContent =
+                "This payment involves a new or unfamiliar recipient. Verify the recipient independently before transferring money.";
+
+        }
+
+        else if (reasons.some(
+            reason =>
+                reason.title === "Amount deviation"
+        )) {
+
+            warningMessage.textContent =
+                "The payment amount is unusual compared with the user's normal behaviour. Verify the reason and recipient before continuing.";
+
+        }
+
+        else {
+
+            warningMessage.textContent =
+                "Sentinel detected contextual signals that require additional verification before this payment should proceed.";
+
+        }
+
+
+        warningReasons.innerHTML =
+            reasons.map(reason => `
+
+                <div class="warning-reason">
+
+                    <span>!</span>
+
+                    <div>
+                        <strong>
+                            ${escapeHtml(reason.title)}
+                        </strong>
+                        <br>
+                        ${escapeHtml(reason.text)}
+                    </div>
+
+                </div>
+
+            `).join("");
+
+    }
+
+
+    /* =====================================================
+       ML PREDICTION
+       FLASK → sentinel_model.pkl
+    ===================================================== */
+
+    async function getMLPrediction() {
+
+        mlStatus.textContent =
+            "Connecting to Sentinel ML...";
+
+
+        mlClassification.textContent =
+            "Evaluating";
+
+
+        mlProbability.textContent =
+            "Calculating";
+
+
+        /*
+         * Get UPI ID.
+         */
+
+        const upi =
+            paymentData.upi ||
+            paymentData.upiId ||
+            "";
+
+
+        /*
+         * Get payment message.
+         */
+
+        const message =
+            paymentData.message ||
+            paymentData.reason ||
+            paymentData.description ||
+            "";
+
+
+        /*
+         * Get beneficiary status.
+         */
+
+        const beneficiaryStatus =
+            paymentData.beneficiaryStatus ||
+            paymentData.recipientStatus ||
+            "";
+
+
+        /*
+         * Get refund UPI.
+         */
+
+        const refundUpi =
+            paymentData.refundUpi ||
+            paymentData.refundDestinationUpi ||
+            "";
+
+
+        /*
+         * EXACT PAYLOAD EXPECTED BY FLASK
+         */
+
+        const payload = {
+
+            upi:
+                upi,
+
+            amount:
+                Number(
+                    paymentData.amount || 0
+                ),
+
+            message:
+                message,
+
+            usualAmount:
+                Number(
+                    paymentData.usualAmount || 0
+                ),
+
+            recentPayments:
+                Number(
+                    paymentData.recentPayments || 0
+                ),
+
+            beneficiaryStatus:
+                beneficiaryStatus,
+
+            previousPayments:
+                Number(
+                    paymentData.previousPayments || 0
+                ),
+
+            refundUpi:
+                refundUpi
+
+        };
+
+
+        console.log(
+            "========================================"
+        );
+
+        console.log(
+            "SENTINEL → FLASK ML REQUEST"
+        );
+
+        console.log(
+            "========================================"
+        );
+
+        console.log(
+            "API:",
+            ML_API_URL
+        );
+
+        console.log(
+            "Payload:",
+            payload
+        );
+
+
+        try {
+
+            /*
+             * CONNECT TO FLASK
+             *
+             * Flask receives this request at:
+             *
+             * /api/analyze-payment
+             *
+             * Flask then loads:
+             *
+             * sentinel_model.pkl
+             */
+
+            const response =
+                await fetch(
+                    ML_API_URL,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                payload
+                            )
+                    }
+                );
+
+
+            /*
+             * Try to read the JSON response.
+             */
+
+            const result =
+                await response.json();
+
+
+            console.log(
+                "SENTINEL ← FLASK ML RESPONSE:",
+                result
+            );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.error ||
+                    `Flask returned HTTP ${response.status}`
+                );
+
+            }
+
+
+            /*
+             * Make sure Flask actually
+             * returned the ML result.
+             */
+
+            if (!result.ml) {
+
+                throw new Error(
+                    "Flask response does not contain an ML result."
+                );
+
+            }
+
+
+            /*
+             * Get the ML result.
+             *
+             * Flask returns:
+             *
+             * result.ml.prediction
+             * result.ml.scamProbability
+             */
+
+            mlResult =
+                result.ml;
+
+
+            /*
+             * Get the exact features calculated
+             * by the backend.
+             */
+
+            mlFeatures =
+                result.mlFeatures || {};
+
+
+            /*
+             * IMPORTANT:
+             *
+             * Replace the old risk data with the
+             * complete Flask result.
+             */
+
+            safeRiskData =
+                result;
+
+
+            /*
+             * Store everything for decision.html
+             * and the feedback system.
+             */
+
+            sessionStorage.setItem(
+                "sentinelRisk",
+                JSON.stringify(result)
+            );
+
+
+            /*
+             * Validate prediction.
+             */
 
             const prediction =
                 Number(
-                    ml.prediction
+                    mlResult.prediction
                 );
 
+
+            /*
+             * Validate probability.
+             */
 
             const probability =
                 Number(
-                    ml.scamProbability
+                    mlResult.scamProbability
                 );
 
 
-            predictionElement.textContent =
+            if (
+                !Number.isFinite(prediction) ||
+                !Number.isFinite(probability)
+            ) {
+
+                throw new Error(
+                    "Invalid ML prediction or probability returned by Flask."
+                );
+
+            }
+
+
+            if (
+                prediction !== 0 &&
+                prediction !== 1
+            ) {
+
+                throw new Error(
+                    "Invalid ML prediction value."
+                );
+
+            }
+
+
+            if (
+                probability < 0 ||
+                probability > 1
+            ) {
+
+                throw new Error(
+                    "Invalid scam probability returned by ML model."
+                );
+
+            }
+
+
+            /*
+             * ML SUCCESS
+             */
+
+            mlStatus.textContent =
+                "AI assessment completed";
+
+
+            mlClassification.textContent =
                 prediction === 1
-                    ? "Potential Scam"
-                    : "No Scam Pattern";
+                    ? "Prediction: Scam"
+                    : "Prediction: Normal";
 
 
-            const percentage =
-                Math.min(
-                    Math.max(
-                        probability * 100,
-                        0
-                    ),
-                    100
-                );
-
-
-            probabilityElement.textContent =
-                percentage.toFixed(2) +
+            mlProbability.textContent =
+                "Scam Probability: " +
+                (
+                    probability * 100
+                ).toFixed(2) +
                 "%";
 
 
-            probabilityFill.style.width =
-                percentage + "%";
+            mlRawOutput.textContent =
+                "The Logistic Regression model evaluated the contextual payment signals and returned Prediction: " +
+                prediction +
+                " with a Scam Probability of " +
+                (
+                    probability * 100
+                ).toFixed(2) +
+                "%. This ML result is used as an additional assessment alongside Sentinel's explainable rule-based risk analysis.";
 
 
-            probabilityFill.style.background =
-                getProbabilityColor(
-                    percentage
-                );
+            /*
+             * Debug information.
+             *
+             * These are the EXACT 8 features
+             * sent to sentinel_model.pkl by Flask.
+             */
+
+            console.log(
+                "Sentinel ML Features:",
+                mlFeatures
+            );
+
+
+            console.log(
+                "Sentinel ML Prediction:",
+                prediction
+            );
+
+
+            console.log(
+                "Sentinel Scam Probability:",
+                probability
+            );
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "========================================"
+            );
+
+            console.error(
+                "SENTINEL ML ERROR"
+            );
+
+            console.error(
+                error
+            );
+
+            console.error(
+                "========================================"
+            );
+
+
+            mlResult = null;
+
+            mlFeatures = {};
+
+
+            mlStatus.textContent =
+                "AI assessment unavailable";
+
+
+            mlClassification.textContent =
+                "Prediction: -";
+
+
+            mlProbability.textContent =
+                "Scam Probability: -";
+
+
+            mlRawOutput.textContent =
+                "The Sentinel ML backend could not be reached. Make sure the Flask server is running at http://127.0.0.1:5000 and that sentinel_model.pkl is available in the backend folder.";
+
+
+            /*
+             * Do NOT create a fake ML result.
+             *
+             * Keep the existing rule-based risk
+             * analysis if it was already available.
+             */
+
+            safeRiskData =
+                riskData || {
+
+                    score: 0,
+
+                    level: "LOW",
+
+                    signals: []
+
+                };
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PAUSE & VERIFY
+    ===================================================== */
+
+    function renderPauseCheckpoint() {
+
+        const checks = [];
+
+
+        /*
+         * Amount
+         */
+
+        const amount =
+            Number(paymentData.amount || 0);
+
+
+        const usualAmount =
+            Number(paymentData.usualAmount || 0);
+
+
+        const backendAmountDeviation =
+            Number(
+                mlFeatures.amount_deviation || 0
+            );
+
+
+        if (
+            (
+                usualAmount > 0 &&
+                amount >= usualAmount * 2
+            ) ||
+            backendAmountDeviation >= 2
+        ) {
+
+            checks.push({
+
+                signal: "Amount Deviation",
+
+                title: "Amount Verification",
+
+                question:
+                    "Is this payment amount genuinely expected?"
+
+            });
 
         }
 
 
+        /*
+         * New beneficiary
+         */
 
-        /* =====================================================
-           DISPLAY SIGNALS
-        ===================================================== */
+        const beneficiaryStatus =
+            String(
+                paymentData.beneficiaryStatus ||
+                paymentData.recipientStatus ||
+                ""
+            ).toLowerCase();
 
-        function displaySignals(
-            signals
+
+        if (
+            beneficiaryStatus === "new" ||
+            beneficiaryStatus === "unknown" ||
+            getSignalFlag("New Beneficiary") === 1
         ) {
 
-            const container =
-                document.getElementById(
-                    "signalsContainer"
-                );
+            checks.push({
+
+                signal: "New Beneficiary",
+
+                title: "Recipient Verification",
+
+                question:
+                    "Have you independently verified who will receive this money?"
+
+            });
+
+        }
 
 
-            container.innerHTML = "";
+        /*
+         * Urgency
+         */
+
+        if (
+            getSignalFlag("Urgency Signals") === 1
+        ) {
+
+            checks.push({
+
+                signal: "Urgency Signals",
+
+                title: "Pressure Check",
+
+                question:
+                    "Are you being pressured to complete this payment immediately?"
+
+            });
+
+        }
 
 
-            if (!signals.length) {
+        /*
+         * Scam language
+         */
 
-                container.innerHTML = `
-                    <p style="color:#6b7280;">
-                        No risk signals were returned.
-                    </p>
+        if (
+            getSignalFlag("Scam Language") === 1
+        ) {
+
+            checks.push({
+
+                signal: "Scam Language",
+
+                title: "Request Verification",
+
+                question:
+                    "Did you personally initiate this payment, or were you instructed to make it?"
+
+            });
+
+        }
+
+
+        /*
+         * Refund
+         */
+
+        if (
+            getSignalFlag("Refund Redirection") === 1
+        ) {
+
+            checks.push({
+
+                signal: "Refund Redirection",
+
+                title: "Refund Verification",
+
+                question:
+                    "Are you expecting this refund, and have you independently verified the process?"
+
+            });
+
+        }
+
+
+        /*
+         * Velocity
+         */
+
+        if (
+            getSignalFlag("Transaction Velocity") === 1
+        ) {
+
+            checks.push({
+
+                signal: "Transaction Velocity",
+
+                title: "Activity Check",
+
+                question:
+                    "Did you intentionally initiate all of the recent payment attempts?"
+
+            });
+
+        }
+
+
+        /*
+         * Behaviour
+         */
+
+        if (
+            getSignalFlag("Behaviour Deviation") === 1
+        ) {
+
+            checks.push({
+
+                signal: "Behaviour Deviation",
+
+                title: "Behaviour Check",
+
+                question:
+                    "Does this payment match your normal reason and pattern for sending money?"
+
+            });
+
+        }
+
+
+        /*
+         * Combined context
+         */
+
+        if (
+            getSignalFlag("Combined Context") === 1
+        ) {
+
+            checks.push({
+
+                signal: "Combined Context",
+
+                title: "Independent Verification",
+
+                question:
+                    "Have you verified this payment through a source independent of the person who requested it?"
+
+            });
+
+        }
+
+
+        /*
+         * Limit to four questions
+         */
+
+        const selectedChecks =
+            checks.slice(0, 4);
+
+
+        checkpointCount =
+            selectedChecks.length;
+
+
+        completedCheckpoints = 0;
+
+
+        /*
+         * Low risk
+         */
+
+        if (
+            selectedChecks.length === 0 &&
+            Number(
+                safeRiskData.score ??
+                safeRiskData.riskScore ??
+                0
+            ) < 60
+        ) {
+
+            pauseVerifyCard.style.display =
+                "none";
+
+            continueBtn.disabled =
+                false;
+
+            return;
+
+        }
+
+
+        reasonBadges.innerHTML =
+            selectedChecks.length
+                ? selectedChecks.map(
+                    check => `
+
+                        <div class="reason-badge">
+
+                            ${escapeHtml(
+                                check.signal
+                            )}
+
+                        </div>
+
+                    `
+                ).join("")
+                : `
+
+                    <div class="reason-badge">
+                        Risk review
+                    </div>
+
                 `;
+
+
+        checkList.innerHTML =
+            selectedChecks.map(
+                (check, index) => `
+
+                    <label
+                        class="check-item"
+                        id="checkItem${index}"
+                    >
+
+                        <input
+                            type="checkbox"
+                            class="checkpoint-checkbox"
+                            data-index="${index}"
+                        >
+
+                        <div class="check-content">
+
+                            <div class="check-title">
+
+                                ${escapeHtml(
+                                    check.title
+                                )}
+
+                            </div>
+
+                            <div class="check-question">
+
+                                ${escapeHtml(
+                                    check.question
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    </label>
+
+                `
+            ).join("");
+
+
+        document
+            .querySelectorAll(
+                ".checkpoint-checkbox"
+            )
+            .forEach(
+                checkbox => {
+
+                    checkbox.addEventListener(
+                        "change",
+                        handleCheckpointChange
+                    );
+
+                }
+            );
+
+
+        updatePauseStatus();
+
+    }
+
+
+    /* =====================================================
+       CHECKPOINT CHANGE
+    ===================================================== */
+
+    function handleCheckpointChange(event) {
+
+        const checkbox =
+            event.target;
+
+
+        const index =
+            Number(
+                checkbox.dataset.index
+            );
+
+
+        const item =
+            document.getElementById(
+                `checkItem${index}`
+            );
+
+
+        if (checkbox.checked) {
+
+            item.classList.add(
+                "checked"
+            );
+
+        }
+
+        else {
+
+            item.classList.remove(
+                "checked"
+            );
+
+        }
+
+
+        updatePauseStatus();
+
+    }
+
+
+    /* =====================================================
+       PAUSE STATUS
+    ===================================================== */
+
+    function updatePauseStatus() {
+
+        const checkboxes =
+            document.querySelectorAll(
+                ".checkpoint-checkbox"
+            );
+
+
+        completedCheckpoints =
+            Array.from(
+                checkboxes
+            ).filter(
+                checkbox =>
+                    checkbox.checked
+            ).length;
+
+
+        const total =
+            checkboxes.length;
+
+
+        const progress =
+            total === 0
+                ? 100
+                : (
+                    completedCheckpoints /
+                    total
+                ) * 100;
+
+
+        pauseProgressBar.style.width =
+            progress + "%";
+
+
+        if (
+            total === 0 ||
+            completedCheckpoints === total
+        ) {
+
+            continueBtn.disabled =
+                false;
+
+
+            pauseStatus.textContent =
+                "✓ Verification complete. You can continue with the payment if you choose.";
+
+
+            pauseStatus.classList.add(
+                "ready"
+            );
+
+        }
+
+        else {
+
+            continueBtn.disabled =
+                true;
+
+
+            pauseStatus.textContent =
+                `${completedCheckpoints} of ${total} verification checks completed. Complete the remaining checks before continuing.`;
+
+
+            pauseStatus.classList.remove(
+                "ready"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CANCEL PAYMENT
+    ===================================================== */
+
+    cancelBtn.addEventListener(
+        "click",
+        async () => {
+
+            await saveDecision(
+                "cancelled"
+            );
+
+            sessionStorage.setItem(
+                "sentinelDecision",
+                "cancelled"
+            );
+
+            window.location.href =
+                "decision.html";
+
+        }
+    );
+
+
+    /* =====================================================
+       CONTINUE PAYMENT
+    ===================================================== */
+
+    continueBtn.addEventListener(
+        "click",
+        async () => {
+
+            if (
+                continueBtn.disabled
+            ) {
 
                 return;
 
             }
 
 
-            signals.forEach(
-                signal => {
+            await saveDecision(
+                "continued"
+            );
 
-                    const score =
+
+            sessionStorage.setItem(
+                "sentinelDecision",
+                "continued"
+            );
+
+
+            window.location.href =
+                "decision.html";
+
+        }
+    );
+
+
+    /* =====================================================
+       SAVE TRANSACTION
+    ===================================================== */
+
+    async function saveDecision(
+        decision
+    ) {
+
+        try {
+
+            await saveTransaction({
+
+                ...paymentData,
+
+                riskScore:
+                    Number(
+                        safeRiskData.score ??
+                        safeRiskData.riskScore ??
+                        0
+                    ),
+
+                riskLevel:
+                    safeRiskData.level ||
+                    safeRiskData.riskLevel ||
+                    getRiskLevel(
                         Number(
-                            signal.score || 0
-                        );
+                            safeRiskData.score ??
+                            safeRiskData.riskScore ??
+                            0
+                        )
+                    ),
 
+                riskSignals:
+                    safeRiskData.signals ||
+                    [],
 
-                    const max =
-                        Number(
-                            signal.max || 0
-                        );
+                /*
+                 * IMPORTANT:
+                 *
+                 * These now use the actual Flask ML
+                 * response fields.
+                 */
 
+                mlPrediction:
+                    mlResult
+                        ? mlResult.prediction
+                        : null,
 
-                    const percentage =
-                        max > 0
-                            ? Math.min(
-                                (score / max) * 100,
-                                100
-                              )
-                            : 0;
+                mlProbability:
+                    mlResult
+                        ? mlResult.scamProbability
+                        : null,
 
+                /*
+                 * Save the exact features used
+                 * by the ML model.
+                 */
 
-                    const signalElement =
-                        document.createElement(
-                            "div"
-                        );
+                mlFeatures:
+                    mlFeatures || {},
 
+                decision:
+                    decision,
 
-                    signalElement.className =
-                        "signal";
+                timestamp:
+                    new Date().toISOString()
 
+            });
 
-                    signalElement.innerHTML = `
+        }
 
-                        <div class="signal-top">
+        catch (error) {
 
-                            <span class="signal-name">
-                                ${escapeHTML(
-                                    signal.name ||
-                                    "Risk signal"
-                                )}
-                            </span>
-
-                            <span class="signal-score">
-                                ${score} / ${max}
-                            </span>
-
-                        </div>
-
-
-                        <div class="signal-bar">
-
-                            <div
-                                class="signal-fill"
-                                style="
-                                    width:${percentage}%;
-                                    background:${getSignalColor(
-                                        score,
-                                        max
-                                    )};
-                                "
-                            ></div>
-
-                        </div>
-                    `;
-
-
-                    container.appendChild(
-                        signalElement
-                    );
-
-                }
+            console.error(
+                "Firebase transaction save failed:",
+                error
             );
 
         }
 
-
-
-        /* =====================================================
-           CANCEL PAYMENT
-        ===================================================== */
-
-        window.cancelPayment =
-            async function () {
-
-
-                const cancelBtn =
-                    document.getElementById(
-                        "cancelBtn"
-                    );
-
-
-                const continueBtn =
-                    document.getElementById(
-                        "continueBtn"
-                    );
-
-
-                cancelBtn.disabled =
-                    true;
-
-
-                continueBtn.disabled =
-                    true;
-
-
-                cancelBtn.textContent =
-                    "Saving decision...";
-
-
-                try {
-
-
-                    /* =========================================
-                       CREATE TRANSACTION
-                    ========================================== */
-
-                    const transaction = {
-
-                        ...paymentData,
-
-                        ...riskData,
-
-                        decision:
-                            "cancelled",
-
-                        decisionTime:
-                            new Date(),
-
-                        status:
-                            "cancelled"
-
-                    };
-
-
-                    /* =========================================
-                       SAVE FIREBASE
-                    ========================================== */
-
-                    const transactionId =
-                        await saveTransaction(
-                            transaction
-                        );
-
-
-                    console.log(
-                        "Cancelled transaction saved:",
-                        transactionId
-                    );
-
-
-                    /* =========================================
-                       LOCAL DECISION
-                    ========================================== */
-
-                    sessionStorage.setItem(
-                        "sentinelDecision",
-                        "cancelled"
-                    );
-
-
-                    sessionStorage.setItem(
-                        "sentinelDecisionTime",
-                        new Date().toISOString()
-                    );
-
-
-                    if (transactionId) {
-
-                        sessionStorage.setItem(
-                            "sentinelTransactionId",
-                            transactionId
-                        );
-
-                    }
-
-
-                    /* =========================================
-                       DECISION PAGE
-                    ========================================== */
-
-                    window.location.href =
-                        "decision.html";
-
-                }
-
-
-                catch (error) {
-
-                    console.error(
-                        "Error saving cancelled transaction:",
-                        error
-                    );
-
-
-                    alert(
-                        "Could not save the transaction to Firebase."
-                    );
-
-
-                    cancelBtn.disabled =
-                        false;
-
-
-                    continueBtn.disabled =
-                        false;
-
-
-                    cancelBtn.textContent =
-                        "Cancel Payment";
-
-                }
-
-            };
-
-
-
-        /* =====================================================
-           CONTINUE PAYMENT
-        ===================================================== */
-
-        window.continuePayment =
-            async function () {
-
-
-                const cancelBtn =
-                    document.getElementById(
-                        "cancelBtn"
-                    );
-
-
-                const continueBtn =
-                    document.getElementById(
-                        "continueBtn"
-                    );
-
-
-                cancelBtn.disabled =
-                    true;
-
-
-                continueBtn.disabled =
-                    true;
-
-
-                continueBtn.textContent =
-                    "Saving decision...";
-
-
-                try {
-
-
-                    /* =========================================
-                       CREATE TRANSACTION
-                    ========================================== */
-
-                    const transaction = {
-
-                        ...paymentData,
-
-                        ...riskData,
-
-                        decision:
-                            "continued",
-
-                        decisionTime:
-                            new Date(),
-
-                        status:
-                            "continued"
-
-                    };
-
-
-                    /* =========================================
-                       SAVE FIREBASE
-                    ========================================== */
-
-                    const transactionId =
-                        await saveTransaction(
-                            transaction
-                        );
-
-
-                    console.log(
-                        "Continued transaction saved:",
-                        transactionId
-                    );
-
-
-                    /* =========================================
-                       LOCAL DECISION
-                    ========================================== */
-
-                    sessionStorage.setItem(
-                        "sentinelDecision",
-                        "continued"
-                    );
-
-
-                    sessionStorage.setItem(
-                        "sentinelDecisionTime",
-                        new Date().toISOString()
-                    );
-
-
-                    if (transactionId) {
-
-                        sessionStorage.setItem(
-                            "sentinelTransactionId",
-                            transactionId
-                        );
-
-                    }
-
-
-                    /* =========================================
-                       DECISION PAGE
-                    ========================================== */
-
-                    window.location.href =
-                        "decision.html";
-
-                }
-
-
-                catch (error) {
-
-                    console.error(
-                        "Error saving continued transaction:",
-                        error
-                    );
-
-
-                    alert(
-                        "Could not save the transaction to Firebase."
-                    );
-
-
-                    cancelBtn.disabled =
-                        false;
-
-
-                    continueBtn.disabled =
-                        false;
-
-
-                    continueBtn.textContent =
-                        "Continue Payment";
-
-                }
-
-            };
-
-
-
-        /* =====================================================
-           RISK CLASS
-        ===================================================== */
-
-        function getRiskClass(
-            riskLevel
-        ) {
-
-            if (
-                riskLevel === "HIGH"
-            ) {
-
-                return "risk-high";
-
-            }
-
-
-            if (
-                riskLevel === "MEDIUM"
-            ) {
-
-                return "risk-medium";
-
-            }
-
-
-            return "risk-low";
-
-        }
-
-
-
-        /* =====================================================
-           RISK COLOR
-        ===================================================== */
-
-        function getRiskColor(
-            riskLevel
-        ) {
-
-            if (
-                riskLevel === "HIGH"
-            ) {
-
-                return "#dc2626";
-
-            }
-
-
-            if (
-                riskLevel === "MEDIUM"
-            ) {
-
-                return "#d97706";
-
-            }
-
-
-            return "#16a34a";
-
-        }
-
-
-
-        /* =====================================================
-           SIGNAL COLOR
-        ===================================================== */
-
-        function getSignalColor(
-            score,
-            max
-        ) {
-
-            if (!max) {
-
-                return "#9ca3af";
-
-            }
-
-
-            const percentage =
-                score / max;
-
-
-            if (
-                percentage >= 0.7
-            ) {
-
-                return "#dc2626";
-
-            }
-
-
-            if (
-                percentage >= 0.35
-            ) {
-
-                return "#d97706";
-
-            }
-
-
-            return "#16a34a";
-
-        }
-
-
-
-        /* =====================================================
-           ML PROBABILITY COLOR
-        ===================================================== */
-
-        function getProbabilityColor(
-            percentage
-        ) {
-
-            if (
-                percentage >= 70
-            ) {
-
-                return "#dc2626";
-
-            }
-
-
-            if (
-                percentage >= 35
-            ) {
-
-                return "#d97706";
-
-            }
-
-
-            return "#16a34a";
-
-        }
-
-
-
-        /* =====================================================
-           EXPLANATION
-        ===================================================== */
-
-        function getExplanation(
-            riskLevel,
-            score
-        ) {
-
-            if (
-                riskLevel === "HIGH"
-            ) {
-
-                return (
-                    "This payment contains several signals " +
-                    "that are commonly associated with risky " +
-                    "or socially engineered transactions. " +
-                    "Review the details carefully before continuing."
-                );
-
-            }
-
-
-            if (
-                riskLevel === "MEDIUM"
-            ) {
-
-                return (
-                    "This payment contains some unusual or " +
-                    "potentially risky signals. Review the " +
-                    "transaction details before continuing."
-                );
-
-            }
-
-
-            return (
-                "This payment currently shows relatively few " +
-                "risk signals. Sentinel did not identify strong " +
-                "indicators of social-engineering risk."
+    }
+
+
+    /* =====================================================
+       HTML ESCAPE
+    ===================================================== */
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
             );
 
-        }
+    }
 
-
-
-        /* =====================================================
-           HTML ESCAPE
-        ===================================================== */
-
-        function escapeHTML(
-            value
-        ) {
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.textContent =
-                String(value);
-
-
-            return div.innerHTML;
-
-        }
-
-    </script>
+</script>
 
 </body>
-
 </html>

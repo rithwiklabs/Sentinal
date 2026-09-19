@@ -385,7 +385,7 @@
             </div>
 
 
-            <!-- NEW: Feedback -->
+            <!-- Feedback -->
             <div class="feedback-box">
 
                 <h3>Was this transaction actually fraudulent?</h3>
@@ -773,7 +773,7 @@
                 if (actualOutcome === 1) {
 
                     showFeedbackStatus(
-                        "✓ Fraud report recorded. This case can be used for future model improvement.",
+                        "✓ Fraud report recorded.",
                         "success"
                     );
 
@@ -782,11 +782,12 @@
                 else {
 
                     showFeedbackStatus(
-                        "✓ Legitimate transaction recorded. This case can be used for future model improvement.",
+                        "✓ Legitimate transaction recorded.",
                         "success"
                     );
 
                 }
+
 
                 /*
                     Prevent duplicate feedback
@@ -796,6 +797,24 @@
                     "sentinelFeedbackSubmitted",
                     "true"
                 );
+
+
+                /*
+                    Remove success message after 2 seconds
+                */
+
+                setTimeout(() => {
+
+                    const status =
+                        document.getElementById(
+                            "feedbackStatus"
+                        );
+
+                    status.textContent = "";
+
+                    status.style.display = "none";
+
+                }, 2000);
 
             }
 
