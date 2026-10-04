@@ -15,11 +15,11 @@
 
 Sentinel is a payment risk intelligence platform that helps teams monitor transactions, analyse risk, and make faster, better-informed decisions about payments. It combines a clean fintech-style web dashboard with a backend service that powers the risk logic.
 
-> 👥 **This is a group project.** Sentinel is built and maintained collaboratively by a team. Please read the [Contribution Guidelines](#-contribution-guidelines) before you start working on the repo.
+> **This is a group project.** Sentinel is built and maintained collaboratively by a team. Please read the [Contribution Guidelines](#-contribution-guidelines) before you start working on the repo.
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 
 - [About the Project](#-about-the-project)
 - [Group Project & Team](#-group-project--team)
@@ -35,7 +35,7 @@ Sentinel is a payment risk intelligence platform that helps teams monitor transa
 
 ---
 
-## 📖 About the Project
+## About the Project
 
 Sentinel gives a single place to:
 
@@ -46,7 +46,7 @@ Sentinel gives a single place to:
 
 ---
 
-## 👥 Group Project & Team
+## Group Project & Team
 
 This project is developed as a **group project**. Every member is expected to contribute through branches and pull requests, and to review each other's work.
 
@@ -61,7 +61,7 @@ This project is developed as a **group project**. Every member is expected to co
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Sentinal/
@@ -91,7 +91,7 @@ Sentinal/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -172,11 +172,11 @@ uvicorn app.main:app --reload
 
 The API will be available at **http://127.0.0.1:8000** (interactive docs at `/docs` if you are using FastAPI).
 
-> ⚠️ Adjust the commands above if the backend uses a different framework or entry point.
+> Adjust the commands above if the backend uses a different framework or entry point.
 
 ---
 
-## 🤝 Contribution Guidelines
+## Contribution Guidelines
 
 Since this is a group project, we follow a simple workflow to keep the codebase clean and avoid conflicts. Everyone on the team — and any outside contributor — should follow these steps.
 
@@ -265,10 +265,10 @@ git merge main
 
 ### Team etiquette
 
-- 💬 Communicate — tell the team what you're working on so work isn't duplicated.
-- 🐛 Use **GitHub Issues** to report bugs, propose features, and assign tasks.
-- 🧩 Break big tasks into small PRs that are easy to review.
-- 🙌 Be respectful and constructive in reviews and discussions.
+- Communicate — tell the team what you're working on so work isn't duplicated.
+- Use **GitHub Issues** to report bugs, propose features, and assign tasks.
+- Break big tasks into small PRs that are easy to review.
+- Be respectful and constructive in reviews and discussions.
 
 ### Reporting bugs / requesting features
 
@@ -281,7 +281,7 @@ Open an [issue](https://github.com/rithwiklabs/Sentinal/issues) and include:
 
 ---
 
-## 📄 License
+## License
 
 No license has been added yet. The team should agree on one (for example MIT) and add a `LICENSE` file to the repository.
 
